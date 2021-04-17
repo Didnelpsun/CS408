@@ -15,11 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="linear_list.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="head.h">
       <Filter>头文件</Filter>
     </ClCompile>
+    <ClCompile Include="main.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="link_list.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="sequence_list.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
