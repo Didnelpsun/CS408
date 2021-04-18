@@ -172,25 +172,25 @@ int DeleteDynamicSequenceList(DynamicSequenceList* list, int index, element_type
     return 0;
 }
 
-// 按位获取静态顺序表元素
+// 按位查找静态顺序表元素
 element_type GetStaticSequenceListElement(StaticSequenceList list, int index) {
     if (index >= list.length || index < 0) {
         printf("GetStaticSequenceListElement:查找索引超过索引范围！\n");
-        return 1;
+        return NULL;
     }
     return list.data[index];
 }
 
-// 按位获取动态顺序表元素
+// 按位查找动态顺序表元素
 element_type GetDynamicSequenceListElement(DynamicSequenceList list, int index) {
     if (index >= list.length || index < 0) {
         printf("GetDynamicSequenceListElement:查找索引超过索引范围！\n");
-        return 1;
+        return NULL;
     }
     return list.data[index];
 }
 
-// 按值获取静态顺序表索引
+// 按值查找静态顺序表索引
 int LocateStaticSequenceListElement(StaticSequenceList list, element_type elem) {
     for (int i = 0; i < list.length; i++) {
         if (list.data[i] == elem) {
@@ -201,7 +201,7 @@ int LocateStaticSequenceListElement(StaticSequenceList list, element_type elem) 
     return -1;
 }
 
-// 按值获取动态顺序表索引
+// 按值查找动态顺序表索引
 int LocateDynamicSequenceListElement(DynamicSequenceList list, element_type elem) {
     for (int i = 0; i < list.length; i++) {
         if (list.data[i] == elem) {

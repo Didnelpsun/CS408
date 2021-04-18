@@ -243,7 +243,7 @@ int DeleteDynamicSequenceList(DynamicSequenceList* list, int index, element_type
 element_type GetStaticSequenceListElement(StaticSequenceList list, int index) {
     if (index >= list.length || index < 0) {
         printf("GetStaticSequenceListElement:查找索引超过静态顺序表索引范围！\n");
-        return 1;
+        return NULL;
     }
     return list.data[index];
 }
@@ -254,7 +254,7 @@ element_type GetStaticSequenceListElement(StaticSequenceList list, int index) {
 element_type GetDynamicSequenceListElement(DynamicSequenceList list, int index) {
     if (index >= list.length || index < 0) {
         printf("GetDynamicSequenceListElement:查找索引超过动态态顺序表索引范围！\n");
-        return 1;
+        return NULL;
     }
     return list.data[index];
 }
@@ -496,3 +496,187 @@ int InsertPriorLinkNode(LinkNode* node, element_type elem) {
     return 0;
 }
 ```
+
+#### 单链表删除
+
+基本的方式和插入类似，都是转移next结点。
+
+带头结点的也只能删除从1开始的结点，0的头结点不能删除。
+
+时间复杂度为$O(n)$。
+
+```c
+// 删除有头节点单链表元素
+int DeleteLinkListWithHead(LinkList list, int index, element_type *elem) {
+    if (index < 1) {
+    printf("DeleteLinkListWithHead:删除索引值过小！\n");
+    return 1;
+    }
+    // p指向当前扫描的结点
+    LinkNode* p;
+    // i表示当前指向的是第几个结点
+    int i = 0;
+    // 指向头结点
+    p = list;
+    while (p != NULL && i < index - 1) {
+    p = p->next;
+    i++;
+    }
+    if (p == NULL || p->next == NULL) {
+    printf("DeleteLinkListWithHead:删除索引值过大！\n");
+    return 1;
+    }
+    // q指向被删除的结点
+    LinkNode* q = p->next;
+    // 获取删除的元素数据
+    *elem = q->data;
+    // 将q结点从链表中断开
+    p->next = q->next;
+    free(q);
+    return 0;
+}
+```
+
+无头结点需要额外处理第一个结点
+
+```c
+// 删除无头节点单链表元素
+int DeleteLinkListWithHead(LinkList list, int index, element_type* elem) {
+    if (index < 0) {
+        printf("DeleteLinkListWithHead:删除索引值过小！\n");
+        return 1;
+    }
+    // p指向当前扫描的结点
+    LinkNode* p;
+    // i表示当前指向的是第几个结点
+    int i = 0;
+    // 指向头结点
+    p = list;
+    // 如果删除第一个第0号结点
+    if (index == 0) {
+        list = p->next;
+        free(p);
+        return 0;
+    }
+    while (p != NULL && i < index - 1) {
+        p = p->next;
+        i++;
+    }
+    if (p == NULL || p->next == NULL) {
+        printf("DeleteLinkListWithHead:删除索引值过大！\n");
+        return 1;
+    }
+    // q指向被删除的结点
+    LinkNode* q = p->next;
+    // 获取删除的元素数据
+    *elem = q->data;
+    // 将q结点从链表中断开
+    p->next = q->next;
+    free(q);
+    return 0;
+}
+```
+
+如果删除指定结点而不知道其前驱，也可以使用之前前插结点的方式，把该结点后继的结点的数据复制到本结点上，然后把后继结点删除，就相当于删除了本结点。时间复杂度为$O(1)$。
+
+```c
+// 删除单链表元素
+int DeleteLinkNode(LinkNode* node) {
+    if (node == NULL) {
+        printf("DeleteLinkNode:本结点是空结点无法删除！");
+        return 1;
+    }
+    // 如果该结点为最后一个结点，无法找到前驱结点，无法操作
+    if (node->next = NULL) {
+        printf("DeleteLinkNode:后继结点为空无法操作！");
+        return 1;
+    }
+    // 指向后继结点
+    LinkNode* p = node->next;
+    // 交换数据
+    node->data = p->data;
+    // 断开结点
+    node->next = p->next;
+    free(p);
+    return 0;
+}
+```
+
+所以单链表还是不算方便。
+
+#### 单链表查找
+
+按位查找时间复杂度为$O(n)$。
+
+```c
+// 按位查找单链表元素
+element_type GetLinkListElement(LinkList list, int index) {
+    if (index < 0) {
+        printf("GetLinkListElement:查找索引值过小！\n");
+        return NULL;
+    }
+    // 定义一个结点指针p指向当前扫描到的结点
+    LinkNode* p;
+    // 定义一个变量i表示当前扫描到的结点的索引号
+    int i = 0;
+    // 将链表头结点指向p，为第0个结点
+    p = list;
+    // 循环遍历到达指定索引号的单链表的结点
+    // 条件是当前结点的下一个不为空且索引号到达，所到达的结点一定不是空结点
+    while (p->next != NULL && i < index) {
+        p = p->next;
+        i++;
+    }
+    // 如果查找索引大于当前扫描索引
+    if (i < index) {
+        printf("GetLinkListElement:查找索引值过大！\n");
+        return NULL;
+    }
+    return p->data;
+}
+```
+
+```c
+// 按位查找单链表结点
+LinkNode* GetLinkListNode(LinkList list, int index) {
+    if (index < 0) {
+        printf("GetLinkListNode:查找索引值过小！\n");
+        return NULL;
+    }
+    // 定义一个结点指针p指向当前扫描到的结点
+    LinkNode* p;
+    // 定义一个变量i表示当前扫描到的结点的索引号
+    int i = 0;
+    // 将链表头结点指向p，为第0个结点
+    p = list;
+    // 循环遍历到达指定索引号的单链表的结点
+    // 条件是当前结点的下一个不为空且索引号到达，所到达的结点一定不是空结点
+    while (p->next != NULL && i < index) {
+        p = p->next;
+        i++;
+    }
+    // 如果查找索引大于当前扫描索引
+    if (i < index) {
+        printf("GetLinkListNode:查找索引值过大！\n");
+    }
+    // 如果索引值过大，其p也会指向最后一个NULL，所以返回值都是一样为NULL，不需要单独处理
+    return p;
+}
+```
+
+这样插入元素函数InsertLinkListWithHead只用`GetLinkListNode(list,i-1)`和`InsertNextLinkNode(p,elem)`两个函数完成。
+
+```c
+// 按值查找单链表结点
+LinkNode* LocateLinkListNode(LinkList list, element_type elem) {
+    LinkNode* p = list;
+    while (p != NULL && p->data != elem) {
+        p = p->next;
+    }
+    return p;
+}
+```
+
+#### 单链表建立
+
+可以使用尾插法建立单链表，从后面不断插入元素。
