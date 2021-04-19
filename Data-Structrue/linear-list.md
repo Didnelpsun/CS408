@@ -306,7 +306,7 @@ int LocateDynamicSequenceListElement(DynamicSequenceList list, element_type elem
 
 ```c
 // 链表结点
-typedef struct {
+typedef struct LinkNode {
     element_type data;
     struct LinkNode* next;
 } LinkNode, *LinkList;
@@ -331,6 +331,7 @@ int InitLinkListWithoutHead(LinkList list) {
 int InitLinkListWithHead(LinkList list) {
     list = (LinkNode*)malloc(sizeof(LinkNode));
     if (list == NULL) {
+        printf("InitLinkListWithHead:初始化分配内存失败！");
         return 1;
     }
     list->next = NULL;
@@ -456,6 +457,7 @@ int InsertLinkListWithoutHead(LinkList list, int index, element_type elem) {
 // 后插入单链表元素
 int InsertNextLinkNode(LinkNode* node, element_type elem) {
     if (node == NULL) {
+        printf("InsertNextLinkNode:插入结点为空！");
         return 1;
     }
     LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
@@ -481,6 +483,7 @@ int InsertNextLinkNode(LinkNode* node, element_type elem) {
 // 前插入单链表元素
 int InsertPriorLinkNode(LinkNode* node, element_type elem) {
     if (node == NULL) {
+        printf("InsertPriorLinkNode:插入结点为空！");
         return 1;
     }
     LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
@@ -679,4 +682,185 @@ LinkNode* LocateLinkListNode(LinkList list, element_type elem) {
 
 #### 单链表建立
 
-可以使用尾插法建立单链表，从后面不断插入元素。
+可以使用尾插法建立单链表，从后面不断插入元素。需要定义一个尾指针来记录最后一位。
+
+```c
+// 后插建立带头节点单链表
+LinkList TailBuildLinkListWithHead(LinkList list, int length) {
+    element_type elem;
+    list = (LinkList)malloc(sizeof(LinkNode));
+    // s指针为一个中间变量指针，r指针为尾指针（next指向最后一个元素）
+    LinkNode* s, * r = list;
+    int i = 0;
+    element_type x;
+    if (length < 1) {
+        printf("TailBuildLinkListWithHead:输入的单链表长度过小！");
+        return 1;
+    }
+    while (i < length) {
+        scanf("%d", &x);
+        s = (LinkNode*)malloc(sizeof(LinkNode));
+        s->data = x;
+        r->next = s;
+        r = s;
+        i++;
+    }
+    r->next = NULL;
+    return list;
+}
+```
+
+使用前插法建立单链表实际上也是使用后插操作，不过每一次后插的元素都是头结点，也不用使用尾指针。
+
+前插法可以实现链表的逆置。
+
+```c
+// 前插建立带头节点单链表
+LinkList HeadBuildLinkListWithHead(LinkList list, int length) {
+    element_type elem;
+    list = (LinkList)malloc(sizeof(LinkNode));
+    // 将单链表尾部设置为NULL
+    list->next = NULL;
+    // s指针为一个中间变量指针
+    LinkNode* s;
+    int i = 0;
+    element_type x;
+    if (length < 1) {
+        printf("HeadBuildLinkListWithHead:输入的单链表长度过小！");
+        return 1;
+    }
+    while (i < length) {
+        scanf("%d", &x);
+        s = (LinkNode*)malloc(sizeof(LinkNode));
+        s->data = x;
+        s->next = list->next;
+        list->next = s;
+        i++;
+    }
+    return list;
+}
+```
+
+## 双链表
+
+为了解决单链表只能单一方向扫描而无法两项遍历的缺点，使用了两个指针，prior和next，分别指向前驱和后继。
+
+### 双链表定义
+
+基本上与单链表的定义一致。
+
+### 双链表操作
+
+#### 双链表初始化
+
+```c
+// 初始化有头节点双链表
+int InitDoubleLinkListWithHead(DoubleLinkList list) {
+    list = (DoubleLinkNode*)malloc(sizeof(DoubleLinkNode));
+    // 分配内存失败
+    if (list == NULL) {
+        printf("InitDoubleLinkListWithHead:初始化分配内存失败！");
+        return 1;
+    }
+    // 头结点的前驱结点始终为NULL
+    list->prior = NULL;
+    list->next = NULL;
+    return 0;
+}
+```
+
+#### 双链表插入
+
+```c
+// 后插入双链表元素
+int InsertNextDoubleLinkNode(DoubleLinkNode* node, element_type elem) {
+    if (node == NULL) {
+        printf("InsertNextDoubleLinkNode:插入结点为空！");
+        return 1;
+    }
+    DoubleLinkNode* s = (DoubleLinkNode*)malloc(sizeof(DoubleLinkNode));
+    // 如果分配空间失败
+    if (s == NULL) {
+        printf("InsertNextDoubleLinkNode:分配内存失败！\n");
+        return 1;
+    }
+    s->data = elem;
+    // 将新建结点s插入结点node后
+    s->next = node->next;
+    // 如果有后继结点，将p原来的后继给s结点
+    if (node->next->prior) {
+        node->next->prior = s;
+    }
+    // 交换s的前驱和后继
+    s->prior = node;
+    node->next = s;
+    return 0;
+}
+
+// 前插入双链表元素
+int InsertPriorDoubleLinkNode(DoubleLinkNode* node, element_type elem) {
+    if (node == NULL) {
+        printf("InsertPriorDoubleLinkNode:插入结点为空！");
+        return 1;
+    }
+    DoubleLinkNode* s = (DoubleLinkNode*)malloc(sizeof(DoubleLinkNode));
+    // 如果分配空间失败
+    if (s == NULL) {
+        printf("InsertPriorDoubleLinkNode:分配内存失败！\n");
+        return 1;
+    }
+    s->next = node->next;
+    node->next = s;
+    s->data = node->data;
+    node->data = elem;
+    return 0;
+}
+```
+
+#### 双链表删除
+
+```c
+// 删除双链表后续结点
+int DeleteNextDoubleLinkListNode(DoubleLinkNode* node) {
+    if (node == NULL) {
+        printf("DeleteDoubleLinkListNode:删除结点为空！");
+        return 1;
+    }
+    DoubleLinkNode* p = node->next;
+    if (p == NULL) {
+        printf("DeleteDoubleLinkListNode:删除结点后续结点为空！");
+        return 1;
+    }
+    node->next = p->next;
+    // 如果p结点为最后一个结点
+    if (p->next != NULL) {
+        p->next->prior = node;
+    }
+    free(p);
+    return 0;
+}
+```
+
+## 循环链表
+
+分为循环单链表和循环双链表。基本上变化不大。
+
+原来的单链表的尾部指向NULL，但是循环单链表的尾部是指向头部。
+
+循环单链表即使没有头结点的地址，也可以通过循环得到整个单链表的信息。
+
+从头到尾单链表需要遍历整个链表，而循环单链表只用移动一位就可以从头到尾。
+
+循环双链表除此之外，头结点的prior指针还要指表尾结点（即某结点*p为尾结点时，p->next==list）。
+
+循环双链表为空表时，头结点的prior和next域都等于list（即，指向自身）。
+
+## 静态链表
+
+静态链表借助数组来描述线性表的链式存储结构，结点也有数据域和指针域，这里的指针是结点的相对地址（数组下标），又称游标。
+
+静态链表和顺序表一样需要预先分配一块连续的内存空间。
+
+数组0号元素充当链表的头结点且不包含数据。
+
+如果一个结点是尾结点，其游标设置为-1。

@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "head.h"
 
-// 链表结点
-typedef struct {
+// 单链表结点
+typedef struct LinkNode {
 	element_type data;
 	struct LinkNode* next;
 } LinkNode, *LinkList;
@@ -12,6 +12,7 @@ typedef struct {
 int InitLinkListWithHead(LinkList list) {
 	list = (LinkNode*)malloc(sizeof(LinkNode));
 	if (list == NULL) {
+		printf("InitLinkListWithHead:初始化分配内存失败！");
 		return 1;
 	}
 	list->next = NULL;
@@ -25,7 +26,7 @@ int InitLinkListWithoutHead(LinkList list) {
 }
 
 // 判断有头节点单链表是否为空
-int IsLLinkListEmptyWithHead(LinkList list) {
+int IsLinkListEmptyWithHead(LinkList list) {
 	if (list->next == NULL) {
 		return 1;
 	}
@@ -128,6 +129,7 @@ int InsertLinkListWithoutHead(LinkList list, int index, element_type elem) {
 // 后插入单链表元素
 int InsertNextLinkNode(LinkNode* node, element_type elem) {
 	if (node == NULL) {
+		printf("InsertNextLinkNode:插入结点为空！");
 		return 1;
 	}
 	LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
@@ -145,6 +147,7 @@ int InsertNextLinkNode(LinkNode* node, element_type elem) {
 // 前插入单链表元素
 int InsertPriorLinkNode(LinkNode* node, element_type elem) {
 	if (node == NULL) {
+		printf("InsertPriorLinkNode:插入结点为空！");
 		return 1;
 	}
 	LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
@@ -321,7 +324,7 @@ int GetLength(LinkList list) {
 }
 
 // 后插建立带头节点单链表
-LinkList TailBuildLinkListWithHead(LinkList* list, int length) {
+LinkList TailBuildLinkListWithHead(LinkList list, int length) {
 	element_type elem;
 	list = (LinkList)malloc(sizeof(LinkNode));
 	// s指针为一个中间变量指针，r指针为尾指针（next指向最后一个元素）
@@ -339,5 +342,63 @@ LinkList TailBuildLinkListWithHead(LinkList* list, int length) {
 		r->next = s;
 		r = s;
 		i++;
+	}
+	r->next = NULL;
+	return list;
+}
+
+// 前插建立带头节点单链表
+LinkList HeadBuildLinkListWithHead(LinkList list, int length) {
+	element_type elem;
+	list = (LinkList)malloc(sizeof(LinkNode));
+	// 将单链表尾部设置为NULL
+	list->next = NULL;
+	// s指针为一个中间变量指针
+	LinkNode* s;
+	int i = 0;
+	element_type x;
+	if (length < 1) {
+		printf("HeadBuildLinkListWithHead:输入的单链表长度过小！");
+		return 1;
+	}
+	while (i < length) {
+		scanf("%d", &x);
+		s = (LinkNode*)malloc(sizeof(LinkNode));
+		s->data = x;
+		s->next = list->next;
+		list->next = s;
+		i++;
+	}
+	return list;
+}
+
+// 初始化有头节点循环单链表
+int InitCircularLinkListWithHead(LinkList list) {
+	list = (LinkNode*)malloc(sizeof(LinkNode));
+	if (list == NULL) {
+		printf("InitCircularLinkListWithHead:初始化分配内存失败！");
+		return 1;
+	}
+	list->next = list;
+	return 0;
+}
+
+// 判断有头节点循环单链表是否为空
+int IsCircularLinkListEmptyWithHead(LinkList list) {
+	if (list->next == list) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+// 判断结点是否尾有头节点循环单链表的尾结点
+int IsCircularLinkListEndWithHead(LinkList list, LinkNode* node) {
+	if (node->next == list) {
+		return 1;
+	}
+	else {
+		return 0;
 	}
 }
