@@ -3,14 +3,14 @@
 #include "head.h"
 
 // 单链表结点
-typedef struct LinkNode {
+typedef struct LinkListNode {
 	element_type data;
-	struct LinkNode* next;
-} LinkNode, *LinkList;
+	struct LinkListNode* next;
+} LinkListNode, *LinkList;
 
 // 初始化有头节点单链表
 int InitLinkListWithHead(LinkList list) {
-	list = (LinkNode*)malloc(sizeof(LinkNode));
+	list = (LinkListNode*)malloc(sizeof(LinkListNode));
 	if (list == NULL) {
 		printf("InitLinkListWithHead:初始化分配内存失败！");
 		return 1;
@@ -52,7 +52,7 @@ int InsertLinkListWithHead(LinkList list, int index, element_type elem) {
 		return 1;
 	}
 	// 定义一个结点指针p指向当前扫描到的结点
-	LinkNode* p;
+	LinkListNode* p;
 	// 定义一个变量i表示当前扫描到的结点的索引号
 	int i = 0;
 	// 将链表头结点指向p，为第0个结点
@@ -69,7 +69,7 @@ int InsertLinkListWithHead(LinkList list, int index, element_type elem) {
 		return 1;
 	}
 	// 此时i==index-1
-	LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
+	LinkListNode* s = (LinkListNode*)malloc(sizeof(LinkListNode));
 	if (s == NULL) {
 		printf("InsertLinkListWithHead:分配内存失败！\n");
 		return 1;
@@ -88,7 +88,7 @@ int InsertLinkListWithoutHead(LinkList list, int index, element_type elem) {
 		return 1;
 	}
 	if (index == 0) {
-		LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
+		LinkListNode* s = (LinkListNode*)malloc(sizeof(LinkListNode));
 		if (s == NULL) {
 			printf("InsertLinkListWithoutHead:分配内存失败！\n");
 			return 1;
@@ -101,7 +101,7 @@ int InsertLinkListWithoutHead(LinkList list, int index, element_type elem) {
 		return 0;
 	}
 	// 定义一个结点指针p指向当前扫描到的结点
-	LinkNode* p;
+	LinkListNode* p;
 	// 定义一个变量i表示当前扫描到的结点的索引号
 	int i = 0;
 	// 将链表头结点指向p，为第0个结点
@@ -118,7 +118,7 @@ int InsertLinkListWithoutHead(LinkList list, int index, element_type elem) {
 		return 1;
 	}
 	// 此时i==index-1
-	LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
+	LinkListNode* s = (LinkListNode*)malloc(sizeof(LinkListNode));
 	s->data = elem;
 	// 将p原来的后继给新的结点
 	s->next = p->next;
@@ -127,15 +127,15 @@ int InsertLinkListWithoutHead(LinkList list, int index, element_type elem) {
 }
 
 // 后插入单链表元素
-int InsertNextLinkNode(LinkNode* node, element_type elem) {
+int InsertNextLinkListNode(LinkListNode* node, element_type elem) {
 	if (node == NULL) {
-		printf("InsertNextLinkNode:插入结点为空！");
+		printf("InsertNextLinkListNode:插入结点为空！");
 		return 1;
 	}
-	LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
+	LinkListNode* s = (LinkListNode*)malloc(sizeof(LinkListNode));
 	// 如果分配空间失败
 	if (s == NULL) {
-		printf("InsertNextLinkNode:分配内存失败！\n");
+		printf("InsertNextLinkListNode:分配内存失败！\n");
 		return 1;
 	}
 	s->data = elem;
@@ -145,15 +145,15 @@ int InsertNextLinkNode(LinkNode* node, element_type elem) {
 }
 
 // 前插入单链表元素
-int InsertPriorLinkNode(LinkNode* node, element_type elem) {
+int InsertPriorLinkListNode(LinkListNode* node, element_type elem) {
 	if (node == NULL) {
-		printf("InsertPriorLinkNode:插入结点为空！");
+		printf("InsertPriorLinkListNode:插入结点为空！");
 		return 1;
 	}
-	LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
+	LinkListNode* s = (LinkListNode*)malloc(sizeof(LinkListNode));
 	// 如果分配空间失败
 	if (s == NULL) {
-		printf("InsertPriorLinkNode:分配内存失败！\n");
+		printf("InsertPriorLinkListNode:分配内存失败！\n");
 		return 1;
 	}
 	s->next = node->next;
@@ -170,7 +170,7 @@ int DeleteLinkListWithHead(LinkList list, int index, element_type *elem) {
 		return 1;
 	}
 	// p指向当前扫描的结点
-	LinkNode* p;
+	LinkListNode* p;
 	// i表示当前指向的是第几个结点
 	int i = 0;
 	// 指向头结点
@@ -184,7 +184,7 @@ int DeleteLinkListWithHead(LinkList list, int index, element_type *elem) {
 		return 1;
 	}
 	// q指向被删除的结点
-	LinkNode* q = p->next;
+	LinkListNode* q = p->next;
 	// 获取删除的元素数据
 	*elem = q->data;
 	// 将q结点从链表中断开
@@ -200,7 +200,7 @@ int DeleteLinkListWithHead(LinkList list, int index, element_type* elem) {
 		return 1;
 	}
 	// p指向当前扫描的结点
-	LinkNode* p;
+	LinkListNode* p;
 	// i表示当前指向的是第几个结点
 	int i = 0;
 	// 指向头结点
@@ -220,7 +220,7 @@ int DeleteLinkListWithHead(LinkList list, int index, element_type* elem) {
 		return 1;
 	}
 	// q指向被删除的结点
-	LinkNode* q = p->next;
+	LinkListNode* q = p->next;
 	// 获取删除的元素数据
 	*elem = q->data;
 	// 将q结点从链表中断开
@@ -230,18 +230,18 @@ int DeleteLinkListWithHead(LinkList list, int index, element_type* elem) {
 }
 
 // 删除单链表元素
-int DeleteLinkNode(LinkNode* node) {
+int DeleteLinkListNode(LinkListNode* node) {
 	if (node == NULL) {
-		printf("DeleteLinkNode:本结点是空结点无法删除！");
+		printf("DeleteLinkListNode:本结点是空结点无法删除！");
 		return 1;
 	}
 	// 如果该结点为最后一个结点，无法找到前驱结点，无法操作
 	if (node->next = NULL) {
-		printf("DeleteLinkNode:后继结点为空无法操作！");
+		printf("DeleteLinkListNode:后继结点为空无法操作！");
 		return 1;
 	}
 	// 指向后继结点
-	LinkNode* p = node->next;
+	LinkListNode* p = node->next;
 	// 交换数据
 	node->data = p->data;
 	// 断开结点
@@ -257,7 +257,7 @@ element_type GetLinkListElement(LinkList list, int index) {
 		return NULL;
 	}
 	// 定义一个结点指针p指向当前扫描到的结点
-	LinkNode* p;
+	LinkListNode* p;
 	// 定义一个变量i表示当前扫描到的结点的索引号
 	int i = 0;
 	// 将链表头结点指向p，为第0个结点
@@ -277,13 +277,13 @@ element_type GetLinkListElement(LinkList list, int index) {
 }
 
 // 按位查找单链表结点
-LinkNode* GetLinkListNode(LinkList list, int index) {
+LinkListNode* GetLinkListNode(LinkList list, int index) {
 	if (index < 0) {
 		printf("GetLinkListNode:查找索引值过小！\n");
 		return NULL;
 	}
 	// 定义一个结点指针p指向当前扫描到的结点
-	LinkNode* p;
+	LinkListNode* p;
 	// 定义一个变量i表示当前扫描到的结点的索引号
 	int i = 0;
 	// 将链表头结点指向p，为第0个结点
@@ -304,8 +304,8 @@ LinkNode* GetLinkListNode(LinkList list, int index) {
 
 
 // 按值查找单链表结点
-LinkNode* LocateLinkListNode(LinkList list, element_type elem) {
-	LinkNode* p = list;
+LinkListNode* LocateLinkListNode(LinkList list, element_type elem) {
+	LinkListNode* p = list;
 	while (p != NULL && p->data != elem) {
 		p = p->next;
 	}
@@ -315,7 +315,7 @@ LinkNode* LocateLinkListNode(LinkList list, element_type elem) {
 // 求链表长度
 int GetLength(LinkList list) {
 	int len = 0;
-	LinkNode* p = list;
+	LinkListNode* p = list;
 	while (p->next != NULL) {
 		p = p->next;
 		len++;
@@ -326,9 +326,9 @@ int GetLength(LinkList list) {
 // 后插建立带头节点单链表
 LinkList TailBuildLinkListWithHead(LinkList list, int length) {
 	element_type elem;
-	list = (LinkList)malloc(sizeof(LinkNode));
+	list = (LinkList)malloc(sizeof(LinkListNode));
 	// s指针为一个中间变量指针，r指针为尾指针（next指向最后一个元素）
-	LinkNode* s, * r = list;
+	LinkListNode* s, * r = list;
 	int i = 0;
 	element_type x;
 	if (length < 1) {
@@ -337,7 +337,7 @@ LinkList TailBuildLinkListWithHead(LinkList list, int length) {
 	}
 	while (i < length) {
 		scanf("%d", &x);
-		s = (LinkNode*)malloc(sizeof(LinkNode));
+		s = (LinkListNode*)malloc(sizeof(LinkListNode));
 		s->data = x;
 		r->next = s;
 		r = s;
@@ -350,11 +350,11 @@ LinkList TailBuildLinkListWithHead(LinkList list, int length) {
 // 前插建立带头节点单链表
 LinkList HeadBuildLinkListWithHead(LinkList list, int length) {
 	element_type elem;
-	list = (LinkList)malloc(sizeof(LinkNode));
+	list = (LinkList)malloc(sizeof(LinkListNode));
 	// 将单链表尾部设置为NULL
 	list->next = NULL;
 	// s指针为一个中间变量指针
-	LinkNode* s;
+	LinkListNode* s;
 	int i = 0;
 	element_type x;
 	if (length < 1) {
@@ -363,7 +363,7 @@ LinkList HeadBuildLinkListWithHead(LinkList list, int length) {
 	}
 	while (i < length) {
 		scanf("%d", &x);
-		s = (LinkNode*)malloc(sizeof(LinkNode));
+		s = (LinkListNode*)malloc(sizeof(LinkListNode));
 		s->data = x;
 		s->next = list->next;
 		list->next = s;
@@ -374,7 +374,7 @@ LinkList HeadBuildLinkListWithHead(LinkList list, int length) {
 
 // 初始化有头节点循环单链表
 int InitCircularLinkListWithHead(LinkList list) {
-	list = (LinkNode*)malloc(sizeof(LinkNode));
+	list = (LinkListNode*)malloc(sizeof(LinkListNode));
 	if (list == NULL) {
 		printf("InitCircularLinkListWithHead:初始化分配内存失败！");
 		return 1;
@@ -394,7 +394,7 @@ int IsCircularLinkListEmptyWithHead(LinkList list) {
 }
 
 // 判断结点是否尾有头节点循环单链表的尾结点
-int IsCircularLinkListEndWithHead(LinkList list, LinkNode* node) {
+int IsCircularLinkListEndWithHead(LinkList list, LinkListNode* node) {
 	if (node->next == list) {
 		return 1;
 	}

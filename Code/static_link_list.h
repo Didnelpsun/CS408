@@ -7,4 +7,6 @@ typedef struct StaticLinkNode {
 	element_type data;
 	// 下一个元素的数组下标
 	int next;
-} DoubleLinkNode, * DoubleLinkList;
+} StaticLinkNode;
+// 静态链表数组
+typedef StaticLinkNode StaticLinkList[MAXSIZE];

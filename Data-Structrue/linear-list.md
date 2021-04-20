@@ -33,65 +33,15 @@ $L=(a_1,a_2,\cdots,a_i,\cdots,a_n)$，其中$i$表示元素在线性表中的位
 
 使用C语言的结构体定义顺序表，使用`typedef`定义一个ElemType表示数据基本类型，并定义最大长度MaxSize：
 
-可以使用静态分配空间：
+可以使用静态分配空间，也可以使用动态分配空间：
 
-```c
-// 静态顺序表
-typedef struct {
-    ElemType data[MaxSize];
-    int length;
-} StaticSequenceList;
-```
-
-也可以使用动态分配空间：
-
-```c
-// 动态顺序表
-typedef struct {
-    element_type *data;
-    // 已分配的最大容量
-    int max_size;
-    int length;
-} DynamicSequenceList;
-```
-
-max_size表示动态顺序表当前可以使用的最大存储空间。
+MAXSIZE表示动态顺序表当前可以使用的最大存储空间。
 
 ### 顺序表操作
 
 #### 顺序表初始化
 
-```c
-// 初始化静态顺序表
-int InitStaticSequenceList(StaticSequenceList* list) {
-    // 初初始化静态顺序表长度为0
-    list->length = 0;
-    return 0;
-}
-```
-
 静态顺序表因为数组部分在创建时就已经设置好了，所以初始化就直接设置数据长度就可以了。
-
-```c
-// 初始化动态顺序表
-int InitDynamicSequenceList(DynamicSequenceList* list) {
-    // 初初始化动态顺序表长度为0
-    list->length = 0;
-    list->max_size = 0;
-    // 申请一片连续的存储空间
-    element_type* space = (element_type*)malloc(MAXSIZE * sizeof(element_type));
-    if (space != NULL) {
-        list->data = space;
-        list->max_size = MAXSIZE;
-        return 0;
-    }
-    else {
-        list->max_size = 0;
-        printf("InitDynamicSequenceList:初始化动态顺序表失败！\n");
-        return 1;
-    }
-}
-```
 
 动态顺序表不仅需要设置数据长度与最大长度，还得分配数组初始空间。
 
@@ -99,102 +49,11 @@ int InitDynamicSequenceList(DynamicSequenceList* list) {
 
 只有动态顺序表才能增加。
 
-```c
-// 分配其他地址增长动态顺序表的数据空间长度
-int OtherIncreaseDynamicSequenceList(DynamicSequenceList* list, int len) {
-    if (len <= 0) {
-        printf("OtherIncreaseDynamicSequenceList:申请空间应该大于0！\n");
-        return 1;
-    }
-    // 申请一片连续的存储空间
-    int new_length = list->max_size + len;
-    element_type* space = (element_type*)malloc(new_length * sizeof(element_type));
-    if (space != NULL) {
-        // 建立中间变量
-        list->data = space;
-        int* temp = list->data;
-        for (int i = 0; i < list->length; i++) {
-            list->data[i] = temp[i];
-        }
-        list->max_size = new_length;
-        free(temp);
-        return 0;
-    }
-    else {
-        printf("OtherIncreaseDynamicSequenceList:重新分配地址增长动态顺序表空间失败！\n");
-        return 1;
-    }
-}
-```
-
-```c
-// 重新分配地址增长动态顺序表的数据空间长度
-int ReIncreaseDynamicSequenceList(DynamicSequenceList* list, int len) {
-    if (len <= 0) {
-        printf("ReIncreaseDynamicSequenceList:申请空间应该大于0！\n");
-        return 1;
-    }
-    // 申请一片连续的存储空间
-    int new_length = list->max_size + len;
-    element_type* space = (element_type*)realloc(list->data, new_length * sizeof(element_type));
-    if (space != NULL) {
-        list->data = space;
-        list->max_size += len;
-        return 0;
-    }
-    else {
-        list->max_size = 0;
-        list->length = 0;
-        printf("ReIncreaseDynamicSequenceList:分配其他地址增长动态顺序表空间失败！\n");
-        return 1;
-    }
-}
-```
-
 #### 顺序表插入
 
 倒序移动元素，最后将数据插入对应索引并长度减一。
 
 插入时间复杂度为：$T(n)=O(n)$，空间复杂度为$S(n)=O(1)$。
-
-```c
-// 插入静态顺序表
-void InsertStaticSequenceList(StaticSequenceList* list, int index, element_type elem) {
-    if (list->length == MAXSIZE) {
-        printf("InsertStaticSequenceList:静态顺序表空间不足，插入失败！\n");
-        return 1;
-    }
-    if (index > list->length || index < 0) {
-        printf("InsertStaticSequenceList:插入索引超过静态态顺序表索引范围！\n");
-        return 1;
-    }
-    for (int i = list->length; i > index; i--) {
-        list->data[i] = list->data[i - 1];
-    }
-    list->data[index] = elem;
-    list->length++;
-    return 0;
-}
-```
-
-```c
-// 插入动态顺序表
-int InsertDynamicSequenceList(DynamicSequenceList* list, int index, element_type elem) {
-    if (list->length == MAXSIZE) {
-        ReIncreaseDynamicSequenceList(list, 1);
-    }
-    if (index > list->length || index < 0) {
-        printf("InsertDynamicSequenceList:插入索引超过动态顺序表索引范围！\n");
-        return 1;
-    }
-    for (int i = list->length; i > index; i--) {
-        list->data[i] = list->data[i - 1];
-    }
-    list->data[index] = elem;
-    list->length++;
-    return 0;
-}
-```
 
 #### 顺序表删除
 
@@ -202,91 +61,11 @@ int InsertDynamicSequenceList(DynamicSequenceList* list, int index, element_type
 
 顺序表的删除时间复杂度为：$T(n)=O(n)$，空间复杂度为$S(n)=O(1)$。
 
-```c
-// 删除静态顺序表
-int DeleteStaticSequenceList(StaticSequenceList* list, int index, element_type *elem) {
-    if (index >= list->length || index < 0) {
-        printf("DeleteStaticSequenceList:删除索引超过静态态顺序表索引范围！\n");
-        return 1;
-    }
-    *elem = list->data[index];
-    for (int i = index; i < list->length; i++) {
-        list->data[i] = list->data[i+1];
-    }
-    list->length--;
-    return 0;
-}
-```
-
-```c
-// 删除动态顺序表
-int DeleteDynamicSequenceList(DynamicSequenceList* list, int index, element_type *elem) {
-    if (index >= list->length || index < 0) {
-        printf("DeleteDynamicSequenceList:删除索引超过动态态顺序表索引范围！\n");
-        return 1;
-    }
-    *elem = list->data[index];
-    for (int i = index; i < list->length; i++) {
-        list->data[i] = list->data[i + 1];
-    }
-    list->length--;
-    return 0;
-}
-```
-
 #### 顺序表查找
 
 按位查找时间复杂度为$T(n)=O(1)$。
 
-```c
-// 按位获取静态顺序表元素
-element_type GetStaticSequenceListElement(StaticSequenceList list, int index) {
-    if (index >= list.length || index < 0) {
-        printf("GetStaticSequenceListElement:查找索引超过静态顺序表索引范围！\n");
-        return NULL;
-    }
-    return list.data[index];
-}
-```
-
-```c
-// 按位获取动态顺序表元素
-element_type GetDynamicSequenceListElement(DynamicSequenceList list, int index) {
-    if (index >= list.length || index < 0) {
-        printf("GetDynamicSequenceListElement:查找索引超过动态态顺序表索引范围！\n");
-        return NULL;
-    }
-    return list.data[index];
-}
-```
-
 按值查找一般都是找到第一个元素等于指定值的元素，返回其位序，如果没有找到就返回-1。按位查找时间复杂度为$T(n)=O(n)$。
-
-```c
-// 按值获取静态顺序表索引
-int LocateStaticSequenceListElement(StaticSequenceList list, element_type elem) {
-    for (int i = 0; i < list.length; i++) {
-        if (list.data[i] == elem) {
-            return i;
-        }
-    }
-    printf("LocateStaticSequenceListElement:未能定位到对应值的元素！\n");
-    return -1;
-}
-```
-
-```c
-// 按值获取动态顺序表索引
-int LocateDynamicSequenceListElement(DynamicSequenceList list, element_type elem) {
-    for (int i = 0; i < list.length; i++) {
-        if (list.data[i] == elem) {
-            return i;
-        }
-    }
-    printf("LocateDynamicSequenceListElement:未能定位到对应值的元素！\n");
-    return -1;
-}
-```
 
 ## 单链表
 
@@ -304,40 +83,11 @@ int LocateDynamicSequenceListElement(DynamicSequenceList list, element_type elem
 
 使用LinkNode表示一个单链表结点的结构体，而使用LinkList表示一个单链表，其实LinkList是一个指向LinkNode的指针变量。如定义LinkList L等价于LinkNode* L。
 
-```c
-// 链表结点
-typedef struct LinkNode {
-    element_type data;
-    struct LinkNode* next;
-} LinkNode, *LinkList;
-```
-
 ### 单链表操作
 
 #### 单链表初始化
 
 有带头节点与不带头节点的初始化的区别，带头节点代表第一个结点不存放数据，只是用于标识单链表的开始，但是区别不大，带头结点更好使用。
-
-```c
-// 初始化无头节点单链表
-int InitLinkListWithoutHead(LinkList list) {
-    list = NULL;
-    return 0;
-}
-```
-
-```c
-// 初始化有头节点单链表
-int InitLinkListWithHead(LinkList list) {
-    list = (LinkNode*)malloc(sizeof(LinkNode));
-    if (list == NULL) {
-        printf("InitLinkListWithHead:初始化分配内存失败！");
-        return 1;
-    }
-    list->next = NULL;
-    return 0;
-}
-```
 
 #### 单链表插入
 
@@ -356,92 +106,6 @@ int InitLinkListWithHead(LinkList list) {
 
 带头结点的单链表只能往头结点之后插入，所以插入索引必须从1开始。
 
-```c
-int InsertLinkListWithHead(LinkList list, int index, element_type elem) {
-    if (index < 1) {
-        printf("InsertLinkListWithHead:插入索引值过小！\n");
-        return 1;
-    }
-    // 定义一个结点指针p指向当前扫描到的结点
-    LinkNode* p;
-    // 定义一个变量i表示当前扫描到的结点的索引号
-    int i = 0;
-    // 将链表头结点指向p，为第0个结点
-    p = list;
-    // 循环遍历到达指定索引号的单链表的结点
-    // 条件是当前结点的下一个不为空且索引号到达，所到达的结点一定不是空结点
-    while (p->next != NULL && i < index-1) {
-        p = p->next;
-        i++;
-    }
-    // 如果此时i小于index-1，表示遍历完还没有到达对应的索引
-    if (i < index-1) {
-        printf("InsertLinkListWithHead:插入索引值过大！\n");
-        return 1;
-    }
-    // 此时i==index-1
-    LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
-    if (s == NULL) {
-        printf("InsertLinkListWithHead:分配内存失败！\n");
-        return 1;
-    }
-    s->data = elem;
-    // 将p原来的后继给新的结点
-    s->next = p->next;
-    p->next = s;
-    return 0;
-}
-```
-
-不带头结点的单链表可以插入到第一个位置，所以插入所以插入索引可以为0。当插入索引为0时需要特殊处理，其他则基本不变。
-
-```c
-// 插入无头节点单链表元素
-int InsertLinkListWithoutHead(LinkList list, int index, element_type elem) {
-    if (index < 0) {
-        printf("InsertLinkListWithoutHead:插入索引值过小！\n");
-        return 1;
-    }
-    if (index == 0) {
-        LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
-        s->data = elem;
-        // 将s的后继设为list指针
-        s->next = list;
-        // 将list指针设置为s指针
-        list = s;
-        return 0;
-    }
-    // 定义一个结点指针p指向当前扫描到的结点
-    LinkNode* p;
-    // 定义一个变量i表示当前扫描到的结点的索引号
-    int i = 0;
-    // 将链表头结点指向p，为第0个结点
-    p = list;
-    // 循环遍历到达指定索引号的单链表的结点
-    // 条件是当前结点的下一个不为空且索引号到达，所到达的结点一定不是空结点
-    while (p->next != NULL && i < index - 1) {
-        p = p->next;
-        i++;
-    }
-    // 如果此时i小于index-1，表示遍历完还没有到达对应的索引
-    if (i < index - 1) {
-        printf("InsertLinkListWithoutHead:插入索引值过大！\n");
-        return 1;
-    }
-    // 此时i==index-1
-    LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
-    if (s == NULL) {
-        printf("InsertLinkListWithoutHead:分配内存失败！\n");
-        return 1;
-    }
-    s->data = elem;
-    // 将p原来的后继给新的结点
-    s->next = p->next;
-    p->next = s;
-    return 0;
-}
-```
-
 头插法建立单链表：
 
 + 每个结点的插入时间为$O(1)$，设单链表长为n，则总时间复杂度为$O(n)$。
@@ -453,52 +117,11 @@ int InsertLinkListWithoutHead(LinkList list, int index, element_type elem) {
 + 生成的链表中结点数据与输入数据顺序一致。
 + 总时间复杂度为$O(n)$。
 
-```c
-// 后插入单链表元素
-int InsertNextLinkNode(LinkNode* node, element_type elem) {
-    if (node == NULL) {
-        printf("InsertNextLinkNode:插入结点为空！");
-        return 1;
-    }
-    LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
-    // 如果分配空间失败
-    if (s == NULL) {
-        printf("InsertNextLinkNode:分配内存失败！\n");
-        return 1;
-    }
-    s->data = elem;
-    s->next = node->next;
-    node->next = s;
-    return 0;
-}
-```
-
 插入有/无头节点单链表元素函数的后面代码可以使用后插入单链表元素函数来替代。
 
 使用前插入的方法插入元素，可以使用头指针来得到整个链表信息，从而就能找到链表中的这个结点，但是如果没有头指针那么就无法实现了。且这种遍历的时间复杂度是$O(n)$。
 
 还有另一种方式实现前插法，先后插一个元素，把前面结点的数据移动到这个新加的结点，把要新加的数据放在原来的结点，这就实现了后插，虽然地址没有变化，但是从数据上看就是前插，且时间复杂度是$O(1)$。
-
-```c
-// 前插入单链表元素
-int InsertPriorLinkNode(LinkNode* node, element_type elem) {
-    if (node == NULL) {
-        printf("InsertPriorLinkNode:插入结点为空！");
-        return 1;
-    }
-    LinkNode* s = (LinkNode*)malloc(sizeof(LinkNode));
-    // 如果分配空间失败
-    if (s == NULL) {
-        printf("InsertPriorLinkNode:分配内存失败！\n");
-        return 1;
-    }
-    s->next = node->next;
-    node->next = s;
-    s->data = node->data;
-    node->data = elem;
-    return 0;
-}
-```
 
 #### 单链表删除
 
@@ -508,102 +131,9 @@ int InsertPriorLinkNode(LinkNode* node, element_type elem) {
 
 时间复杂度为$O(n)$。
 
-```c
-// 删除有头节点单链表元素
-int DeleteLinkListWithHead(LinkList list, int index, element_type *elem) {
-    if (index < 1) {
-    printf("DeleteLinkListWithHead:删除索引值过小！\n");
-    return 1;
-    }
-    // p指向当前扫描的结点
-    LinkNode* p;
-    // i表示当前指向的是第几个结点
-    int i = 0;
-    // 指向头结点
-    p = list;
-    while (p != NULL && i < index - 1) {
-    p = p->next;
-    i++;
-    }
-    if (p == NULL || p->next == NULL) {
-    printf("DeleteLinkListWithHead:删除索引值过大！\n");
-    return 1;
-    }
-    // q指向被删除的结点
-    LinkNode* q = p->next;
-    // 获取删除的元素数据
-    *elem = q->data;
-    // 将q结点从链表中断开
-    p->next = q->next;
-    free(q);
-    return 0;
-}
-```
-
 无头结点需要额外处理第一个结点
 
-```c
-// 删除无头节点单链表元素
-int DeleteLinkListWithHead(LinkList list, int index, element_type* elem) {
-    if (index < 0) {
-        printf("DeleteLinkListWithHead:删除索引值过小！\n");
-        return 1;
-    }
-    // p指向当前扫描的结点
-    LinkNode* p;
-    // i表示当前指向的是第几个结点
-    int i = 0;
-    // 指向头结点
-    p = list;
-    // 如果删除第一个第0号结点
-    if (index == 0) {
-        list = p->next;
-        free(p);
-        return 0;
-    }
-    while (p != NULL && i < index - 1) {
-        p = p->next;
-        i++;
-    }
-    if (p == NULL || p->next == NULL) {
-        printf("DeleteLinkListWithHead:删除索引值过大！\n");
-        return 1;
-    }
-    // q指向被删除的结点
-    LinkNode* q = p->next;
-    // 获取删除的元素数据
-    *elem = q->data;
-    // 将q结点从链表中断开
-    p->next = q->next;
-    free(q);
-    return 0;
-}
-```
-
 如果删除指定结点而不知道其前驱，也可以使用之前前插结点的方式，把该结点后继的结点的数据复制到本结点上，然后把后继结点删除，就相当于删除了本结点。时间复杂度为$O(1)$。
-
-```c
-// 删除单链表元素
-int DeleteLinkNode(LinkNode* node) {
-    if (node == NULL) {
-        printf("DeleteLinkNode:本结点是空结点无法删除！");
-        return 1;
-    }
-    // 如果该结点为最后一个结点，无法找到前驱结点，无法操作
-    if (node->next = NULL) {
-        printf("DeleteLinkNode:后继结点为空无法操作！");
-        return 1;
-    }
-    // 指向后继结点
-    LinkNode* p = node->next;
-    // 交换数据
-    node->data = p->data;
-    // 断开结点
-    node->next = p->next;
-    free(p);
-    return 0;
-}
-```
 
 所以单链表还是不算方便。
 
@@ -611,135 +141,15 @@ int DeleteLinkNode(LinkNode* node) {
 
 按位查找时间复杂度为$O(n)$。
 
-```c
-// 按位查找单链表元素
-element_type GetLinkListElement(LinkList list, int index) {
-    if (index < 0) {
-        printf("GetLinkListElement:查找索引值过小！\n");
-        return NULL;
-    }
-    // 定义一个结点指针p指向当前扫描到的结点
-    LinkNode* p;
-    // 定义一个变量i表示当前扫描到的结点的索引号
-    int i = 0;
-    // 将链表头结点指向p，为第0个结点
-    p = list;
-    // 循环遍历到达指定索引号的单链表的结点
-    // 条件是当前结点的下一个不为空且索引号到达，所到达的结点一定不是空结点
-    while (p->next != NULL && i < index) {
-        p = p->next;
-        i++;
-    }
-    // 如果查找索引大于当前扫描索引
-    if (i < index) {
-        printf("GetLinkListElement:查找索引值过大！\n");
-        return NULL;
-    }
-    return p->data;
-}
-```
-
-```c
-// 按位查找单链表结点
-LinkNode* GetLinkListNode(LinkList list, int index) {
-    if (index < 0) {
-        printf("GetLinkListNode:查找索引值过小！\n");
-        return NULL;
-    }
-    // 定义一个结点指针p指向当前扫描到的结点
-    LinkNode* p;
-    // 定义一个变量i表示当前扫描到的结点的索引号
-    int i = 0;
-    // 将链表头结点指向p，为第0个结点
-    p = list;
-    // 循环遍历到达指定索引号的单链表的结点
-    // 条件是当前结点的下一个不为空且索引号到达，所到达的结点一定不是空结点
-    while (p->next != NULL && i < index) {
-        p = p->next;
-        i++;
-    }
-    // 如果查找索引大于当前扫描索引
-    if (i < index) {
-        printf("GetLinkListNode:查找索引值过大！\n");
-    }
-    // 如果索引值过大，其p也会指向最后一个NULL，所以返回值都是一样为NULL，不需要单独处理
-    return p;
-}
-```
-
 这样插入元素函数InsertLinkListWithHead只用`GetLinkListNode(list,i-1)`和`InsertNextLinkNode(p,elem)`两个函数完成。
-
-```c
-// 按值查找单链表结点
-LinkNode* LocateLinkListNode(LinkList list, element_type elem) {
-    LinkNode* p = list;
-    while (p != NULL && p->data != elem) {
-        p = p->next;
-    }
-    return p;
-}
-```
 
 #### 单链表建立
 
 可以使用尾插法建立单链表，从后面不断插入元素。需要定义一个尾指针来记录最后一位。
 
-```c
-// 后插建立带头节点单链表
-LinkList TailBuildLinkListWithHead(LinkList list, int length) {
-    element_type elem;
-    list = (LinkList)malloc(sizeof(LinkNode));
-    // s指针为一个中间变量指针，r指针为尾指针（next指向最后一个元素）
-    LinkNode* s, * r = list;
-    int i = 0;
-    element_type x;
-    if (length < 1) {
-        printf("TailBuildLinkListWithHead:输入的单链表长度过小！");
-        return 1;
-    }
-    while (i < length) {
-        scanf("%d", &x);
-        s = (LinkNode*)malloc(sizeof(LinkNode));
-        s->data = x;
-        r->next = s;
-        r = s;
-        i++;
-    }
-    r->next = NULL;
-    return list;
-}
-```
-
 使用前插法建立单链表实际上也是使用后插操作，不过每一次后插的元素都是头结点，也不用使用尾指针。
 
 前插法可以实现链表的逆置。
-
-```c
-// 前插建立带头节点单链表
-LinkList HeadBuildLinkListWithHead(LinkList list, int length) {
-    element_type elem;
-    list = (LinkList)malloc(sizeof(LinkNode));
-    // 将单链表尾部设置为NULL
-    list->next = NULL;
-    // s指针为一个中间变量指针
-    LinkNode* s;
-    int i = 0;
-    element_type x;
-    if (length < 1) {
-        printf("HeadBuildLinkListWithHead:输入的单链表长度过小！");
-        return 1;
-    }
-    while (i < length) {
-        scanf("%d", &x);
-        s = (LinkNode*)malloc(sizeof(LinkNode));
-        s->data = x;
-        s->next = list->next;
-        list->next = s;
-        i++;
-    }
-    return list;
-}
-```
 
 ## 双链表
 
@@ -753,93 +163,9 @@ LinkList HeadBuildLinkListWithHead(LinkList list, int length) {
 
 #### 双链表初始化
 
-```c
-// 初始化有头节点双链表
-int InitDoubleLinkListWithHead(DoubleLinkList list) {
-    list = (DoubleLinkNode*)malloc(sizeof(DoubleLinkNode));
-    // 分配内存失败
-    if (list == NULL) {
-        printf("InitDoubleLinkListWithHead:初始化分配内存失败！");
-        return 1;
-    }
-    // 头结点的前驱结点始终为NULL
-    list->prior = NULL;
-    list->next = NULL;
-    return 0;
-}
-```
-
 #### 双链表插入
 
-```c
-// 后插入双链表元素
-int InsertNextDoubleLinkNode(DoubleLinkNode* node, element_type elem) {
-    if (node == NULL) {
-        printf("InsertNextDoubleLinkNode:插入结点为空！");
-        return 1;
-    }
-    DoubleLinkNode* s = (DoubleLinkNode*)malloc(sizeof(DoubleLinkNode));
-    // 如果分配空间失败
-    if (s == NULL) {
-        printf("InsertNextDoubleLinkNode:分配内存失败！\n");
-        return 1;
-    }
-    s->data = elem;
-    // 将新建结点s插入结点node后
-    s->next = node->next;
-    // 如果有后继结点，将p原来的后继给s结点
-    if (node->next->prior) {
-        node->next->prior = s;
-    }
-    // 交换s的前驱和后继
-    s->prior = node;
-    node->next = s;
-    return 0;
-}
-
-// 前插入双链表元素
-int InsertPriorDoubleLinkNode(DoubleLinkNode* node, element_type elem) {
-    if (node == NULL) {
-        printf("InsertPriorDoubleLinkNode:插入结点为空！");
-        return 1;
-    }
-    DoubleLinkNode* s = (DoubleLinkNode*)malloc(sizeof(DoubleLinkNode));
-    // 如果分配空间失败
-    if (s == NULL) {
-        printf("InsertPriorDoubleLinkNode:分配内存失败！\n");
-        return 1;
-    }
-    s->next = node->next;
-    node->next = s;
-    s->data = node->data;
-    node->data = elem;
-    return 0;
-}
-```
-
 #### 双链表删除
-
-```c
-// 删除双链表后续结点
-int DeleteNextDoubleLinkListNode(DoubleLinkNode* node) {
-    if (node == NULL) {
-        printf("DeleteDoubleLinkListNode:删除结点为空！");
-        return 1;
-    }
-    DoubleLinkNode* p = node->next;
-    if (p == NULL) {
-        printf("DeleteDoubleLinkListNode:删除结点后续结点为空！");
-        return 1;
-    }
-    node->next = p->next;
-    // 如果p结点为最后一个结点
-    if (p->next != NULL) {
-        p->next->prior = node;
-    }
-    free(p);
-    return 0;
-}
-```
 
 ## 循环链表
 
@@ -855,7 +181,23 @@ int DeleteNextDoubleLinkListNode(DoubleLinkNode* node) {
 
 循环双链表为空表时，头结点的prior和next域都等于list（即，指向自身）。
 
+### 循环链表定义
+
+循环链表和链表的结点定义是一致的。
+
+### 循环链表操作
+
+#### 循环单链表初始化
+
+#### 循环双链表初始化
+
+#### 循环双链表插入
+
+#### 循环双链表删除
+
 ## 静态链表
+
+静态链表本质是一个数组，不过其内的基本元素不是基本数据类型而是结构体类型。
 
 静态链表借助数组来描述线性表的链式存储结构，结点也有数据域和指针域，这里的指针是结点的相对地址（数组下标），又称游标。
 
@@ -864,3 +206,42 @@ int DeleteNextDoubleLinkListNode(DoubleLinkNode* node) {
 数组0号元素充当链表的头结点且不包含数据。
 
 如果一个结点是尾结点，其游标设置为-1。
+
+考的比较少。
+
+### 静态链表特点
+
+1. 增删改不需要移动大量数据元素。
+2. 不能随机存取，只能从头节点开始。
+3. 容量固定保持不变。
+
+适用场景：
+
+1. 不支持指针的低级语言。
+2. 数据元素数量固定不变，如操作系统文件分配表FAT。
+
+### 静态链表定义
+
+### 静态链表操作
+
+#### 静态链表查找
+
+需要从头结点往后逐个遍历结点，时间复杂度为$O(n)$。
+
+#### 静态链表插入
+
+如果要插入位序为i，索引为i-1的结点：
+
+1. 找到一个空结点（如何判断为空？可以先让next游标为某个特殊值如-2等），存入数据元素。
+2. 然后从头结点出发扎到位序为i-1的结点。
+3. 修改新结点的next。
+4. 修改i-1位序结点的next。
+
+## 顺序表与链表对比
+
++ 从逻辑结构来看，其都是线性结构的。
++ 从物理结构来看，顺序表可以随机存取，存储数据密度高，但是分配与改变空间不变；链表空间离散，修改方便，但是不可随机存储，存储数据密度低。
++ 从创建来看，顺序表需要申请一片大小适合的空间；而链表无所谓。
++ 从销毁来看，顺序表需要将length设置为0，从逻辑上销毁，再从物理上销毁空间，如果是静态分配的静态数组，系统会自动回收空间，而如果是动态数组，需要手动调用`free`函数；链表逐点进行`free`就可以了。
++ 从增加删除来看，顺序表都要对后续元素进行前移或后移，时间复杂度为$O(n)$，主要来自于移动元素；而对于链表插入或删除元素只用修改指针就可以了，时间复杂度也为$O(n)$，主要来自于查找目标元素，但是链表的查找元素所花费的时间可能远小于移动元素的时间。
++ 从查找来看，顺序表因为有顺序所以按位查找时间复杂度为$O(1)$，如果按值查找时间复杂度为$O(n)$，如果值是有序的则可以通过二分查找等方式降低在$O(\log_2n)$的时间内找到；如果是链表的查找无论是按位还是按值都是$O(n)$的时间复杂度。
