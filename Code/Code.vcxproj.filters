@@ -21,12 +21,30 @@
     <ClCompile Include="main.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="sequence_stack.h">
+      <Filter>头文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="link_list.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="sequence_list.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="double_link_list.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="link_stack.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="static_link_list.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="sequence_queue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="link_queue.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

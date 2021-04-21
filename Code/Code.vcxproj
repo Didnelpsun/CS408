@@ -141,12 +141,16 @@
   <ItemGroup>
     <ClCompile Include="head.h" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="sequence_stack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="double_link_list.h" />
     <ClInclude Include="link_list.h" />
+    <ClInclude Include="link_queue.h" />
+    <ClInclude Include="link_stack.h" />
     <ClInclude Include="sequence_list.h" />
     <ClInclude Include="static_link_list.h" />
+    <ClInclude Include="sequence_queue.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
