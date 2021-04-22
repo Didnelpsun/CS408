@@ -65,3 +65,35 @@ int GetSequenceStackTop(SequenceStack* stack, element_type* elem) {
 	*elem = stack->data[stack->top];
 	return 0;
 }
+
+// 顺序栈实现括号匹配
+int BracketCheck(char str[], int length) {
+	SequenceStack s;
+	// 初始化栈
+	InitSequenceStack(&s);
+	for (int i = 0; i < length; i++) {
+		// 扫描到左括号
+		if (str[i] == '{' || str[i] == '[' || str[i] == '(') {
+			PushSequenceStack(&s, str[i]);
+		}
+		else {
+			// 如果栈空
+			if (IsSequenceStackEmpty(s)==1) {
+				return 1;
+			}
+		}
+		// 定义一个栈顶元素变量
+		char t;
+		PopSequenceStack(&s, &t);
+		if (str[i] == ')' && t != '(') {
+			return 1;
+		}
+		if (str[i] == ']' && t != '[') {
+			return 1;
+		}
+		if (str[i] == '}' && t != '{') {
+			return 1;
+		}
+	}
+	return 0;
+}
