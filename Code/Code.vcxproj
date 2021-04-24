@@ -148,6 +148,7 @@
     <ClInclude Include="link_list.h" />
     <ClInclude Include="link_queue.h" />
     <ClInclude Include="link_stack.h" />
+    <ClInclude Include="link_string.h" />
     <ClInclude Include="sequence_list.h" />
     <ClInclude Include="sequence_string.h" />
     <ClInclude Include="static_link_list.h" />

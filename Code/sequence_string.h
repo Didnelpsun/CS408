@@ -60,3 +60,45 @@ int LocateStaticSequenceString(StaticSequenceString mainstring, StaticSequenceSt
     }
     return -1;
 }
+
+// 求模式串的next数组
+// 数组0号索引不存值
+int GetNext(StaticSequenceString string, int *next[]) {
+    int i = 1, j = 0;
+    next[i] = 0;
+    while (i < string.length) {
+        if (j == 0 || string.data[i] == string.data[j]) {
+            ++i, ++j;
+            *next[i] = j;
+        }
+        else {
+            if (next[j]) {
+                // 模式串回溯
+                j = *next[j];
+            }
+        }
+    }
+    return 0;
+}
+
+// KMP算法
+int KMP(StaticSequenceString string1, StaticSequenceString string2) {
+    int i = 1, j = 1;
+    int length = string2.length + 1;
+    int* next = (int*)malloc(length*sizeof(int));
+    GetNext(string2, &next);
+    while (i <= string1.length && j <= string2.length) {
+        if (j == 0 || string1.data[i] == string2.data[j]) {
+            i++, j++;
+        }
+        else {
+            // 模式字符串后移
+            j = next[i];
+        }
+    }
+    if (j > string2.length) {
+        return i - string2.length;
+    }
+    return -1;
+    free(next);
+}
