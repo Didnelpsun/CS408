@@ -142,6 +142,7 @@
     <ClCompile Include="head.h" />
     <ClCompile Include="main.c" />
     <ClCompile Include="sequence_stack.h" />
+    <ClCompile Include="sequence_tree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="double_link_list.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="link_queue.h" />
     <ClInclude Include="link_stack.h" />
     <ClInclude Include="link_string.h" />
+    <ClInclude Include="link_tree.h" />
     <ClInclude Include="sequence_list.h" />
     <ClInclude Include="sequence_string.h" />
     <ClInclude Include="static_link_list.h" />

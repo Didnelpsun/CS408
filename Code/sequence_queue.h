@@ -55,3 +55,11 @@ int GetSequenceQueueHead(SequenceQueue* queue, element_type* elem) {
 	*elem = queue->data[queue->front];
 	return 0;
 }
+
+// ÅĞ¶ÏË³Ğò¶ÓÊÇ·ñÎª¿Õ
+int IsSequenceQueueEmpty(SequenceQueue queue) {
+	if (queue.rear == queue.front) {
+		return 1;
+	}
+	return 0;
+}
