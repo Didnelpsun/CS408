@@ -3,7 +3,7 @@
 #include "head.h"
 #include "sequence_queue.h"
 
-// 链树
+// 链二叉树
 typedef struct LinkTreeNode {
 	element_type data;
 	// 左右孩子结点
@@ -110,12 +110,12 @@ int LevelorderTraversalLinkTree(LinkTree tree, int(*visit)(LinkTree elem)) {
 	while (IsSequenceQueueEmpty(queue) == 0) {
 		// 队头出队
 		//ExitSequenceQueue(&queue, &p);
-		visit(p);
-		if (p->lchild != NULL) {
-			//EnterSequenceQueue(&queue, p->lchild);
+		//visit(p);
+		/*if (p->lchild != NULL) {
+			EnterSequenceQueue(&queue, p->lchild);
 		}
 		if (p->rchild != NULL) {
-			//EnterSequenceQueue(&queue, p->rchild);
-		}
+			EnterSequenceQueue(&queue, p->rchild);
+		}*/
 	}
 }

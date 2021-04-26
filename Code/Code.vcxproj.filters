@@ -24,6 +24,12 @@
     <ClCompile Include="sequence_stack.h">
       <Filter>头文件</Filter>
     </ClCompile>
+    <ClCompile Include="sequence_tree.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="thread_tree.h">
+      <Filter>头文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="link_list.h">
@@ -45,6 +51,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="link_queue.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="link_string.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="link_tree.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="sequence_string.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

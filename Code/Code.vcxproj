@@ -143,6 +143,7 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="sequence_stack.h" />
     <ClCompile Include="sequence_tree.cpp" />
+    <ClCompile Include="thread_tree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="double_link_list.h" />
