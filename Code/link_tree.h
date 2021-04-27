@@ -119,3 +119,72 @@ int LevelorderTraversalLinkTree(LinkTree tree, int(*visit)(LinkTree elem)) {
 		}*/
 	}
 }
+
+// 二叉排序树遍历查找
+LinkTreeNode* TraversalSearchBST(LinkTree tree, element_type elem) {
+	while (tree != NULL && elem != tree->data) {
+		if (elem < tree->data) {
+			tree = tree->lchild;
+		}
+		else {
+			tree = tree->rchild;
+		}
+	}
+	return tree;
+}
+
+// 二叉排序树递归查找
+LinkTreeNode* RecursiveSearchBST(LinkTree tree, element_type elem) {
+	if (tree == NULL) {
+		// 为空树
+		return NULL;
+	}
+	if (elem = tree->data) {
+		return tree;
+	}
+	else if (elem < tree->data) {
+		return RecursiveSearchBST(tree->lchild, elem);
+	}
+	else {
+		return RecursiveSearchBST(tree->rchild, elem);
+	}
+}
+
+// 二叉排序树递归插入
+int InsertBST(LinkTree tree, element_type elem) {
+	if (tree == NULL) {
+		tree = (LinkTree)malloc(sizeof(LinkTree));
+		if (tree) {
+			tree->data = elem;
+			tree->lchild = tree->rchild = NULL;
+			return 0;
+		}
+		else {
+			printf("BSTInsert:插入分配空间失败！");
+			return 1;
+		}
+	}
+	// 关键词重复
+	else if (elem == tree->data) {
+		printf("BSTInsert:关键字重复！");
+		return 1;
+	}
+	else if (elem < tree->data) {
+		return InsertBST(tree->lchild, elem);
+	}
+	else {
+		return InsertBST(tree->rchild, elem);
+	}
+}
+
+// 根据关键字建立二叉排序树
+int CreateBST(LinkTree tree, element_type elem[], int n) {
+	tree = NULL;
+	int i = 0;
+	while (true)
+	{
+		InsertBST(tree, elem[i]);
+		i++;
+	}
+	return 0;
+}
