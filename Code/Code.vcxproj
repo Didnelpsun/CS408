@@ -143,11 +143,11 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="sequence_tree.h" />
     <ClCompile Include="sequence_stack.h" />
-    <ClCompile Include="sequence_tree.cpp" />
     <ClCompile Include="thread_tree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="double_link_list.h" />
+    <ClInclude Include="graph.h" />
     <ClInclude Include="link_list.h" />
     <ClInclude Include="link_queue.h" />
     <ClInclude Include="link_stack.h" />
