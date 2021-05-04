@@ -153,6 +153,7 @@
     <ClInclude Include="link_stack.h" />
     <ClInclude Include="link_string.h" />
     <ClInclude Include="link_tree.h" />
+    <ClInclude Include="search.h" />
     <ClInclude Include="sequence_list.h" />
     <ClInclude Include="sequence_string.h" />
     <ClInclude Include="static_link_list.h" />
