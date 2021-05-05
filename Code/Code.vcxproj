@@ -156,6 +156,7 @@
     <ClInclude Include="search.h" />
     <ClInclude Include="sequence_list.h" />
     <ClInclude Include="sequence_string.h" />
+    <ClInclude Include="sort.h" />
     <ClInclude Include="static_link_list.h" />
     <ClInclude Include="sequence_queue.h" />
   </ItemGroup>
