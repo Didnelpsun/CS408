@@ -197,21 +197,21 @@ int main(){
 + MAR位数反映存储单元的个数（最多支持多少个）。
 + MDR位数=存储字长=每个存储单元的大小。
 + 总容量=存储单元个数×存储字长。单位为bit。
-+ 如MAR为32位，MDR为8位，总容量=$2^{32}*8/8=3^{32}$Byte，所以为4GB。
++ 如MAR为32位，MDR为8位，总容量=$2^{32}\times8\div8=3^{32}$Byte，所以为4GB。
 
 ### 中央处理器
 
 + CPU主频：CPU内数字脉冲信号振荡的频率。单位为赫兹。
-+ CPU时钟周期：CPU主频（时钟主频）=1/CPU时钟周期。单位为纳秒或微秒。
++ CPU时钟周期：CPU主频（时钟主频）=1÷CPU时钟周期。单位为纳秒或微秒。
 + CPI (Clock cycle Per Instruction）：执行一条指令所需的时钟周期数。
 + 执行一条指令的耗时= CPIxCPU时钟周期。
-+ CPU执行时间（整个程序的耗时）=CPU时钟周期数/主频=(指令条数*CPI)/主频。
-+ IPS（Instructions Per Second）：每秒执行多少条指令，IPS=主频/平均CPI。
++ CPU执行时间（整个程序的耗时）=CPU时钟周期数÷主频=(指令条数×CPI)÷主频。
++ IPS（Instructions Per Second）：每秒执行多少条指令，IPS=主频÷平均CPI。
 + FLOPS（Floating-point Operations Per Second）：每秒执行多少次浮点运算。
 
 **例题** 某CPU主频为10o00Hz，某程序包含100条指令，平均来看指令任CPI=3，该程序在该CPU上执行需要多久？
 
-100*3/1000=0.3s。
+100×3÷1000=0.3s。
 
 ### 系统整体
 
