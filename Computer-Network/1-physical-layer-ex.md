@@ -70,7 +70,7 @@ $D.512kb/s$
 
 **例题** 下图为$10BaseT$网卡接收到的信号波形，则该网卡收到的比特串是()。
 
-$A.0011\,0110$&nbsp;&nbsp;&nbsp;&nbsp;$B.1010\,1101$&nbsp;&nbsp;&nbsp;&nbsp;$C.101\,0010$&nbsp;&nbsp;&nbsp;&nbsp;$D.1100\,0101$
+$A.0011\quad0110$&nbsp;&nbsp;&nbsp;&nbsp;$B.1010\quad1101$&nbsp;&nbsp;&nbsp;&nbsp;$C.101\quad0010$&nbsp;&nbsp;&nbsp;&nbsp;$D.1100\quad0101$
 
 ![编码][code]
 
