@@ -103,11 +103,13 @@ $IP$协议使用$ARP$协议，而$ICMP$与$IGMP$使用$IP$协议。
 片偏移 Fragment Offset|用来标记分片之后，该分片在原来的数据报的位置，以8字节为单位|13位
 生存时间 Time To Live|即TTL，每经过一个路由器TTL-1，等于0时自动放弃，根据系统不同默认的TTL不同，为了防止无法传输的数据报在链路中无限传输|8位
 协议 Protocol|用来标记数据部分协议名的字段值，如ICMP：1；IGMP：2；TCP：6；EGP：8；IGP：9；UPD：17；IPv6：41；ESP：50；OSPF：89|8位
-首部检验和 Header Checksum|检验首部的字段是否出错，出错就丢弃此数据报|16位
+首部检验和 Header Checksum|检验首部的字段是否出错，不包括数据部分，出错就丢弃此数据报|16位
 源地址 Source IP Address|发送方ip地址|32位
 目的地址 Destination IP Address|接收方ip地址|32位
 可选字段 Options|用来排错等安全检测|未知，可在0-40位之间
 填充|将数据报对齐成4字节的整数倍，数值全部为0|未知，根据可选字段来定
+
+重点：$DF$和$MF$，首部长度$4bit$、总长度$1bit$、片偏移$8bit$。
 
 #### IP数据报分片
 
