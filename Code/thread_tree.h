@@ -24,6 +24,7 @@ int InorderThread(ThreadTreeNode* node) {
 		pre->rtag = 1;
 	}
 	pre = node;
+	return 0;
 }
 
 // 找到以node为根结点的子树中第一个被中序遍历的结点
@@ -51,6 +52,7 @@ int InorderTraversalThreadTree(ThreadTree tree, int(*visit)(ThreadTreeNode* node
 	for (ThreadTreeNode* p = FristInOrderNode(tree); p != NULL; p = NextInOrderNode(p)) {
 		visit(p);
 	}
+	return 0;
 }
 
 // 找到以node为根结点的子树中前面最后一个被中序遍历的结点
@@ -78,4 +80,5 @@ int ReverseInorderTraversalThreadTree(ThreadTree tree, int(*visit)(ThreadTreeNod
 	for (ThreadTreeNode* p = LastInOrderNode(tree); p != NULL; p = PreInOrderNode(p)) {
 		visit(p);
 	}
+	return 0;
 }

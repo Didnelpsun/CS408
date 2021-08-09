@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="head.h" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="test.c" />
     <ClCompile Include="sequence_tree.h" />
     <ClCompile Include="sequence_stack.h" />
     <ClCompile Include="thread_tree.h" />

@@ -333,7 +333,7 @@ LinkList TailBuildLinkListWithHead(LinkList list, int length) {
 	element_type x;
 	if (length < 1) {
 		printf("TailBuildLinkListWithHead:输入的单链表长度过小！");
-		return 1;
+		return NULL;
 	}
 	while (i < length) {
 		scanf("%d", &x);
@@ -359,7 +359,7 @@ LinkList HeadBuildLinkListWithHead(LinkList list, int length) {
 	element_type x;
 	if (length < 1) {
 		printf("HeadBuildLinkListWithHead:输入的单链表长度过小！");
-		return 1;
+		return NULL;
 	}
 	while (i < length) {
 		scanf("%d", &x);
