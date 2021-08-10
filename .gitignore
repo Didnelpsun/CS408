@@ -1,3 +1,4 @@
 *.pdf
 /Code/.vs/
+/Code/Debug/
 /Code/x64/

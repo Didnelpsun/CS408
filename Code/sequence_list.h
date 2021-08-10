@@ -225,16 +225,11 @@ int MultiDeleteStaticSequenceList(StaticSequenceList* list, int index, int len, 
         printf("MultiDeleteStaticSequenceList:删除索引超过索引范围！\n");
         return 1;
     }
-    elem = (element_type*)malloc(len * sizeof(element_type));
-    if (elem == NULL) {
-        printf("MultiDeleteStaticSequenceList:分配空间失败！\n");
-    }
-    else {
-        for (int i = index; i < list->length - len; i++) {
+    for (int i = index; i < list->length - len; i++) {
+        if (i < index + len) {
             elem[i - index] = list->data[i];
-            list->data[i] = list->data[i + len];
         }
-        list->length -= len;
+        list->data[i] = list->data[i + len];
     }
     list->length -= len;
     return 0;
@@ -246,17 +241,13 @@ int MultiDeleteDynamicSequenceList(DynamicSequenceList* list, int index, int len
         printf("MultiDeleteDynamicSequenceList:删除索引超过索引范围！\n");
         return 1;
     }
-    elem = (element_type*)malloc(len * sizeof(element_type));
-    if (elem == NULL) {
-        printf("MultiDeleteDynamicSequenceList:分配空间失败！\n");
-    }
-    else {
-        for (int i = index; i < list->length - len; i++) {
+    for (int i = index; i < list->length - len; i++) {
+        if (i < index + len) {
             elem[i - index] = list->data[i];
-            list->data[i] = list->data[i + len];
         }
-        list->length -= len;
+        list->data[i] = list->data[i + len];
     }
+    list->length -= len;
     return 0;
 }
 
@@ -264,7 +255,7 @@ int MultiDeleteDynamicSequenceList(DynamicSequenceList* list, int index, int len
 element_type GetStaticSequenceListElement(StaticSequenceList list, int index) {
     if (index >= list.length || index < 0) {
         printf("GetStaticSequenceListElement:查找索引超过索引范围！\n");
-        return NULL;
+        return DEFAULTELEM;
     }
     return list.data[index];
 }
@@ -273,7 +264,7 @@ element_type GetStaticSequenceListElement(StaticSequenceList list, int index) {
 element_type GetDynamicSequenceListElement(DynamicSequenceList list, int index) {
     if (index >= list.length || index < 0) {
         printf("GetDynamicSequenceListElement:查找索引超过索引范围！\n");
-        return NULL;
+        return DEFAULTELEM;
     }
     return list.data[index];
 }
@@ -322,6 +313,10 @@ int EmptyDynamicSequenceList(DynamicSequenceList list) {
 
 // 销毁动态顺序表
 int DestroyDynamicSequenceList(DynamicSequenceList* list) {
-    free(list);
+    if (list != NULL) {
+        free(list->data);
+    }
+    list = NULL;
+    return 0;
 }
 

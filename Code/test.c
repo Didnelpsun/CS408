@@ -1,7 +1,7 @@
 // ²âÊÔÎÄ¼þ
 
-#include "head.h"
 #include "sequence_list.h"
+#include "link_list.h"
 
 int SequenceListTest() {
     DynamicSequenceList list;
@@ -13,15 +13,28 @@ int SequenceListTest() {
     //printf("%d", list.length);
     PrintfDynamicSequenceList(list);
     printf("\n");
-    element_type elem;
-    MultiDeleteDynamicSequenceList(&list, 2, 2, &elem);
+    int len = 2;
+    element_type elem[2];
+    MultiDeleteDynamicSequenceList(&list, 0, len, elem);
     PrintfDynamicSequenceList(list);
+    for (int i = 0; i < len; i++) {
+        printf("%c\n", elem[i]);
+    }
     /*DynamicSequenceList dlist;
     InitDynamicSequenceList(&dlist);
     OtherIncreaseDynamicSequenceList(&dlist, 15);
     printf("%d", dlist.max_size);*/
-    int index = LocateDynamicSequenceListElement(list, '5');
+    /*int index = LocateDynamicSequenceListElement(list, '5');
     printf("%d", index);
+    DestroyDynamicSequenceList(&list);*/
+    return 0;
+}
+
+int LinkListTest() {
+    //LinkList list;
+    //InitLinkListWithHead(list);
+    //int empty = EmptyLinkListWithHead(list);
+    //printf("%d", empty);
     return 0;
 }
 

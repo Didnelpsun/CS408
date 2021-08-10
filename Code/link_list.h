@@ -15,6 +15,7 @@ int InitLinkListWithHead(LinkList list) {
 		printf("InitLinkListWithHead:初始化分配内存失败！");
 		return 1;
 	}
+	list->data = NULL;
 	list->next = NULL;
 	return 0;
 }
@@ -26,7 +27,7 @@ int InitLinkListWithoutHead(LinkList list) {
 }
 
 // 判断有头节点单链表是否为空
-int IsLinkListEmptyWithHead(LinkList list) {
+int EmptyLinkListWithHead(LinkList list) {
 	if (list->next == NULL) {
 		return 1;
 	}
@@ -36,7 +37,7 @@ int IsLinkListEmptyWithHead(LinkList list) {
 }
 
 // 判断无头节点单链表是否为空
-int IsLLinkListEmptyWithoutHead(LinkList list) {
+int EmptyIsLLinkListWithoutHead(LinkList list) {
 	if (list == NULL) {
 		return 1;
 	}
@@ -46,6 +47,7 @@ int IsLLinkListEmptyWithoutHead(LinkList list) {
 }
 
 // 插入有头节点单链表元素
+// 0号节点是头节点
 int InsertLinkListWithHead(LinkList list, int index, element_type elem) {
 	if (index < 1) {
 		printf("InsertLinkListWithHead:插入索引值过小！\n");
@@ -194,7 +196,7 @@ int DeleteLinkListWithHead(LinkList list, int index, element_type *elem) {
 }
 
 // 删除无头节点单链表元素
-int DeleteLinkListWithHead(LinkList list, int index, element_type* elem) {
+int DeleteLinkListWithoutHead(LinkList list, int index, element_type* elem) {
 	if (index < 0) {
 		printf("DeleteLinkListWithHead:删除索引值过小！\n");
 		return 1;
