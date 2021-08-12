@@ -1,4 +1,7 @@
 *.pdf
-/Code/.vs/
-/Code/Debug/
-/Code/x64/
+*/.vs/
+*/.idea/
+*/Debug/
+*/x64/
+*/out/
+*/cmake-build-debug/

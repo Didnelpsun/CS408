@@ -2,9 +2,33 @@
 
 ## 基本概念
 
-### 特征
-
 ### 功能
+
+**例题** 系统调用是由操作系统提供给用户的，它()。
+
+$A.$直接通过键盘交互方式使用
+
+$B.$只能通过用户程序间接使用
+
+$C.$是命令接口中的命令
+
+$D.$与系统的命令一样
+
+解：$B$。系统调用是操作系统为应用程序使用内核功能所提供的接口。
+
+**例题** 操作系统与用户通信接口通常不包括()。
+
+$A.shell$
+
+$B.$命令解释器
+
+$C.$广义指令
+
+$D.$缓存管理指令
+
+解：$D$。广义指令就是系统调用命令，而命令解释器属于命令接口，$shell$是命令解析器，它也属于命令接口。系统中的缓存全部由操作系统管理，对用户是透明的，操作系统不提供管理系统缓存的系统调用。
+
+### 特征
 
 **例题** 单处理机系统中，可并行的是()。
 
@@ -24,13 +48,226 @@ $C.$Ⅰ、Ⅲ、Ⅳ
 
 $D.$Ⅱ、Ⅲ、Ⅳ
 
-系统调用是由操作系统提供给用户的，它()。
+解：$D$。在单处理机系统（不包含多核的情况）中，同一时刻只能有一个进程占用处理机，因此进程之间不能并行执行。通道是独立于$CPU$的、控制输入/输出的设备，两者可以并行。显然，处理器与设备是可以并行的，难道$CPU$和显示屏不能并行工作？设备与设备是可以并行的，难道显示屏与打印机不能并行工作？
 
-$A.$直接通过键盘交互方式使用
+**例题** 下列选项中，不属于多道程序设计的基本特征是()。
 
-$B.$只能通过用户程序间接使用
+$A.$制约性
 
-$C.$是命令接口中的命令
+$B.$间断性
 
-$D.$与系统的命令一样
+$C.$顺序性
 
+$D.$共享性
+
+解：$C$。引入多道程序设计后，程序的执行就失去了封闭性和顺序性。程序执行因为共享资源及相互协同的原因产生了竞争，相互制约。考虑到竞争的公平性，程序的执行是断续的。顺序性是单道程序设计的基本特征。
+
+## 操作系统类别
+
+**例题** 操作系统有多种类型。允许多个用户以交互的方式使用计算机的操作系统，称为()；允许多个用户将若干作业提交给计算机系统集中处理的操作系统，称为()；在()的控制下，计算机系统能及时处理由过程控制反馈的数据，并及时做出响应；在$IBM-PC$中，操作系统称为()。
+
+$A.$批处理系统
+
+$B.$分时操作系统
+
+$C.$实时操作系统
+
+$D.$微型计算机操作系统
+
+解：$B$、$A$、$C$、$D$。强调交互式方式就是分时操作系统；多个作业集中处理强调了多个，所以就是批处理操作系统；强调及时处理与响应就是实时操作系统。微型计算机操作系统即微机系统，其中$IBM-PC$就是$IBM$发明的$PC$，即个人计算机。
+
+### 分时操作系统
+
+**例题** 分时系统追求的目标是()。
+
+$A.$充分利用$I/O$设备
+
+$B.$比较快速响应用户
+
+$C.$提高系统吞吐率
+
+$D.$充分利用内存
+
+解：$B$。正是分时系统的特点同时性、及时性、交互性代表了其目标是快速响应用户，也正是不能完全满足这个目标才出现了实时操作系统。
+
+### 实时操作系统
+
+**例题** ()不是设计实时操作系统的主要追求目标。
+
+$A.$安全可靠
+
+$B.$资源利用率
+
+$C.$及时响应
+
+$D.$快速处理
+
+解：$B$。实时性和可靠性是实时操作系统最重要的两个目标，而安全可靠体现了可靠性，快速处理和及时响应体现了实时性。资源利用率不是实时操作系统的主要目标，即为了保证快速处理高优先级任务，允许“浪费”一些系统资源。
+
+### 多道程序
+
+**例题** 设某计算机系统有一个$CPU$、一台输入设备、一台打印机。现有两个进程同时进入就绪态，且进程$A$先得到$CPU$运行，进程$B$后运行。进程$A$的运行轨迹为：计算$50ms$，打印信息$100ms$，再计算$50ms$，打印信息$100ms$，结束。进程$B$的运行轨迹为：计算$50ms$，输入数据$80ms$，再计算$100ms$，结束。画出它们的时序关系图（可用甘特图)，并说明：
+
+1）开始运行后，$CPU$有无空闲等待？若有，在哪段时间内等待？计算$CPU$的利用率。
+
+2）进程$A$运行时有无等待现象？若有，在何时发生等待现象？
+
+3 ）进程$B$运行时有无等待现象？若有，在何时发生等待现象？
+
+解：$A$先进入，则先占用设备。后来者等待，得到：
+
+![甘特图][gantt]
+
+1）$CPU$在$100\sim150ms$时间段内空闲，利用率为$250/300=83.3\%$。
+
+2）进程$A$为无等待现象。
+
+3）进程$B$为有等待现象，$0\sim50ms$，$180\sim200ms$。
+
+## 操作系统的运行环境
+
+**例题** 下列关于系统调用的说法中，正确的是()。
+
+Ⅰ.用户程序设计时，使用系统调用命令，该命令经过编译后，形成若干参数和陷入（$trap$）指令
+
+Ⅱ.用户程序设计时，使用系统调用命令，该命令经过编译后，形成若干参数和屏蔽中断指令
+
+Ⅲ.系统调用功能是操作系统向用户程序提供的接口
+
+Ⅳ.用户及其应用程序和应用系统是通过系统调用提供的支持和服务来使用系统资源完成其操作的
+
+$A.$Ⅰ、Ⅲ
+
+$B.$Ⅱ、Ⅳ
+
+$C.$Ⅰ、Ⅲ、Ⅳ
+
+$D.$Ⅱ、Ⅲ、Ⅳ
+
+解：$C$。Ⅰ正确：系统调用需要从用户应用程序调用系统的接口，用户态进入核心态，触发$trap$指令。（如基于$x86$的$Linux$系统，该指令为$int\,Ox80$或$sysenter$。Ⅱ是干扰项，屏蔽中断指令由外部的异步操作造成，由操作系统接收到外部操作而产生对现场进行保护，程序设计无法形成屏蔽中断指令。Ⅲ正确：系统调用的概念。Ⅳ正确：操作系统是一层接口，对上层提供服务，对下层进行抽象。它通过系统调用向其上层的用户、应用程序和应用系统提供对系统资源的使用。
+
+**例题** 下列操作系统的各个功能组成部分中，()可不需要硬件的支持。
+
+$A.$进程调度
+
+$B.$时钟管理
+
+$C.$地址映射
+
+$D.$中断系统
+
+解：$A$。中断系统和地址映射显然都需要硬件支持，因为中断指令和地址映射中的重定位都是离不开硬件支持的。而时钟管理中，重置时钟等是由硬件直接完成的。进程调度由调度算法决定$CPU$使用权,由操作系统实现，无须硬件的支持。
+
+**例题** 计算机区分核心态和用户态指令后，从核心态到用户态的转换是由操作系统程序执行后完成的，而用户态到核心态的转换则是由()完成的。
+
+$A.$硬件
+
+$B.$核心态程序
+
+$C.$用户程序
+
+$D.$中断处理程序
+
+解：$A$。计算机通过硬件中断机制完成由用户态到核心态的转换。$B$显然不正确，核心态程序只有在操作系统进入核心态后才可以执行。$D$中的中断处理程序一般也在核心态执行，在中断完成后对中断的结果进行一系列处理，因此无法完成“转换成核心态”这一任务。若由用户程序将操作系统由用户态转换到核心态，则用户程序中就可使用核心态指令，这就会威胁到计算机的安全，所以$C$不正确。
+
+计算机通过硬件完成操作系统由用户态到核心态的转换，这是通过中断机制来实现的。发生中断事件时（有可能是用户程序发出的系统调用），触发中断，硬件中断机制将计算机状态置为核心态。
+
+**例题** 在操作系统中，只能在核心态下执行的指令是()。
+
+$A.$读时钟
+
+$B.$取数
+
+$C.$广义指令
+
+$D.$寄存器清$0$
+
+解：$C$。广义指令即系统调用命令，它必然工作在核心态，所以答案为$C$。要注意区分“调用”和“执行”，广义指令的调用可能发生在用户态，调用广义指令的那条指令不一定是特权指令，但广义指令存在于核心态中，所以执行一定在核心态。
+
+**例题** 下列指令中，不能在用户态执行的是()。
+
+$A.trap$指令
+
+$B.$跳转指令
+
+$C.$压栈指令
+
+$D.$关中断指令
+
+解：$D$。$trap$指令、跳转指令和压栈指令均可以在用户态执行，其中$trap$指令负责由用户态转换为内核态，跳转指令是指改变程序执行顺序的指令，压栈指令即进栈指令，与出栈（弹栈）指令相对，用于将数据压入数据栈。关中断指令为特权指令，指关闭中断机制的指令，必须在核心态才能执行，选$D$。关中断在中断机制中在第一步，用于完整保护现场避免指令打扰，也用于原语执行保持完整，关中断后要执行开中断指令。
+
+**例题** 内部异常（内中断）可分为故障（$fault$）、陷阱（$trap$）和终止（$abort$）三类。下列有关内部异常的叙述中，错误的是()。
+
+$A.$内部异常的产生与当前执行指令相关
+
+$B.$内部异常的检测由$CPU$内部逻辑实现
+
+$C.$内部异常的响应发生在指令执行过程中
+
+$D.$内部异常处理后返回到发生异常的指令继续执行
+
+解：$D$。内部异常由内部产生，即在执行指令出现问题，所以$A$正确。异常由内部$CPU$检测，不必通过外部信号通知$CPU$，所以$B$正确。异常必须立刻响应处理，所以其相应在指令执行过程中，$C$对。对于非法指令等无法通过处理程序修复的问题，必须中断进行，所以不能回到原端点继续执行，$D$错误。
+
+**例题** 处理外部中断时，应该由操作系统保存的是()。
+
+$A.$程序计数器（$PC$）的内容
+
+$B.$通用寄存器的内容
+
+$c.$块表（$TLB$）中的内容
+
+$D.Cache$中的内容
+
+解：$B$。$PC$值由中断隐指令自动保存。通用寄存器内容由操作系统保存。$TLB$称为转译后备缓冲器，与$Cache$一样是$CPU$缓存的一种，都是由各自的缓存器保存。
+
+**例题** 假定下列指令已装入指令寄存器，则执行时不可能导致$CPU$从用户态变为内核态（系统态）的是()。
+
+$A.DIV\,R0,R1;(R0)/(R1)\rightarrow R0$
+
+$B.INT\,n;$产生软中断
+
+$C.NOT\,R0;$寄存器$R0$的内容取非
+
+$D.MOV\,R0,addr;$把地址$addr$处的内存数据放入寄存器$R0$
+
+解：$C$。为什么会产生由用户态转换核心态？因为可能出现异常导致中断。$A$可能除数$R0$为$0$导致异常；$B$由于软中断，所以是一个中断指令，所以会转为核心态；$D$是将内存放入寄存器中，可能产生缺页异常（即放不进去）；$C$是取反，只变一位数字，不会产生异常。
+
+**例题** 定时器产生时钟中断后，由时钟中断服务程序更新的部分内容是()。
+
+I.内核中时钟变量的值
+
+Ⅱ.当前进程占用CPU的时间
+
+Ⅲ.当前进程在时间片内的剩余执行时间
+
+$A.$仅Ⅰ、Ⅱ
+
+$B.$仅Ⅱ、Ⅲ
+
+$C.$仅Ⅰ、Ⅲ
+
+$D.$Ⅰ、Ⅱ、Ⅱ
+
+解：$D$。时钟中断的主要工作是处理和时间有关的信息及决定是否执行调度程序。和时间有关的所有信息包括系统时间、进程的时间片、延时、使用$CPU$的时间、各种定时器，因此Ⅰ、Ⅱ、Ⅲ均正确。
+
+**例题** 下列关于系统调用的叙述中，正确的是()。
+
+Ⅰ.在执行系统调用服务程序的过程中，$CPU$处于内核态
+
+Ⅱ.操作系统通过提供系统调用避免用户程序直接访问外设
+
+Ⅲ.不同的操作系统为应用程序提供了统一的系统调用接口
+
+Ⅳ.系统调用是操作系统内核为应用程序提供服务的接口
+
+$A.$仅Ⅰ、Ⅳ
+
+$B.$仅Ⅱ、Ⅲ
+
+$C.$仅Ⅰ、Ⅱ、Ⅳ
+
+$D.$仅Ⅱ、Ⅲ、Ⅳ
+
+解：$C$。用户可以在用户态调用操作系统的服务，但执行具体的系统调用服务程序是处于内核态的，Ⅰ正确；设备管理属于操作系统的职能之一，包括对输入/输出设备的分配、初始化、维护等，用户程序需要通过系统调用使用操作系统的设备管理服务，Ⅱ正确；操作系统不同，底层逻辑、实现方式均不相同，为应用程序提供的系统调用接口也不同，Ⅲ错误；系统调用是用户在程序中调用操作系统提供的子功能，Ⅳ正确。
+
+[gantt]:data:image/png;base64,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
