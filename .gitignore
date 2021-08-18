@@ -1,4 +1,9 @@
 *.pdf
+*.png
+*.jpg
+*.jpeg
+*.html
+*.htm
 *.vs/
 *.idea/
 *Debug/
