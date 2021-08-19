@@ -2,41 +2,41 @@
 #include <cstdlib>
 #include "head.h"
 
-// µ¥Á´±í½áµã
+// å•é“¾è¡¨ç»“ç‚¹
 class LinkListNode {
 public:
-    // Êı¾İ
-	element_type data;
-    // Ö¸Õë
-	LinkListNode* next;
-	// ¹¹Ôìº¯Êı
-	LinkListNode();
-	explicit LinkListNode(element_type data);
+    // æ•°æ®
+    element_type data;
+    // æŒ‡é’ˆ
+    LinkListNode* next;
+    // æ„é€ å‡½æ•°
+    LinkListNode();
+    explicit LinkListNode(element_type data);
 };
 
 class LinkList{
 public:
-    // Ö¸Õë
+    // æŒ‡é’ˆ
     LinkListNode* next;
-    // Á´±í³¤¶È
+    // é“¾è¡¨é•¿åº¦
     int length;
-    // ¹¹Ôìº¯Êı
+    // æ„é€ å‡½æ•°
     LinkList();
-    // ÅĞ¿Õ
+    // åˆ¤ç©º
     bool Empty();
 };
 
 class LinkListWithHead: public LinkList{
 public:
-    // ¹¹Ôìº¯Êı
+    // æ„é€ å‡½æ•°
     LinkListWithHead();
 };
 
 class LinkListWithoutHead: public LinkList{
 public:
-    // Êı¾İ
+    // æ•°æ®
     element_type data;
-    // ¹¹Ôìº¯Êı
+    // æ„é€ å‡½æ•°
     LinkListWithoutHead();
 };
 
@@ -47,7 +47,7 @@ LinkListNode::LinkListNode() {
 
 LinkListNode::LinkListNode(element_type data) {
     this->data = data;
-	this->next = nullptr;
+    this->next = nullptr;
 }
 
 LinkList::LinkList() {
@@ -70,95 +70,95 @@ bool LinkList::Empty() {
 }
 
 
-//// ²åÈëÓĞÍ·½Úµãµ¥Á´±íÔªËØ
-//// 0ºÅ½ÚµãÊÇÍ·½Úµã
+//// æ’å…¥æœ‰å¤´èŠ‚ç‚¹å•é“¾è¡¨å…ƒç´ 
+//// 0å·èŠ‚ç‚¹æ˜¯å¤´èŠ‚ç‚¹
 //int InsertLinkListWithHead(LinkList list, int index, element_type elem) {
 //	if (index < 1) {
-//		printf("InsertLinkListWithHead:²åÈëË÷ÒıÖµ¹ıĞ¡£¡\n");
+//		printf("InsertLinkListWithHead:æ’å…¥ç´¢å¼•å€¼è¿‡å°ï¼\n");
 //		return 1;
 //	}
-//	// ¶¨ÒåÒ»¸ö½áµãÖ¸ÕëpÖ¸Ïòµ±Ç°É¨Ãèµ½µÄ½áµã
+//	// å®šä¹‰ä¸€ä¸ªç»“ç‚¹æŒ‡é’ˆpæŒ‡å‘å½“å‰æ‰«æåˆ°çš„ç»“ç‚¹
 //	LinkListNode* p;
-//	// ¶¨ÒåÒ»¸ö±äÁ¿i±íÊ¾µ±Ç°É¨Ãèµ½µÄ½áµãµÄË÷ÒıºÅ
+//	// å®šä¹‰ä¸€ä¸ªå˜é‡iè¡¨ç¤ºå½“å‰æ‰«æåˆ°çš„ç»“ç‚¹çš„ç´¢å¼•å·
 //	int i = 0;
-//	// ½«Á´±íÍ·½áµãÖ¸Ïòp£¬ÎªµÚ0¸ö½áµã
+//	// å°†é“¾è¡¨å¤´ç»“ç‚¹æŒ‡å‘pï¼Œä¸ºç¬¬0ä¸ªç»“ç‚¹
 //	p = list;
-//	// Ñ­»·±éÀúµ½´ïÖ¸¶¨Ë÷ÒıºÅµÄµ¥Á´±íµÄ½áµã
-//	// Ìõ¼şÊÇµ±Ç°½áµãµÄÏÂÒ»¸ö²»Îª¿ÕÇÒË÷ÒıºÅµ½´ï£¬Ëùµ½´ïµÄ½áµãÒ»¶¨²»ÊÇ¿Õ½áµã
+//	// å¾ªç¯éå†åˆ°è¾¾æŒ‡å®šç´¢å¼•å·çš„å•é“¾è¡¨çš„ç»“ç‚¹
+//	// æ¡ä»¶æ˜¯å½“å‰ç»“ç‚¹çš„ä¸‹ä¸€ä¸ªä¸ä¸ºç©ºä¸”ç´¢å¼•å·åˆ°è¾¾ï¼Œæ‰€åˆ°è¾¾çš„ç»“ç‚¹ä¸€å®šä¸æ˜¯ç©ºç»“ç‚¹
 //	while (p->next != NULL && i < index - 1) {
 //		p = p->next;
 //		i++;
 //	}
-//	// Èç¹û´ËÊ±iĞ¡ÓÚindex-1£¬±íÊ¾±éÀúÍê»¹Ã»ÓĞµ½´ï¶ÔÓ¦µÄË÷Òı
+//	// å¦‚æœæ­¤æ—¶iå°äºindex-1ï¼Œè¡¨ç¤ºéå†å®Œè¿˜æ²¡æœ‰åˆ°è¾¾å¯¹åº”çš„ç´¢å¼•
 //	if (i < index - 1) {
-//		printf("InsertLinkListWithHead:²åÈëË÷ÒıÖµ¹ı´ó£¡\n");
+//		printf("InsertLinkListWithHead:æ’å…¥ç´¢å¼•å€¼è¿‡å¤§ï¼\n");
 //		return 1;
 //	}
-//	// ´ËÊ±i==index-1
+//	// æ­¤æ—¶i==index-1
 //	LinkListNode* s = (LinkListNode*)malloc(sizeof(LinkListNode));
 //	if (s) {
 //		s->data = elem;
-//		// ½«pÔ­À´µÄºó¼Ì¸øĞÂµÄ½áµã
+//		// å°†påŸæ¥çš„åç»§ç»™æ–°çš„ç»“ç‚¹
 //		s->next = p->next;
 //		p->next = s;
 //		return 0;
 //	}
 //	else {
-//		printf("InsertLinkListWithHead:·ÖÅäÄÚ´æÊ§°Ü£¡\n");
+//		printf("InsertLinkListWithHead:åˆ†é…å†…å­˜å¤±è´¥ï¼\n");
 //		return 1;
 //	}
 //}
 //
-//// ²åÈëÎŞÍ·½Úµãµ¥Á´±íÔªËØ
-//// CÓïÑÔÒ²ÎŞ·¨µ÷ÓÃÕâ¸öº¯Êı
+//// æ’å…¥æ— å¤´èŠ‚ç‚¹å•é“¾è¡¨å…ƒç´ 
+//// Cè¯­è¨€ä¹Ÿæ— æ³•è°ƒç”¨è¿™ä¸ªå‡½æ•°
 //int InsertLinkListWithoutHead(LinkList list, int index, element_type elem) {
 //	if (index < 0) {
-//		printf("InsertLinkListWithoutHead:²åÈëË÷ÒıÖµ¹ıĞ¡£¡\n");
+//		printf("InsertLinkListWithoutHead:æ’å…¥ç´¢å¼•å€¼è¿‡å°ï¼\n");
 //		return 1;
 //	}
 //	if (index == 0) {
 //		LinkListNode* s = (LinkListNode*)malloc(sizeof(LinkListNode));
 //		if (s) {
 //			s->data = elem;
-//			// ½«sµÄºó¼ÌÉèÎªlistÖ¸Õë
+//			// å°†sçš„åç»§è®¾ä¸ºlistæŒ‡é’ˆ
 //			s->next = list;
-//			// ½«listÖ¸ÕëÉèÖÃÎªsÖ¸Õë
+//			// å°†listæŒ‡é’ˆè®¾ç½®ä¸ºsæŒ‡é’ˆ
 //			list = s;
 //			return 0;
 //		}
 //		else {
-//			printf("InsertLinkListWithoutHead:·ÖÅäÄÚ´æÊ§°Ü£¡\n");
+//			printf("InsertLinkListWithoutHead:åˆ†é…å†…å­˜å¤±è´¥ï¼\n");
 //			return 1;
 //		}
 //	}
-//	// ¶¨ÒåÒ»¸ö½áµãÖ¸ÕëpÖ¸Ïòµ±Ç°É¨Ãèµ½µÄ½áµã
+//	// å®šä¹‰ä¸€ä¸ªç»“ç‚¹æŒ‡é’ˆpæŒ‡å‘å½“å‰æ‰«æåˆ°çš„ç»“ç‚¹
 //	LinkListNode* p;
-//	// ¶¨ÒåÒ»¸ö±äÁ¿i±íÊ¾µ±Ç°É¨Ãèµ½µÄ½áµãµÄË÷ÒıºÅ
+//	// å®šä¹‰ä¸€ä¸ªå˜é‡iè¡¨ç¤ºå½“å‰æ‰«æåˆ°çš„ç»“ç‚¹çš„ç´¢å¼•å·
 //	int i = 0;
-//	// ½«Á´±íÍ·½áµãÖ¸Ïòp£¬ÎªµÚ0¸ö½áµã
+//	// å°†é“¾è¡¨å¤´ç»“ç‚¹æŒ‡å‘pï¼Œä¸ºç¬¬0ä¸ªç»“ç‚¹
 //	p = list;
-//	// Ñ­»·±éÀúµ½´ïÖ¸¶¨Ë÷ÒıºÅµÄµ¥Á´±íµÄ½áµã
-//	// Ìõ¼şÊÇµ±Ç°½áµãµÄÏÂÒ»¸ö²»Îª¿ÕÇÒË÷ÒıºÅµ½´ï£¬Ëùµ½´ïµÄ½áµãÒ»¶¨²»ÊÇ¿Õ½áµã
+//	// å¾ªç¯éå†åˆ°è¾¾æŒ‡å®šç´¢å¼•å·çš„å•é“¾è¡¨çš„ç»“ç‚¹
+//	// æ¡ä»¶æ˜¯å½“å‰ç»“ç‚¹çš„ä¸‹ä¸€ä¸ªä¸ä¸ºç©ºä¸”ç´¢å¼•å·åˆ°è¾¾ï¼Œæ‰€åˆ°è¾¾çš„ç»“ç‚¹ä¸€å®šä¸æ˜¯ç©ºç»“ç‚¹
 //	while (p->next != NULL && i < index - 1) {
 //		p = p->next;
 //		i++;
 //	}
-//	// Èç¹û´ËÊ±iĞ¡ÓÚindex-1£¬±íÊ¾±éÀúÍê»¹Ã»ÓĞµ½´ï¶ÔÓ¦µÄË÷Òı
+//	// å¦‚æœæ­¤æ—¶iå°äºindex-1ï¼Œè¡¨ç¤ºéå†å®Œè¿˜æ²¡æœ‰åˆ°è¾¾å¯¹åº”çš„ç´¢å¼•
 //	if (i < index - 1) {
-//		printf("InsertLinkListWithoutHead:²åÈëË÷ÒıÖµ¹ı´ó£¡\n");
+//		printf("InsertLinkListWithoutHead:æ’å…¥ç´¢å¼•å€¼è¿‡å¤§ï¼\n");
 //		return 1;
 //	}
-//	// ´ËÊ±i==index-1
+//	// æ­¤æ—¶i==index-1
 //	LinkListNode* s = (LinkListNode*)malloc(sizeof(LinkListNode));
 //	if (s) {
 //		s->data = elem;
-//		// ½«pÔ­À´µÄºó¼Ì¸øĞÂµÄ½áµã
+//		// å°†påŸæ¥çš„åç»§ç»™æ–°çš„ç»“ç‚¹
 //		s->next = p->next;
 //		p->next = s;
 //		return 0;
 //	}
 //	else {
-//		printf("InsertLinkListWithoutHead:·ÖÅä¿Õ¼äÊ§°Ü£¡\n");
+//		printf("InsertLinkListWithoutHead:åˆ†é…ç©ºé—´å¤±è´¥ï¼\n");
 //		return 1;
 //	}
 //}
