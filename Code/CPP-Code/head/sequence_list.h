@@ -1,15 +1,19 @@
-﻿#include <cstdio>
-#include <cstdlib>
+﻿#include <cstdlib>
+#include <iostream>
 #include "head.h"
 
 #pragma warning(disable:6385)
 #pragma warning(disable:6386)
+
+using namespace std;
 
 // 顺序表
 class SequenceList {
 public:
     element_type *data{};
     int length{};
+    // 构造函数
+    SequenceList();
     // 插入函数
     virtual bool Insert(int index, element_type elem);
     // 打印函数
@@ -33,8 +37,6 @@ public:
 // 静态顺序表
 class StaticSequenceList: public SequenceList{
 public:
-    element_type data[MAXSIZE]{};
-    int length;
     // 构造函数
     StaticSequenceList();
     // 插入函数
@@ -44,9 +46,6 @@ public:
 // 动态顺序表
 class DynamicSequenceList: public SequenceList{
 public:
-    // 给一个指针来分配动态数组
-    element_type *data;
-    int length;
     // 已分配的最大容量
     int max_size;
     // 构造函数
@@ -61,14 +60,17 @@ private:
     bool ReIncrease(int len);
 };
 
+SequenceList::SequenceList() {
+    this->length = 0;
+}
+
 StaticSequenceList::StaticSequenceList() : SequenceList() {
-    this->length=0;
+    this->data = (element_type*)malloc(MAXSIZE * sizeof(element_type));
 }
 
 DynamicSequenceList::DynamicSequenceList() : SequenceList() {
     // 初初始化动态顺序表长度为0
     this->max_size=0;
-    this->length = 0;
     // 申请一片连续的存储空间
     auto* space = (element_type*)malloc(MAXSIZE * sizeof(element_type));
     if (space) {
@@ -76,19 +78,19 @@ DynamicSequenceList::DynamicSequenceList() : SequenceList() {
         this->max_size = MAXSIZE;
     }
     else {
-        printf("InitSequenceList:分配空间失败！\n");
+        cout << "InitSequenceList:分配空间失败！" << endl;
     }
 }
 
 void SequenceList::Printf() {
     for (int i = 0; i < this->length; i++) {
-        printf("第%d个元素值为%c\n", i + 1, this->data[i]);
+        cout << "第" << i + 1 << "个元素值为" << this->data[i] << endl;
     }
 }
 
 bool DynamicSequenceList::OtherIncrease(int len) {
     if (len <= 0) {
-        printf("OtherIncrease:申请空间应该大于0！\n");
+        cout << "OtherIncrease:申请空间应该大于0！" << endl;
         return false;
     }
     // 申请一片连续的存储空间
@@ -106,14 +108,14 @@ bool DynamicSequenceList::OtherIncrease(int len) {
         return true;
     }
     else {
-        printf("OtherIncrease:重新分配空间失败！\n");
+        cout << "OtherIncrease:重新分配空间失败！" << endl;
         return false;
     }
 }
 
 bool DynamicSequenceList::ReIncrease(int len) {
     if (len <= 0) {
-        printf("ReIncrease:申请空间应该大于0！\n");
+        cout << "ReIncrease:申请空间应该大于0！" << endl;
         return false;
     }
     // 申请一片连续的存储空间
@@ -127,7 +129,7 @@ bool DynamicSequenceList::ReIncrease(int len) {
     else {
         this->max_size = 0;
         this->length = 0;
-        printf("ReIncrease:分配其他地址空间失败！\n");
+        cout << "ReIncrease:分配其他地址空间失败！" << endl;
         return false;
     }
 }
@@ -139,12 +141,12 @@ bool SequenceList::Insert(int index, element_type elem) {
 bool StaticSequenceList::Insert(int index, element_type elem) {
     // 当静态顺序表已经满了就不能插入任何元素
     if (this->length >= MAXSIZE) {
-        printf("Insert:静态顺序表空间不足，插入失败！\n");
+        cout << "Insert:静态顺序表空间不足，插入失败！" << endl;
         return false;
     }
     // 索引位置从0开始，所以可以插入的范围是0到list->length
     if (index > this->length || index < 0) {
-        printf("Insert:插入索引%d超过索引范围！\n", index);
+        cout << "Insert:插入索引" << index << "超过索引范围！" << endl;
         return false;
     }
     // 从最后一个元素开始交换后移，list->length是空的
@@ -158,7 +160,7 @@ bool StaticSequenceList::Insert(int index, element_type elem) {
 
 bool DynamicSequenceList::Insert(int index, element_type elem) {
     if (index > this->length || index < 0) {
-        printf("Insert:插入索引%d超过索引范围！\n", index);
+        cout << "Insert:插入索引" << index << "超过索引范围！" << endl;
         return false;
     }
     // 当动态顺序表已经满了，需要新增一个位置
@@ -166,7 +168,7 @@ bool DynamicSequenceList::Insert(int index, element_type elem) {
     if (this->length >= MAXSIZE) {
         bool result = this->ReIncrease(1);
         if (!result) {
-            printf("Insert:申请空间失败！\n");
+            cout << "Insert:申请空间失败！" << endl;
             return false;
         }
     }
@@ -182,7 +184,7 @@ bool SequenceList::LoopInsert(element_type *elem, int start, int end) {
     for (int i = 0; i < end; i++) {
         bool result = this->Insert(i, elem[i + start]);
         if (!result) {
-            printf("LoopInsert:循环插入失败！\n");
+            cout << "LoopInsert:循环插入失败！" << endl;
             return false;
         }
     }
@@ -191,7 +193,7 @@ bool SequenceList::LoopInsert(element_type *elem, int start, int end) {
 
 bool SequenceList::Delete(int index, element_type &elem) {
     if (index >= this->length || index < 0) {
-        printf("Delete:删除索引超过索引范围！\n");
+        cout << "Delete:删除索引" << index << "超过索引范围！" << endl;
         return false;
     }
     elem = this->data[index];
@@ -204,7 +206,7 @@ bool SequenceList::Delete(int index, element_type &elem) {
 
 bool SequenceList::MultiDelete(int index, int len, element_type *elem) {
     if (index + len >= this->length || index < 0) {
-        printf("MultiDelete:删除索引超过索引范围！\n");
+        cout << "MultiDelete:删除索引" << index << "超过索引范围！" << endl;
         return false;
     }
     for (int i = index; i < this->length - len; i++) {
@@ -219,8 +221,8 @@ bool SequenceList::MultiDelete(int index, int len, element_type *elem) {
 
 element_type SequenceList::GetElem(int index) {
     if (index >= this->length || index < 0) {
-        printf("GetElem:查找索引超过索引范围！\n");
-        return DEFAULTELEM;
+        cout << "GetElem:查找索引" << index << "超过索引范围！" << endl;
+        return DEFAULTDATA;
     }
     return this->data[index];
 }
@@ -232,7 +234,7 @@ int SequenceList::Locate(element_type elem) {
             return i;
         }
     }
-    printf("Locate:未能定位到对应值的元素！\n");
+    cout << "Locate:未能定位到对应值的元素！" << endl;
     return -1;
 }
 
@@ -249,7 +251,6 @@ bool SequenceList::Destroy() {
     if (this->data) {
         free(this->data);
     }
-    delete this;
     return true;
 }
 

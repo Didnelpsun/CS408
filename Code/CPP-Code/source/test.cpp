@@ -8,11 +8,10 @@ int SequenceListTest() {
     list.Insert(0, 'a');
     element_type a[6] = {'1','2','3','4','5','6'};
     list.LoopInsert(a, 0, 6);
-    printf("%c", list.data[2]);
-    /*element_type b[3] = { '9', 'a', 'e' };
-    list.LoopInsert(b, 1, 2);*/
-    list.Printf();
     //printf("%c", list.data[2]);
+    element_type b[3] = { '9', 'a', 'e' };
+    list.LoopInsert(b, 1, 2);
+    list.Printf();
     /*list.Printf();
     printf("\n");
     int len = 2;
@@ -26,21 +25,16 @@ int SequenceListTest() {
     InitDynamicSequenceList(&dlist);
     OtherIncreaseDynamicSequenceList(&dlist, 15);
     printf("%d", dlist.max_size);*/
-    //int index = list.Locate('5');
-    //printf("%d", index);
-    //list.Destroy();
+    int index = list.Locate('5');
+    index = list.GetElem(1);
+    cout << list.Empty() << endl;
+    list.Destroy();
     return 0;
 }
 
 int LinkListTest() {
-    LinkList list = nullptr;
-    InitLinkListWithoutHead(list);
-//    InitLinkListWithHead(list);
-    //LinkList list = CreateLinkListWithHead();
-//    int empty = EmptyLinkListWithHead(list);
-//    LinkList list = CreateLinkListWithoutHead();
-    int empty = EmptyLinkListWithoutHead(list);
-    printf("%d", empty);
+    LinkList list;
+    cout << list.Empty() << endl;
     return 0;
 }
 
