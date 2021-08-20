@@ -1,8 +1,8 @@
-// ³õÊ¼»¯×î´ó³¤¶È
+ï»¿// åˆå§‹åŒ–æœ€å¤§é•¿åº¦
 #define MAXSIZE 5
-// ¶¨ÒåÄ¬ÈÏÖµ
+// å®šä¹‰é»˜è®¤å€¼
 #define DEFAULTDATA '0'
-// ¶¨Òå×î´óÖµ
+// å®šä¹‰æœ€å¤§å€¼
 //#define INFINITY 32767
-// ¶¨ÒåÄ¬ÈÏÊý¾ÝÀàÐÍ
+// å®šä¹‰é»˜è®¤æ•°æ®ç±»åž‹
 typedef char element_type;

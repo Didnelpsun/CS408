@@ -9,29 +9,44 @@ using namespace std;
 
 // 顺序表
 class SequenceList {
+private:
+    // 数据
+    element_type *_data{};
+    // 长度
+    int _length{};
 public:
-    element_type *data{};
-    int length{};
+    // 设置数据
+    bool SetData(element_type* elem);
+    bool SetData(int index, element_type elem);
+    // 获取数据
+    element_type* GetData() const;
+    element_type GetData(int index) const;
+    // 长度自加1
+    bool SetLength();
+    // 设置长度
+    bool SetLength(int length);
+    // 设置长度
+    int GetLength() const;
     // 构造函数
     SequenceList();
     // 插入函数
-    virtual bool Insert(int index, element_type elem);
+    virtual bool Insert(int index, element_type elem) = 0;
     // 打印函数
-    void Printf();
+    bool Print() const;
     // 循环插入函数
-    bool LoopInsert(element_type *elem, int start, int end);
+    bool LoopInsert(element_type *elem, int start, int length);
     // 删除函数
     bool Delete(int index, element_type &elem);
     // 多个删除函数
-    bool MultiDelete(int index, int len, element_type *elem);
+    bool LoopDelete(int index, int len, element_type *elem);
     // 按位获取元素
-    element_type GetElem(int index);
+    element_type GetElem(int index) const;
     // 按值获取元素
-    int Locate(element_type elem);
+    int Locate(element_type elem) const;
     // 判空
-    bool Empty();
+    bool Empty() const;
     // 销毁
-    bool Destroy();
+    bool Destroy() const;
 };
 
 // 静态顺序表
@@ -45,9 +60,14 @@ public:
 
 // 动态顺序表
 class DynamicSequenceList: public SequenceList{
-public:
+private:
     // 已分配的最大容量
-    int max_size;
+    int _max_size{};
+public:
+    // 设置最大容量
+    bool SetMaxSize(int length);
+    // 获取最大容量
+    int GetMaxSize();
     // 构造函数
     DynamicSequenceList();
     // 插入函数
@@ -60,32 +80,74 @@ private:
     bool ReIncrease(int len);
 };
 
+bool SequenceList::SetData(element_type* elem) {
+    this->_data = elem;
+    return true;
+}
+
+bool SequenceList::SetData(int index, element_type elem) {
+    this->_data[index] = elem;
+    return true;
+}
+
+element_type *SequenceList::GetData() const {
+    return this->_data;
+}
+
+element_type SequenceList::GetData(int index) const {
+    return this->_data[index];
+}
+
+bool SequenceList::SetLength() {
+    this->_length ++;
+    return true;
+}
+
+bool SequenceList::SetLength(int length) {
+    this->_length = length;
+    return true;
+}
+
+int SequenceList::GetLength() const {
+    return this->_length;
+}
+
 SequenceList::SequenceList() {
-    this->length = 0;
+    this->SetLength(0);
 }
 
 StaticSequenceList::StaticSequenceList() : SequenceList() {
-    this->data = (element_type*)malloc(MAXSIZE * sizeof(element_type));
+    this->SetData((element_type*)malloc(MAXSIZE * sizeof(element_type)));
+}
+
+bool DynamicSequenceList::SetMaxSize(int length) {
+    this->_max_size = length;
+    return true;
+}
+
+int DynamicSequenceList::GetMaxSize() {
+    return this->_max_size;
 }
 
 DynamicSequenceList::DynamicSequenceList() : SequenceList() {
     // 初初始化动态顺序表长度为0
-    this->max_size=0;
+    this->SetMaxSize(0);
     // 申请一片连续的存储空间
     auto* space = (element_type*)malloc(MAXSIZE * sizeof(element_type));
     if (space) {
-        this->data = space;
-        this->max_size = MAXSIZE;
+        this->SetData(space);
+        this->SetMaxSize(MAXSIZE);
     }
     else {
         cout << "InitSequenceList:分配空间失败！" << endl;
     }
 }
 
-void SequenceList::Printf() {
-    for (int i = 0; i < this->length; i++) {
-        cout << "第" << i + 1 << "个元素值为" << this->data[i] << endl;
+bool SequenceList::Print() const {
+    for (int i = 0; i < this->GetLength(); i++) {
+        cout << "第" << i + 1 << "个元素值为" << this->GetData(i) << endl;
     }
+    return true;
 }
 
 bool DynamicSequenceList::OtherIncrease(int len) {
@@ -94,16 +156,16 @@ bool DynamicSequenceList::OtherIncrease(int len) {
         return false;
     }
     // 申请一片连续的存储空间
-    int new_length = this->max_size + len;
+    int new_length = this->GetMaxSize() + len;
     auto* space = (element_type*)malloc(new_length * sizeof(element_type));
     if (space) {
         // 建立中间变量
-        this->data = space;
-        element_type* temp = this->data;
-        for (int i = 0; i < this->length; i++) {
-            this->data[i] = temp[i];
+        this->SetData(space);
+        element_type* temp = this->GetData();
+        for (int i = 0; i < this->GetLength(); i++) {
+            this->SetData(i, temp[i]);
         }
-        this->max_size = new_length;
+        this->SetMaxSize(new_length);
         free(temp);
         return true;
     }
@@ -113,75 +175,71 @@ bool DynamicSequenceList::OtherIncrease(int len) {
     }
 }
 
-bool DynamicSequenceList::ReIncrease(int len) {
-    if (len <= 0) {
+bool DynamicSequenceList::ReIncrease(int length) {
+    if (length <= 0) {
         cout << "ReIncrease:申请空间应该大于0！" << endl;
         return false;
     }
     // 申请一片连续的存储空间
-    int new_length = this->max_size + len;
-    auto* space = (element_type*)realloc(this->data, new_length * sizeof(element_type));
+    int new_length = this->GetMaxSize() + length;
+    auto* space = (element_type*)realloc(this->GetData(), new_length * sizeof(element_type));
     if (space) {
-        this->data = space;
-        this->max_size += len;
+        this->SetData(space);
+        this->SetMaxSize(this->GetMaxSize()+length);
         return true;
     }
     else {
-        this->max_size = 0;
-        this->length = 0;
+        this->SetMaxSize(0);
+        this->SetLength(0);
         cout << "ReIncrease:分配其他地址空间失败！" << endl;
         return false;
     }
 }
 
-bool SequenceList::Insert(int index, element_type elem) {
-    return false;
-}
-
 bool StaticSequenceList::Insert(int index, element_type elem) {
     // 当静态顺序表已经满了就不能插入任何元素
-    if (this->length >= MAXSIZE) {
+    if (this->GetLength() >= MAXSIZE) {
         cout << "Insert:静态顺序表空间不足，插入失败！" << endl;
         return false;
     }
     // 索引位置从0开始，所以可以插入的范围是0到list->length
-    if (index > this->length || index < 0) {
+    if (index > this->GetLength() || index < 0) {
         cout << "Insert:插入索引" << index << "超过索引范围！" << endl;
         return false;
     }
     // 从最后一个元素开始交换后移，list->length是空的
-    for (int i = this->length; i > index; i--) {
-        this->data[i] = this->data[i - 1];
+    for (int i = this->GetLength(); i > index; i--) {
+        this->SetData(i, this->GetData(i-1));
     }
-    this->data[index] = elem;
-    this->length++;
+    this->SetData(index, elem);
+    this->SetLength();
     return true;
 }
 
 bool DynamicSequenceList::Insert(int index, element_type elem) {
-    if (index > this->length || index < 0) {
+    if (index > this->GetLength() || index < 0) {
         cout << "Insert:插入索引" << index << "超过索引范围！" << endl;
         return false;
     }
     // 当动态顺序表已经满了，需要新增一个位置
     // 为了避免索引无效而多增加一个空间，所以放在检查索引值的后面
-    if (this->length >= MAXSIZE) {
+    if (this->GetLength() >= MAXSIZE) {
         bool result = this->ReIncrease(1);
         if (!result) {
             cout << "Insert:申请空间失败！" << endl;
             return false;
         }
     }
-    for (int i = this->length; i > index; i--) {
-        this->data[i] = this->data[i - 1];
+    for (int i = this->GetLength(); i > index; i--) {
+        this->SetData(i, this->GetData(i-1));
     }
-    this->data[index] = elem;
-    this->length++;
+    this->SetData(index, elem);
+    this->SetLength();
     return true;
 }
 
-bool SequenceList::LoopInsert(element_type *elem, int start, int end) {
-    for (int i = 0; i < end; i++) {
+bool SequenceList::LoopInsert(element_type *elem, int start, int length) {
+    for (int i = 0; i < length; i++) {
         bool result = this->Insert(i, elem[i + start]);
         if (!result) {
             cout << "LoopInsert:循环插入失败！" << endl;
@@ -192,45 +250,45 @@ bool SequenceList::LoopInsert(element_type *elem, int start, int end) {
 }
 
 bool SequenceList::Delete(int index, element_type &elem) {
-    if (index >= this->length || index < 0) {
+    if (index >= this->GetLength() || index < 0) {
         cout << "Delete:删除索引" << index << "超过索引范围！" << endl;
         return false;
     }
-    elem = this->data[index];
-    for (int i = index; i < this->length; i++) {
-        this->data[i] = this->data[i + 1];
+    elem = this->GetData(index);
+    for (int i = index; i < this->GetLength(); i++) {
+        this->SetData(i, this->GetData(i+1));
     }
-    this->length--;
+    this->SetLength(this->GetLength()-1);
     return true;
 }
 
-bool SequenceList::MultiDelete(int index, int len, element_type *elem) {
-    if (index + len >= this->length || index < 0) {
-        cout << "MultiDelete:删除索引" << index << "超过索引范围！" << endl;
+bool SequenceList::LoopDelete(int index, int length, element_type *elem) {
+    if (index + length > this->GetLength() || index < 0) {
+        cout << "LoopDelete:删除索引" << index + length << "超过索引范围！" << endl;
         return false;
     }
-    for (int i = index; i < this->length - len; i++) {
-        if (i < index + len) {
-            elem[i - index] = this->data[i];
+    for (int i = index; i <= this->GetLength() - length; i++) {
+        if (i < index + length) {
+            elem[i - index] = this->GetData(i);
         }
-        this->data[i] = this->data[i + len];
+        this->SetData(i, this->GetData(i + length));
     }
-    this->length -= len;
+    this->SetLength(this->GetLength()-length);
     return true;
 }
 
-element_type SequenceList::GetElem(int index) {
-    if (index >= this->length || index < 0) {
+element_type SequenceList::GetElem(int index) const {
+    if (index >= this->GetLength() || index < 0) {
         cout << "GetElem:查找索引" << index << "超过索引范围！" << endl;
         return DEFAULTDATA;
     }
-    return this->data[index];
+    return this->GetData(index);
 }
 
 
-int SequenceList::Locate(element_type elem) {
-    for (int i = 0; i < this->length; i++) {
-        if (this->data[i] == elem) {
+int SequenceList::Locate(element_type elem) const {
+    for (int i = 0; i < this->GetLength(); i++) {
+        if (this->GetData(i) == elem) {
             return i;
         }
     }
@@ -238,8 +296,8 @@ int SequenceList::Locate(element_type elem) {
     return -1;
 }
 
-bool SequenceList::Empty() {
-    if (this->length == 0) {
+bool SequenceList::Empty() const {
+    if (this->GetLength() == 0) {
         return false;
     }
     else {
@@ -247,9 +305,9 @@ bool SequenceList::Empty() {
     }
 }
 
-bool SequenceList::Destroy() {
-    if (this->data) {
-        free(this->data);
+bool SequenceList::Destroy() const {
+    if (this->GetData()) {
+        free(this->GetData());
     }
     return true;
 }
