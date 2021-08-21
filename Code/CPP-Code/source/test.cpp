@@ -21,12 +21,13 @@ int SequenceListTest() {
 int LinkListTest() {
     LinkListWithHead list;
     //cout << list.Empty() << endl;
-    //element_type a[6] = { '1','2','3','4','5','6' };
-    //list.LoopInsert(a, 1, 6);
-    list.Insert(1, '3');
+    element_type a[6] = { '1','2','3','4','5','6' };
+    list.PriorInsert(a, 2, 3);
     list.Print();
-    list.Insert(2, '4');
-    list.Print();
+    cout << list.GetLength() << endl;
+    LinkListWithoutHead list2;
+    list2.PriorInsert(a, 2, 3);
+    list2.Print();
+    cout << list2.GetLength() << endl;
     return 0;
 }
-

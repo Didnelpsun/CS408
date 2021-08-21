@@ -56,8 +56,10 @@ public:
 	bool Empty() const;
 	// 插入
 	virtual bool Insert(int index, element_type data) = 0;
-	// 循环插入
-	bool LoopInsert(element_type* elem, int start, int length);
+	// 前插入
+	bool PriorInsert(element_type* elem, int start, int length);
+	// 后插入
+	bool NextInsert(element_type* elem, int start, int length);
 };
 
 class LinkListWithHead : public LinkList {
@@ -192,7 +194,7 @@ bool LinkListWithHead::Print() {
 	cout << "第0个元素值为空" << endl;
 	// 当前遍历指针
 	LinkListNode* p = this->GetNext();
-	if (p != nullptr) {
+	while (p != nullptr) {
 		cout << "第" << i << "个元素值为" << p->GetData() << endl;
 		i++;
 		p = p->GetNext();
@@ -201,16 +203,16 @@ bool LinkListWithHead::Print() {
 }
 
 bool LinkListWithoutHead::Print() {
-	int i = 1;
+	int i = 0;
 	if (this->GetLength() == 0) {
 		return true;
 	}
 	cout << "第" << i << "个元素值为" << this->GetData() << endl;
 	// 当前遍历指针
 	LinkListNode* p = this->GetNext();
-	if (p != nullptr) {
-		cout << "第" << i << "个元素值为" << p->GetData() << endl;
+	while (p != nullptr) {
 		i++;
+		cout << "第" << i << "个元素值为" << p->GetData() << endl;
 		p = p->GetNext();
 	}
 	return true;
@@ -245,82 +247,99 @@ bool LinkListWithHead::Insert(int index, element_type data) {
 		cout << "Insert:插入索引值过大！" << endl;
 		return false;
 	}
-	cout << i << index << endl;
 	// 此时i==index-1
 	// 将p原来的后继给新的结点
 	s->SetNext(p->GetNext());
 	p->SetNext(s);
-    cout << p->GetNext() << endl;
     this->SetLength();
 	return true;
 }
 
 bool LinkListWithoutHead::Insert(int index, element_type data) {
-	return true;
-
-}
-
-bool LinkList::LoopInsert(element_type* elem, int start, int length) {
-	for (int i = 1; i < length; i++) {
-		bool result = this->Insert(i, elem[i + start]);
-		if (!result) {
-			cout << "LoopInsert:循环插入失败！" << endl;
-			return false;
-		}
+	if (index < 0) {
+		cout << "Insert:插入索引值过小！" << endl;
+		return false;
 	}
+	if (index == 0) {
+		LinkListNode* node = new LinkListNode(this->GetData());
+		this->SetData(data);
+		this->SetLength();
+		return true;
+	}
+	// 定义一个结点指针p指向当前扫描到的结点
+	LinkListNode* p;
+	// 定义一个变量i表示当前扫描到的结点的索引号
+	int i = 1;
+	// 将链表头结点的next指向p，为第1个结点
+	p = this->GetNext();
+	LinkListNode* s = new LinkListNode(data);
+	// 如果该链表为空链表
+	if (p == nullptr) {
+		this->SetLength();
+		this->SetNext(s);
+		return true;
+	}
+	// 循环遍历到达指定索引号的单链表的结点
+	// 条件是当前结点的下一个不为空且索引号到达，所到达的结点一定不是空结点
+	while (p->GetNext() != nullptr && i < index - 1) {
+		p = p->GetNext();
+		i++;
+	}
+	// 如果此时i小于index-1，表示遍历完还没有到达对应的索引
+	if (i < index - 1) {
+		cout << "Insert:插入索引值过大！" << endl;
+		return false;
+	}
+	// 此时i==index-1
+	// 将p原来的后继给新的结点
+	s->SetNext(p->GetNext());
+	p->SetNext(s);
+	this->SetLength();
 	return true;
 }
 
-//// 插入无头节点单链表元素
-//// C语言也无法调用这个函数
-//int InsertLinkListWithoutHead(LinkList list, int index, element_type elem) {
-//	if (index < 0) {
-//		cout << "InsertLinkListWithoutHead:插入索引值过小！" << endl;
-//		return false;
-//	}
-//	if (index == 0) {
-//		LinkListNode* s = (LinkListNode*)malloc(sizeof(LinkListNode));
-//		if (s) {
-//			s->data = elem;
-//			// 将s的后继设为list指针
-//			s->next = list;
-//			// 将list指针设置为s指针
-//			list = s;
-//			return true;
-//		}
-//		else {
-//			cout << "InsertLinkListWithoutHead:分配内存失败！" << endl;
-//			return false;
-//		}
-//	}
-//	// 定义一个结点指针p指向当前扫描到的结点
-//	LinkListNode* p;
-//	// 定义一个变量i表示当前扫描到的结点的索引号
-//	int i = 0;
-//	// 将链表头结点指向p，为第0个结点
-//	p = list;
-//	// 循环遍历到达指定索引号的单链表的结点
-//	// 条件是当前结点的下一个不为空且索引号到达，所到达的结点一定不是空结点
-//	while (p->next != NULL && i < index - 1) {
-//		p = p->next;
-//		i++;
-//	}
-//	// 如果此时i小于index-1，表示遍历完还没有到达对应的索引
-//	if (i < index - 1) {
-//		cout << "InsertLinkListWithoutHead:插入索引值过大！" << endl;
-//		return false;
-//	}
-//	// 此时i==index-1
-//	LinkListNode* s = (LinkListNode*)malloc(sizeof(LinkListNode));
-//	if (s) {
-//		s->data = elem;
-//		// 将p原来的后继给新的结点
-//		s->next = p->next;
-//		p->next = s;
-//		return true;
-//	}
-//	else {
-//		cout << "InsertLinkListWithoutHead:分配空间失败！" << endl;
-//		return false;
-//	}
-//}
+bool LinkList::PriorInsert(element_type* elem, int start, int length) {
+	if (this->GetType()) {
+		for (int i = 0; i < length; i++) {
+			bool result = this->Insert(1, elem[i + start]);
+			if (!result) {
+				cout << "PriorInsert:循环插入失败！" << endl;
+				return false;
+			}
+		}
+		return true;
+	}
+	else {
+		for (int i = 0; i < length; i++) {
+			bool result = this->Insert(0, elem[i + start]);
+			if (!result) {
+				cout << "PriorInsert:循环插入失败！" << endl;
+				return false;
+			}
+		}
+		return true;
+	}
+}
+
+bool LinkList::NextInsert(element_type* elem, int start, int length) {
+	if (this->GetType()) {
+		for (int i = 0; i < length; i++) {
+			bool result = this->Insert(i + 1, elem[i + start]);
+			if (!result) {
+				cout << "NextInsert:循环插入失败！" << endl;
+				return false;
+			}
+		}
+		return true;
+	}
+	else {
+		for (int i = 0; i < length; i++) {
+			bool result = this->Insert(i, elem[i + start]);
+			if (!result) {
+				cout << "NextInsert:循环插入失败！" << endl;
+				return false;
+			}
+		}
+		return true;
+	}
+}
