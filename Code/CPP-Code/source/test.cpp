@@ -22,12 +22,14 @@ int LinkListTest() {
     LinkListWithHead list;
     //cout << list.Empty() << endl;
     element_type a[6] = { '1','2','3','4','5','6' };
-    list.PriorInsert(a, 2, 3);
+    list.NextInsert(a, 0, 5);
     list.Print();
-    cout << list.GetLength() << endl;
+    list.Delete(2, 3);
+    list.Print();
+    /*cout << list.GetLength() << endl;
     LinkListWithoutHead list2;
     list2.PriorInsert(a, 2, 3);
     list2.Print();
-    cout << list2.GetLength() << endl;
+    cout << list2.GetLength() << endl;*/
     return 0;
 }

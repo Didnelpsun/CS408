@@ -34,7 +34,7 @@ public:
     // 打印函数
     bool Print() const;
     // 循环插入函数
-    bool LoopInsert(element_type *elem, int start, int length);
+    bool LoopInsert(element_type *elem, int index, int length);
     // 删除函数
     bool Delete(int index, element_type &elem);
     // 多个删除函数
@@ -238,9 +238,9 @@ bool DynamicSequenceList::Insert(int index, element_type elem) {
     return true;
 }
 
-bool SequenceList::LoopInsert(element_type *elem, int start, int length) {
+bool SequenceList::LoopInsert(element_type *elem, int index, int length) {
     for (int i = 0; i < length; i++) {
-        bool result = this->Insert(i, elem[i + start]);
+        bool result = this->Insert(i, elem[i + index]);
         if (!result) {
             cout << "LoopInsert:循环插入失败！" << endl;
             return false;
