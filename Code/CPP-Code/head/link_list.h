@@ -388,10 +388,6 @@ bool LinkList::Delete(int index) {
 	return true;
 }
 
-bool LinkList::Delete(int index, int length) {
-    return false;
-}
-
 bool LinkListWithHead::Delete(int index, int length) {
 	if (index < 1) {
 	    cout << "Delete:删除索引值" << index << "过小！" << endl;
@@ -475,9 +471,9 @@ bool LinkListWithoutHead::Delete(int index, int length) {
 		cout << "Delete:删除索引值" << index << "过大！" << endl;
 		return false;
 	}
-	// 此时i==index-1，start到达，求end
-	end = start;
-	for (int i = 0; i < length; i++) {
+	// 从1开始遍历
+	end = this->GetNext();
+	for (int i = 1; i < index + length - 1; i++) {
 		end = end->GetNext();
 		if (end == nullptr) {
 			cout << "Delete:删除索引最大值" << index + length - 1 << "大于链表最大索引" << length << endl;
@@ -485,7 +481,11 @@ bool LinkListWithoutHead::Delete(int index, int length) {
 		}
 	}
 	if (index == 0) {
-		this->SetNext(end);
+		this->SetData(end->GetNext()->GetData());
+		this->SetNext(end->GetNext()->GetNext());
+	}
+	if (index == 1) {
+		this->SetNext(end->GetNext());
 	}
 	else {
 		start->SetNext(end->GetNext());
