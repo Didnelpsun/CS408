@@ -8,8 +8,7 @@ int SequenceListTest() {
     element_type a[6] = {'1','2','3','4','5','6'};
     list.LoopInsert(a, 0, 6);
     list.Print();
-    element_type b[4];
-    list.LoopDelete(1, 3, b);
+    element_type* b = list.LoopDelete(1, 3);
     list.Print();
     for (int i = 0; i < 3; i++) {
         cout << b[i] << endl;
@@ -33,7 +32,11 @@ int LinkListTest() {
     auto* list = new LinkListWithoutHead();
     list->NextInsert(a, 0 ,5);
     list->Print();
-    list->Delete(2,4);
+    int len = 3;
+    element_type* b = list->Delete(2, len);
+    for (int i = 0; i < len; i++) {
+        cout << b[i] << endl;
+    }
     list->Print();
     return 0;
 }

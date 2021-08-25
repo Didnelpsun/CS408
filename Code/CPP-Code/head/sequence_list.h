@@ -36,9 +36,9 @@ public:
     // 循环插入函数
     bool LoopInsert(element_type *elem, int index, int length);
     // 删除函数
-    bool Delete(int index, element_type &elem);
+    element_type Delete(int index);
     // 多个删除函数
-    bool LoopDelete(int index, int len, element_type *elem);
+    element_type* LoopDelete(int index, int length);
     // 按位获取元素
     element_type GetElem(int index) const;
     // 按值获取元素
@@ -249,32 +249,37 @@ bool SequenceList::LoopInsert(element_type *elem, int index, int length) {
     return true;
 }
 
-bool SequenceList::Delete(int index, element_type &elem) {
+element_type SequenceList::Delete(int index) {
     if (index >= this->GetLength() || index < 0) {
         cout << "Delete:删除索引" << index << "超过索引范围！" << endl;
         return false;
     }
-    elem = this->GetData(index);
     for (int i = index; i < this->GetLength(); i++) {
         this->SetData(i, this->GetData(i+1));
     }
     this->SetLength(this->GetLength()-1);
-    return true;
+    return this->GetData(index);
 }
 
-bool SequenceList::LoopDelete(int index, int length, element_type *elem) {
+element_type* SequenceList::LoopDelete(int index, int length) {
     if (index + length > this->GetLength() || index < 0) {
         cout << "LoopDelete:删除索引" << index + length << "超过索引范围！" << endl;
         return false;
     }
-    for (int i = index; i <= this->GetLength() - length; i++) {
-        if (i < index + length) {
-            elem[i - index] = this->GetData(i);
+    auto* elem = (element_type*)malloc(length * sizeof(element_type));
+    if (elem) {
+        for (int i = index; i <= this->GetLength() - length; i++) {
+            if (i < index + length) {
+                elem[i - index] = this->GetData(i);
+            }
+            this->SetData(i, this->GetData(i + length));
         }
-        this->SetData(i, this->GetData(i + length));
+        this->SetLength(this->GetLength() - length);
     }
-    this->SetLength(this->GetLength()-length);
-    return true;
+    else {
+        cout << "LoopDelete:申请空间失败！" << endl;
+    }
+    return elem;
 }
 
 element_type SequenceList::GetElem(int index) const {

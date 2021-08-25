@@ -63,8 +63,8 @@ public:
 	// 后插入
 	bool NextInsert(element_type* elem, int start, int length);
 	// 删除
-	virtual bool Delete(int index);
-	virtual bool Delete(int index, int length) = 0;
+    element_type Delete(int index);
+	virtual element_type* Delete(int index, int length) = 0;
 };
 
 class LinkListWithHead : public LinkList {
@@ -76,7 +76,7 @@ public:
 	// 插入
 	bool Insert(int index, element_type data) override;
 	// 删除
-	bool Delete(int index, int length) override;
+    element_type * Delete(int index, int length) override;
 };
 
 class LinkListWithoutHead : public LinkList {
@@ -95,7 +95,7 @@ public:
 	// 插入
 	bool Insert(int index, element_type data) override;
 	// 删除
-	bool Delete(int index, int length) override;
+    element_type * Delete(int index, int length) override;
 };
 
 bool LinkListNode::SetData(element_type data) {
@@ -383,18 +383,19 @@ bool LinkList::NextInsert(element_type* elem, int start, int length) {
 	}
 }
 
-bool LinkList::Delete(int index) {
-	this->Delete(index, 1);
-	return true;
+element_type LinkList::Delete(int index) {
+	return *(this->Delete(index, 1));
 }
 
-bool LinkListWithHead::Delete(int index, int length) {
+element_type* LinkListWithHead::Delete(int index, int length) {
+	auto* data = (element_type*)malloc(length * sizeof(element_type));
 	if (index < 1) {
 	    cout << "Delete:删除索引值" << index << "过小！" << endl;
-	    return false;
+	    return data;
 	}
 	if (length < 1) {
 		cout << "Delete:删除长度" << length << "过小！" << endl;
+		return data;
 	}
 	// 定义一个结点指针start指向当前扫描到的结点，即要删除第一的元素的前一个
 	LinkListNode* start;
@@ -407,7 +408,7 @@ bool LinkListWithHead::Delete(int index, int length) {
 	// 如果链表没有任何数据
 	if(start == nullptr) {
 	    cout << "Delete:链表为空！" << endl;
-	    return false;
+	    return data;
 	}
 	// 循环遍历到达指定索引号的单链表的结点
 	// 条件是当前结点的下一个不为空且索引号到达，所到达的结点一定不是空结点
@@ -423,10 +424,11 @@ bool LinkListWithHead::Delete(int index, int length) {
 	// 此时i==index-1，start到达，求end
 	end = start;
 	for (int i = 0; i < length; i++) {
+		data[i] = end->GetData();
 		end = end->GetNext();
 		if (end == nullptr) {
 			cout << "Delete:删除索引最大值" << index + length - 1 << "大于链表最大索引" << length << endl;
-			return false;
+			return data;
 		}
 	}
 	if (index == 1) {
@@ -436,13 +438,14 @@ bool LinkListWithHead::Delete(int index, int length) {
 		start->SetNext(end->GetNext());
 	}
 	this->SetLength(this->GetLength() - length);
-	return true;
+	return data;
 }
 
-bool LinkListWithoutHead::Delete(int index, int length) {
+element_type* LinkListWithoutHead::Delete(int index, int length) {
+	auto* data = (element_type*)malloc(length * sizeof(element_type));
 	if (index < 0) {
 		cout << "Delete:删除索引值" << index << "过小！" << endl;
-		return false;
+		return data;
 	}
 	if (length < 1) {
 		cout << "Delete:删除长度" << length << "过小！" << endl;
@@ -458,8 +461,9 @@ bool LinkListWithoutHead::Delete(int index, int length) {
 	// 如果链表没有任何数据
 	if (this->GetData() == NULL) {
 		cout << "Delete:链表为空！" << endl;
-		return false;
+		return data;
 	}
+	data[0] = this->GetData();
 	// 循环遍历到达指定索引号的单链表的结点
 	// 条件是当前结点的下一个不为空且索引号到达，所到达的结点一定不是空结点
 	while (start->GetNext() != nullptr && i < index - 1) {
@@ -469,15 +473,18 @@ bool LinkListWithoutHead::Delete(int index, int length) {
 	// 如果此时i小于index-1，表示遍历完还没有到达对应的索引
 	if (i < index - 1) {
 		cout << "Delete:删除索引值" << index << "过大！" << endl;
-		return false;
+		return data;
 	}
 	// 从1开始遍历
 	end = this->GetNext();
 	for (int i = 1; i < index + length - 1; i++) {
+		if (i > index) {
+			data[i - index] = end->GetData();
+		}
 		end = end->GetNext();
 		if (end == nullptr) {
 			cout << "Delete:删除索引最大值" << index + length - 1 << "大于链表最大索引" << length << endl;
-			return false;
+			return data;
 		}
 	}
 	if (index == 0) {
@@ -491,5 +498,5 @@ bool LinkListWithoutHead::Delete(int index, int length) {
 		start->SetNext(end->GetNext());
 	}
 	this->SetLength(this->GetLength() - length);
-	return true;
+	return data;
 }
