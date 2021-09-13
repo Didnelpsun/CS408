@@ -3,7 +3,7 @@
 #include "../head/sequence_list.h"
 #include "../head/link_list.h"
 
-int SequenceListTest() {
+bool SequenceListTest() {
     DynamicSequenceList list;
     element_type a[6] = {'1','2','3','4','5','6'};
     list.LoopInsert(a, 0, 6);
@@ -14,10 +14,10 @@ int SequenceListTest() {
         cout << b[i] << endl;
     }
     list.Destroy();
-    return 0;
+    return true;
 }
 
-int LinkListTest() {
+bool LinkListTest() {
     element_type a[6] = {'0', '1','2','3','4','5' };
 //    LinkListWithHead list;
 //    list.NextInsert(a, 0, 5);
@@ -38,5 +38,5 @@ int LinkListTest() {
         cout << b[i] << endl;
     }
     list->Print();
-    return 0;
+    return true;
 }

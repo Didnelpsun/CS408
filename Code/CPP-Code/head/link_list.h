@@ -419,7 +419,7 @@ element_type* LinkListWithHead::Delete(int index, int length) {
 	// 如果此时i小于index-1，表示遍历完还没有到达对应的索引
 	if (i < index - 1) {
 	    cout << "Delete:删除索引值" << index << "过大！" << endl;
-	    return false;
+	    return data;
 	}
 	// 此时i==index-1，start到达，求end
 	end = start;
@@ -427,7 +427,7 @@ element_type* LinkListWithHead::Delete(int index, int length) {
 		data[i] = end->GetData();
 		end = end->GetNext();
 		if (end == nullptr) {
-			cout << "Delete:删除索引最大值" << index + length - 1 << "大于链表最大索引" << length << endl;
+		    cout << "Delete:删除索引最大值" << index + length - 1 << "大于链表最大索引" << length << "！" << endl;
 			return data;
 		}
 	}
@@ -438,6 +438,8 @@ element_type* LinkListWithHead::Delete(int index, int length) {
 		start->SetNext(end->GetNext());
 	}
 	this->SetLength(this->GetLength() - length);
+	free(start);
+	free(end);
 	return data;
 }
 
@@ -483,7 +485,7 @@ element_type* LinkListWithoutHead::Delete(int index, int length) {
 		}
 		end = end->GetNext();
 		if (end == nullptr) {
-			cout << "Delete:删除索引最大值" << index + length - 1 << "大于链表最大索引" << length << endl;
+			cout << "Delete:删除索引最大值" << index + length - 1 << "大于链表最大索引" << length << "！" << endl;
 			return data;
 		}
 	}
@@ -498,5 +500,7 @@ element_type* LinkListWithoutHead::Delete(int index, int length) {
 		start->SetNext(end->GetNext());
 	}
 	this->SetLength(this->GetLength() - length);
+	free(start);
+	free(end);
 	return data;
 }
