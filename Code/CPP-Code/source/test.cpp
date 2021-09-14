@@ -32,11 +32,12 @@ bool LinkListTest() {
     auto* list = new LinkListWithoutHead();
     list->NextInsert(a, 0 ,5);
     list->Print();
-    int len = 3;
+    int len = 5;
     element_type* b = list->Delete(2, len);
     for (int i = 0; i < len; i++) {
         cout << b[i] << endl;
     }
     list->Print();
+    cout << list->Locate('1') << endl;
     return true;
 }

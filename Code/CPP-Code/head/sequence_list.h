@@ -65,9 +65,9 @@ private:
     int _max_size{};
 public:
     // 设置最大容量
-    bool SetMaxSize(int length);
+    bool SetMaxSize(int max_size);
     // 获取最大容量
-    int GetMaxSize();
+    int GetMaxSize() const;
     // 构造函数
     DynamicSequenceList();
     // 插入函数
@@ -120,12 +120,12 @@ StaticSequenceList::StaticSequenceList() : SequenceList() {
     this->SetData((element_type*)malloc(MAXSIZE * sizeof(element_type)));
 }
 
-bool DynamicSequenceList::SetMaxSize(int length) {
-    this->_max_size = length;
+bool DynamicSequenceList::SetMaxSize(int max_size) {
+    this->_max_size = max_size;
     return true;
 }
 
-int DynamicSequenceList::GetMaxSize() {
+int DynamicSequenceList::GetMaxSize() const {
     return this->_max_size;
 }
 
@@ -264,7 +264,7 @@ element_type SequenceList::Delete(int index) {
 element_type* SequenceList::LoopDelete(int index, int length) {
     if (index + length > this->GetLength() || index < 0) {
         cout << "LoopDelete:删除索引" << index + length << "超过索引范围！" << endl;
-        return false;
+        return nullptr;
     }
     auto* elem = (element_type*)malloc(length * sizeof(element_type));
     if (elem) {
@@ -285,7 +285,7 @@ element_type* SequenceList::LoopDelete(int index, int length) {
 element_type SequenceList::GetElem(int index) const {
     if (index >= this->GetLength() || index < 0) {
         cout << "GetElem:查找索引" << index << "超过索引范围！" << endl;
-        return DEFAULTDATA;
+        return DEFAULTELEM;
     }
     return this->GetData(index);
 }
