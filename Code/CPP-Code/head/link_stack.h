@@ -1,0 +1,76 @@
+#include <cstdlib>
+#include <iostream>
+#include "head.h"
+
+using namespace std;
+
+// 链栈
+class LinkStackNode{
+private:
+    // 数据
+    element_type _data{};
+    // 指针
+    LinkStackNode* _next{};
+public:
+    // 设置数据
+    bool SetData(element_type data);
+
+    // 取数据
+    element_type GetData();
+
+    // 设置指针
+    bool SetNext(LinkStackNode* next);
+
+    // 获取指针
+    LinkStackNode* GetNext();
+
+    // 构造函数
+    LinkStackNode();
+
+    explicit LinkStackNode(element_type data);
+
+    LinkStackNode(element_type data, LinkStackNode* next);
+
+    // 销毁
+    bool Destroy();
+};
+
+bool LinkStackNode::SetData(element_type data) {
+    this->_data = data;
+    return true;
+}
+
+element_type LinkStackNode::GetData() {
+    return this->_data;
+}
+
+bool LinkStackNode::SetNext(LinkStackNode *next) {
+    this->_next = next;
+    return true;
+}
+
+LinkStackNode *LinkStackNode::GetNext() {
+    return this->_next;
+}
+
+LinkStackNode::LinkStackNode() {
+    this->SetData(NULL);
+    this->SetNext(nullptr);
+}
+
+LinkStackNode::LinkStackNode(element_type data) {
+    this->SetData(data);
+    this->SetNext(nullptr);
+}
+
+LinkStackNode::LinkStackNode(element_type data, LinkStackNode *next) {
+    this->SetData(data);
+    this->SetNext(next);
+}
+
+bool LinkStackNode::Destroy() {
+    this->SetData(NULL);
+    delete(this->GetNext());
+    this->SetNext(nullptr);
+    return true;
+}

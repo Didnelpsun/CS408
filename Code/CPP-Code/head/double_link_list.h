@@ -8,7 +8,7 @@ private:
     // 数据
     element_type _data{};
     // 指针
-    DoubleLinkListNode *_prior, *_next{};
+    DoubleLinkListNode *_prior{}, *_next{};
 public:
     // 设置数据
     bool SetData(element_type elem);
@@ -17,10 +17,10 @@ public:
     element_type GetData() const;
 
     // 设置prior
-    bool SetPrior(DoubleLinkListNode *prior)
+    bool SetPrior(DoubleLinkListNode *prior);
 
     // 获取prior
-    DoubleLinkList *GetPrior();
+    DoubleLinkListNode *GetPrior();
 
     // 设置next
     bool SetNext(DoubleLinkListNode *next);
@@ -35,37 +35,37 @@ public:
 
     DoubleLinkListNode(element_type elem, DoubleLinkListNode *next);
 
-    DoubleLinkListNode(element_type elem, DoubleLinkListNode *prior, DoubleLinkListNode *next)
+    DoubleLinkListNode(element_type elem, DoubleLinkListNode *prior, DoubleLinkListNode *next);
 
     // 销毁
     bool Destory();
 };
 
 bool DoubleLinkListNode::SetData(element_type elem) {
-    this._data = elem;
+    this->_data = elem;
     return true;
 }
 
 element_type DoubleLinkListNode::GetData() const {
-    return this._data;
+    return this->_data;
 }
 
 bool DoubleLinkListNode::SetPrior(DoubleLinkListNode *prior) {
-    this._prior = prior;
+    this->_prior = prior;
     return true;
 }
 
-DoubleLinkListNode *DoubleLinkListNode::GetPrior() const {
-    return this._prior;
+DoubleLinkListNode *DoubleLinkListNode::GetPrior() {
+    return this->_prior;
 }
 
 bool DoubleLinkListNode::SetNext(DoubleLinkListNode *next) {
-    this._next=next;
+    this->_next=next;
     return true;
 }
 
-DoubleLinkListNode *DoubleLinkListNode::GetNext() const {
-    return this._next;
+DoubleLinkListNode *DoubleLinkListNode::GetNext() {
+    return this->_next;
 }
 
 DoubleLinkListNode::DoubleLinkListNode() {
@@ -92,10 +92,11 @@ DoubleLinkListNode::DoubleLinkListNode(element_type elem, DoubleLinkListNode *pr
     this->SetData(elem);
 }
 
-bool DoubleLinkListNode::Destroy{
-    free(this.GetPrior());
-    free(this.GetNext());
+bool DoubleLinkListNode::Destory() {
+    free(this->GetPrior());
+    free(this->GetNext());
     this->SetPrior(nullptr);
     this->SetNext(nullptr);
     this->SetData(NULL);
-};
+    return true;
+}

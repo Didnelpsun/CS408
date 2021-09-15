@@ -1,4 +1,4 @@
-﻿// 初始化最大长度
+// 初始化最大长度
 #define MAXSIZE 5
 // 定义默认值
 #define DEFAULTELEM '0'
