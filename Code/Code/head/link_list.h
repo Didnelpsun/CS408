@@ -16,6 +16,12 @@ LinkList InitLinkList() {
     return list;
 }
 
+bool InitLinkList(LinkList &list) {
+    list->data = DEFAULTELEM;
+    list->next = nullptr;
+    return true;
+}
+
 // 判空
 bool EmptyLinkList(LinkList list) {
     return list->next == nullptr && list->data == DEFAULTELEM;
@@ -43,7 +49,8 @@ bool PrintLinkList(LinkList list) {
     }
     // 当前遍历指针
     LinkListNode *node = list;
-    while (!TypeLinkList(list) && node != nullptr && node->data != DEFAULTELEM || TypeLinkList(list) && node != nullptr) {
+    while (!TypeLinkList(list) && node != nullptr && node->data != DEFAULTELEM ||
+           TypeLinkList(list) && node != nullptr) {
         printf("第%d个元素值为%c\n", i, node->data);
         node = node->next;
         i++;
@@ -79,7 +86,7 @@ bool InsertLinkListWithHead(LinkList &list, int index, element_type elem) {
         return false;
     }
     // 此时i==index-1
-    auto *s = new LinkListNode();
+    auto *s = (LinkListNode *) malloc(sizeof(LinkListNode));
     s->data = elem;
     // 将p原来的后继给新的结点
     s->next = p->next;
@@ -97,7 +104,7 @@ bool InsertLinkListWithoutHead(LinkList &list, int index, element_type elem) {
         printf("InsertLinkListWithoutHead:插入索引值%d过小！\n", index);
         return false;
     }
-    auto *s = new LinkListNode();
+    auto *s = (LinkListNode *) malloc(sizeof(LinkListNode));
     if (index == 0) {
         s->data = elem;
         // 将s的后继设为list指针
@@ -305,7 +312,7 @@ element_type GetLinkListElem(LinkList list, int index) {
 }
 
 // 按值查找
-int LocateLinkList(LinkList list, element_type elem){
+int LocateLinkList(LinkList list, element_type elem) {
     LinkListNode *node = list;
     for (int i = 0; i < GetLengthLinkList(list); i++) {
         if (node->data == elem) {
@@ -319,7 +326,7 @@ int LocateLinkList(LinkList list, element_type elem){
 // 销毁
 bool DestroyLinkList(LinkList &list) {
     list->data = DEFAULTELEM;
-    delete(list);
+    delete (list);
     return true;
 }
 

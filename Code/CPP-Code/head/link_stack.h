@@ -16,7 +16,7 @@ public:
     bool SetData(element_type data);
 
     // 取数据
-    element_type GetData();
+    element_type GetData() const;
 
     // 设置指针
     bool SetNext(LinkStackNode* next);
@@ -40,7 +40,7 @@ bool LinkStackNode::SetData(element_type data) {
     return true;
 }
 
-element_type LinkStackNode::GetData() {
+element_type LinkStackNode::GetData() const {
     return this->_data;
 }
 

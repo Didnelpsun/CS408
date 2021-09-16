@@ -5,7 +5,7 @@
 // 顺序栈
 typedef struct {
     // 栈内元素
-    element_type data[MAXSIZE];
+    element_type *data;
     // 栈顶指针
     int top;
     // 最大容量
@@ -14,9 +14,33 @@ typedef struct {
 
 // 初始化
 bool InitSequenceStack(SequenceStack &stack) {
+    stack.data = (element_type *) malloc(sizeof(element_type) * MAXSIZE);
     stack.top = -1;
     stack.max_size = MAXSIZE;
     return true;
+}
+
+bool InitSequenceStack(SequenceStack &stack, int max_size) {
+    stack.data = (element_type *) malloc(sizeof(element_type) * max_size);
+    stack.top = -1;
+    stack.max_size = max_size;
+    return true;
+}
+
+SequenceStack InitSequenceStack(){
+    auto* stack = (SequenceStack*) malloc(sizeof(SequenceStack));
+    stack->data = (element_type *) malloc(sizeof(element_type) * MAXSIZE);
+    stack->top = -1;
+    stack->max_size = MAXSIZE;
+    return (SequenceStack &) stack;
+}
+
+SequenceStack InitSequenceStack(int max_size){
+    auto* stack = (SequenceStack*) malloc(sizeof(SequenceStack));
+    stack->data = (element_type *) malloc(sizeof(element_type) * max_size);
+    stack->top = -1;
+    stack->max_size = max_size;
+    return (SequenceStack &) stack;
 }
 
 // 判空

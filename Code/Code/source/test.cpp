@@ -5,6 +5,9 @@
 #include "../head/double_link_list.h"
 #include "../head/static_link_list.h"
 #include "../head/sequence_stack.h"
+#include "../head/link_stack.h"
+#include "../head/sequence_queue.h"
+#include "../head/link_queue.h"
 
 using namespace std;
 

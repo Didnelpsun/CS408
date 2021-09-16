@@ -4,7 +4,7 @@
 
 // 静态顺序表
 typedef struct {
-    element_type data[MAXSIZE];
+    element_type *data;
     int length;
 } StaticSequenceList;
 
@@ -16,15 +16,59 @@ typedef struct {
 
 // 初始化
 bool InitSequenceList(StaticSequenceList &list) {
+    list.data = (element_type *) malloc(sizeof(element_type) * MAXSIZE);
     list.length = 0;
     return true;
 }
 
+bool InitSequenceList(StaticSequenceList &list, int max_size) {
+    list.data = (element_type *) malloc(sizeof(element_type) * max_size);
+    list.length = 0;
+    return true;
+}
+
+StaticSequenceList InitStaticSequenceList() {
+    auto *list = (StaticSequenceList *) malloc(sizeof(StaticSequenceList));
+    list->data = (element_type *) malloc(sizeof(element_type) * MAXSIZE);
+    list->length = 0;
+    return (StaticSequenceList &) list;
+}
+
+StaticSequenceList InitStaticSequenceList(int max_size) {
+    auto *list = (StaticSequenceList *) malloc(sizeof(StaticSequenceList));
+    list->data = (element_type *) malloc(sizeof(element_type) * max_size);
+    list->length = 0;
+    return (StaticSequenceList &) list;
+}
+
 bool InitSequenceList(DynamicSequenceList &list) {
     list.length = 0;
-    list.data = new element_type[MAXSIZE];
+    list.data = (element_type *) malloc(sizeof(element_type) * MAXSIZE);
     list.max_size = MAXSIZE;
     return true;
+}
+
+bool InitSequenceList(DynamicSequenceList &list, int max_size) {
+    list.length = 0;
+    list.data = (element_type *) malloc(sizeof(element_type) * max_size);
+    list.max_size = max_size;
+    return true;
+}
+
+DynamicSequenceList InitDynamicSequenceList() {
+    auto *list = (DynamicSequenceList *) malloc(sizeof(DynamicSequenceList));
+    list->data = (element_type *) malloc(sizeof(element_type) * MAXSIZE);
+    list->length = 0;
+    list->max_size = MAXSIZE;
+    return (DynamicSequenceList &) list;
+}
+
+DynamicSequenceList InitDynamicSequenceList(int max_size) {
+    auto *list = (DynamicSequenceList *) malloc(sizeof(DynamicSequenceList));
+    list->data = (element_type *) malloc(sizeof(element_type) * max_size);
+    list->length = 0;
+    list->max_size = MAXSIZE;
+    return (DynamicSequenceList &) list;
 }
 
 // 打印
@@ -170,7 +214,7 @@ int LocateSequenceList(List list, element_type elem) {
 
 // 销毁动态顺序表
 int DestroyDynamicSequenceList(DynamicSequenceList &list) {
-    delete(list.data);
+    delete (list.data);
     return 0;
 }
 
