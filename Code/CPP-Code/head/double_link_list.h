@@ -71,7 +71,7 @@ DoubleLinkListNode *DoubleLinkListNode::GetNext() {
 DoubleLinkListNode::DoubleLinkListNode() {
     this->SetPrior(nullptr);
     this->SetNext(nullptr);
-    this->SetData(NULL);
+    this->SetData(DEFAULTELEM);
 }
 
 DoubleLinkListNode::DoubleLinkListNode(element_type elem) {
@@ -97,6 +97,6 @@ bool DoubleLinkListNode::Destory() {
     free(this->GetNext());
     this->SetPrior(nullptr);
     this->SetNext(nullptr);
-    this->SetData(NULL);
+    this->SetData(DEFAULTELEM);
     return true;
 }

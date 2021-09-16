@@ -48,7 +48,7 @@ int StaticLinkListNode::GetNext() const {
 }
 
 StaticLinkListNode::StaticLinkListNode() {
-    this->SetData(NULL);
+    this->SetData(DEFAULTELEM);
     this->SetNext(-1);
 }
 
@@ -63,7 +63,7 @@ StaticLinkListNode::StaticLinkListNode(element_type elem, int next) {
 }
 
 bool StaticLinkListNode::Destroy() {
-    this->SetData(NULL);
+    this->SetData(DEFAULTELEM);
     this->SetNext(NULL);
     return true;
 }

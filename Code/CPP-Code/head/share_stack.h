@@ -158,7 +158,8 @@ int ShareStack::LengthRight() const {
 
 bool ShareStack::PushLeft(element_type elem) {
     if (this->Full()) {
-        cout << "PushLeft:栈满无法进栈！" << endl;
+        // cout << "PushLeft:栈满无法进栈！" << endl;
+        cout << "PushLeft:The stack is full!";
         return false;
     }
     this->_data[this->SetTopLeft()] = elem;
@@ -167,7 +168,8 @@ bool ShareStack::PushLeft(element_type elem) {
 
 bool ShareStack::PushRight(element_type elem) {
     if(this->Full()){
-        cout << "PushRight:栈满无法进栈！" << endl;
+        // cout << "PushRight:栈满无法进栈！" << endl;
+        cout << "PushRight:The stack is full!" << endl;
         return false;
     }
     this->_data[this->SetTopRight()] = elem;
@@ -176,32 +178,36 @@ bool ShareStack::PushRight(element_type elem) {
 
 element_type ShareStack::PopLeft() {
     if (this->EmptyLeft()) {
-        cout << "PopLeft:栈空无法出栈！" << endl;
-        return NULL;
+        // cout << "PopLeft:栈空无法出栈！" << endl;
+        cout << "PopLeft:The stack is empty!" << endl;
+        return DEFAULTELEM;
     }
     return this->_data[this->SetTopLeft(this->GetTopLeft() - 1)];
 }
 
 element_type ShareStack::PopRight() {
     if (this->EmptyRight()) {
-        cout << "PopRight:栈空无法出栈！" << endl;
-        return NULL;
+        // cout << "PopRight:栈空无法出栈！" << endl;
+        cout << "PopRight:The stack is empty!" << endl;
+        return DEFAULTELEM;
     }
     return this->_data[this->SetTopRight(this->GetTopRight() + 1)];
 }
 
 element_type ShareStack::TopLeft() {
     if (this->EmptyLeft()) {
-        cout << "TopLeft:栈空无法读栈顶元素！" << endl;
-        return NULL;
+        // cout << "TopLeft:栈空无法读栈顶元素！" << endl;
+        cout << "TopLeft:The stack is empty!" << endl;
+        return DEFAULTELEM;
     }
     return this->_data[this->GetTopLeft() - 1];
 }
 
 element_type ShareStack::TopRight() {
     if (this->EmptyRight()) {
-        cout << "TopRight:栈空无法读栈顶元素！" << endl;
-        return NULL;
+        // cout << "TopRight:栈空无法读栈顶元素！" << endl;
+        cout << "TopRight:The stack is empty!" << endl;
+        return DEFAULTELEM;
     }
     return this->_data[this->GetTopRight() + 1];
 }

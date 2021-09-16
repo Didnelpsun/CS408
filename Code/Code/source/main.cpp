@@ -1,9 +1,8 @@
 #include "test.cpp"
 
-
 int main()
 {
-//    SequenceListTest();
+    //SequenceListTest();
     LinkListTest();
     return 0;
 }

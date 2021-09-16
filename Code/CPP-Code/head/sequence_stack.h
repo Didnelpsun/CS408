@@ -111,6 +111,7 @@ int SequenceStack::Length() const {
 bool SequenceStack::Push(element_type elem) {
     if (this->Full()) {
         cout << "Push:栈满无法进栈！" << endl;
+        cout << "Push:The stack is full!" << endl;
         return false;
     }
     this->_data[this->SetTop()] = elem;
@@ -120,7 +121,8 @@ bool SequenceStack::Push(element_type elem) {
 element_type SequenceStack::Pop() {
     if (this->Empty()) {
         cout << "Pop:栈空无法出栈！" << endl;
-        return NULL;
+        cout << "Pop:The stack is empty!" << endl;
+        return DEFAULTELEM;
     }
     return this->_data[this->SetTop(this->GetTop() - 1)];
 }
@@ -128,7 +130,8 @@ element_type SequenceStack::Pop() {
 element_type SequenceStack::Top() {
     if (this->Empty()) {
         cout << "Top:栈空无法读栈顶元素！" << endl;
-        return NULL;
+        cout << "Top:The stack is empty!" << endl;
+        return DEFAULTELEM;
     }
     return this->_data[this->GetTop() - 1];
 }

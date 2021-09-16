@@ -103,7 +103,8 @@ SequenceList::SequenceList() {
 
 bool SequenceList::Print() const {
     for (int i = 0; i < this->GetLength(); i++) {
-        cout << "第" << i + 1 << "个元素值为" << this->GetData(i) << endl;
+        // cout << "第" << i << "个元素值为" << this->GetData(i) << endl;
+        cout << "index: " << i << " -> value: " << this->GetData(i) << endl;
     }
     return true;
 }
@@ -112,7 +113,8 @@ bool SequenceList::LoopInsert(element_type *elem, int index, int length) {
     for (int i = 0; i < length; i++) {
         bool result = this->Insert(i, elem[i + index]);
         if (!result) {
-            cout << "LoopInsert:循环插入失败！" << endl;
+            // cout << "LoopInsert:循环插入失败！" << endl;
+            cout << "LoopInsert:Loop insert failed!" << endl;
             return false;
         }
     }
@@ -121,7 +123,8 @@ bool SequenceList::LoopInsert(element_type *elem, int index, int length) {
 
 element_type SequenceList::Delete(int index) {
     if (index >= this->GetLength() || index < 0) {
-        cout << "Delete:删除索引" << index << "超过索引范围！" << endl;
+        // cout << "Delete:删除索引" << index << "超过索引范围！" << endl;
+        cout << "Delete:Delete index value " << index << " is out of range!" << endl;
         return false;
     }
     for (int i = index; i < this->GetLength(); i++) {
@@ -133,28 +136,26 @@ element_type SequenceList::Delete(int index) {
 
 element_type *SequenceList::LoopDelete(int index, int length) {
     if (index + length > this->GetLength() || index < 0) {
-        cout << "LoopDelete:删除索引" << index + length << "超过索引范围！" << endl;
+        // cout << "LoopDelete:删除索引" << index + length << "超过索引范围！" << endl;
+        cout << "LoopDelete:Loop Delete index value " << index + length << " is out of range!" << endl;
         return nullptr;
     }
     auto *elem = new element_type[length];
-    if (elem) {
-        for (int i = index; i <= this->GetLength() - length; i++) {
-            if (i < index + length) {
-                elem[i - index] = this->GetData(i);
-            }
-            this->SetData(i, this->GetData(i + length));
+    for (int i = index; i <= this->GetLength() - length; i++) {
+        if (i < index + length) {
+            elem[i - index] = this->GetData(i);
         }
-        this->SetLength(this->GetLength() - length);
-    } else {
-        cout << "LoopDelete:申请空间失败！" << endl;
+        this->SetData(i, this->GetData(i + length));
     }
+    this->SetLength(this->GetLength() - length);
     return elem;
 }
 
 element_type SequenceList::GetElem(int index) const {
     if (index >= this->GetLength() || index < 0) {
-        cout << "GetElem:查找索引" << index << "超过索引范围！" << endl;
-        return NULL;
+        // cout << "GetElem:查找索引" << index << "超过索引范围！" << endl;
+        cout << "GetElem:The index " << index << " is out of range!" << endl;
+        return DEFAULTELEM;
     }
     return this->GetData(index);
 }
@@ -166,7 +167,8 @@ int SequenceList::Locate(element_type elem) const {
             return i;
         }
     }
-    cout << "Locate:未能定位到对应值的元素！" << endl;
+    // cout << "Locate:未能定位到对应值的元素！" << endl;
+    cout << "Locate:Can't locate the element with value " << elem << " !" << endl;
     return -1;
 }
 
@@ -198,12 +200,14 @@ StaticSequenceList::StaticSequenceList() : SequenceList() {
 bool StaticSequenceList::Insert(int index, element_type elem) {
     // 当静态顺序表已经满了就不能插入任何元素
     if (this->GetLength() >= MAXSIZE) {
-        cout << "Insert:静态顺序表空间不足，插入失败！" << endl;
+        // cout << "Insert:静态顺序表空间不足，插入失败！" << endl;
+        cout << "Insert:The space size of " << MAXSIZE << " is not enough!" << endl;
         return false;
     }
     // 索引位置从0开始，所以可以插入的范围是0到list->length
     if (index > this->GetLength() || index < 0) {
-        cout << "Insert:插入索引" << index << "超过索引范围！" << endl;
+        // cout << "Insert:插入索引" << index << "超过索引范围！" << endl;
+        cout << "Insert:Insert index value " << index << " is out of range!" << endl;
         return false;
     }
     // 从最后一个元素开始交换后移，list->length是空的
@@ -255,41 +259,34 @@ DynamicSequenceList::DynamicSequenceList() : SequenceList() {
     this->SetMaxSize(0);
     // 申请一片连续的存储空间
     auto *space = new element_type[MAXSIZE];
-    if (space) {
-        this->SetData(space);
-        this->SetMaxSize(MAXSIZE);
-    } else {
-        cout << "SequenceList:分配空间失败！" << endl;
-    }
+    this->SetData(space);
+    this->SetMaxSize(MAXSIZE);
 }
 
-bool DynamicSequenceList::OtherIncrease(int len) {
-    if (len <= 0) {
-        cout << "OtherIncrease:申请空间应该大于0！" << endl;
+bool DynamicSequenceList::OtherIncrease(int length) {
+    if (length <= 0) {
+        // cout << "OtherIncrease:申请空间应该大于0！" << endl;
+        cout << "OtherIncrease:The length " << length << " should larger than 0!" << endl;
         return false;
     }
     // 申请一片连续的存储空间
-    int new_length = this->GetMaxSize() + len;
+    int new_length = this->GetMaxSize() + length;
     auto *space = new element_type[new_length];
-    if (space) {
-        // 建立中间变量
-        this->SetData(space);
-        element_type *temp = this->GetData();
-        for (int i = 0; i < this->GetLength(); i++) {
-            this->SetData(i, temp[i]);
-        }
-        this->SetMaxSize(new_length);
-        free(temp);
-        return true;
-    } else {
-        cout << "OtherIncrease:重新分配空间失败！" << endl;
-        return false;
+    // 建立中间变量
+    this->SetData(space);
+    element_type *temp = this->GetData();
+    for (int i = 0; i < this->GetLength(); i++) {
+        this->SetData(i, temp[i]);
     }
+    this->SetMaxSize(new_length);
+    // delete(temp);
+    return true;
 }
 
 bool DynamicSequenceList::ReIncrease(int length) {
     if (length <= 0) {
-        cout << "ReIncrease:申请空间应该大于0！" << endl;
+        // cout << "ReIncrease:申请空间应该大于0！" << endl;
+        cout << "ReIncrease:The length " << length << " should larger than 0!" << endl;
         return false;
     }
     // 申请一片连续的存储空间
@@ -309,17 +306,14 @@ bool DynamicSequenceList::ReIncrease(int length) {
 
 bool DynamicSequenceList::Insert(int index, element_type elem) {
     if (index > this->GetLength() || index < 0) {
-        cout << "Insert:插入索引" << index << "超过索引范围！" << endl;
+        // cout << "Insert:插入索引" << index << "超过索引范围！" << endl;
+        cout << "Insert:Insert index value " << index << " is out of range!" << endl;
         return false;
     }
     // 当动态顺序表已经满了，需要新增一个位置
     // 为了避免索引无效而多增加一个空间，所以放在检查索引值的后面
     if (this->GetLength() >= MAXSIZE) {
-        bool result = this->ReIncrease(1);
-        if (!result) {
-            cout << "Insert:申请空间失败！" << endl;
-            return false;
-        }
+        this->ReIncrease(1);
     }
     for (int i = this->GetLength(); i > index; i--) {
         this->SetData(i, this->GetData(i - 1));

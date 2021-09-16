@@ -54,7 +54,7 @@ LinkStackNode *LinkStackNode::GetNext() {
 }
 
 LinkStackNode::LinkStackNode() {
-    this->SetData(NULL);
+    this->SetData(DEFAULTELEM);
     this->SetNext(nullptr);
 }
 
@@ -69,7 +69,7 @@ LinkStackNode::LinkStackNode(element_type data, LinkStackNode *next) {
 }
 
 bool LinkStackNode::Destroy() {
-    this->SetData(NULL);
+    this->SetData(DEFAULTELEM);
     delete(this->GetNext());
     this->SetNext(nullptr);
     return true;

@@ -54,7 +54,7 @@ LinkListNode *LinkListNode::GetNext() {
 }
 
 LinkListNode::LinkListNode() {
-    this->SetData(NULL);
+    this->SetData(DEFAULTELEM);
     this->SetNext(nullptr);
 }
 
@@ -72,7 +72,7 @@ bool LinkListNode::Destory() {
     if (this->GetNext() != nullptr) {
         free(this->GetNext());
     }
-    this->SetData(NULL);
+    this->SetData(DEFAULTELEM);
     this->SetNext(nullptr);
     return true;
 }
@@ -180,8 +180,9 @@ LinkList::LinkList() {
 
 element_type LinkList::GetElem(int index) {
     if (index >= this->GetLength() || index < 0) {
-        cout << "GetElem:查找索引" << index << "超过索引范围！" << endl;
-        return NULL;
+        // cout << "GetElem:查找索引" << index << "超过索引范围！" << endl;
+        cout << "GetElem:The index " << index << " is out of range!" << endl;
+        return DEFAULTELEM;
     }
     LinkListNode *node = this->GetNext();
     for (int i = 1; i < index; i++) {
@@ -197,7 +198,8 @@ int LinkList::Locate(element_type elem) {
             return i;
         }
     }
-    cout << "Locate:未能定位到值为" << elem << "的元素！" << endl;
+    // cout << "Locate:未能定位到值为" << elem << "的元素！" << endl;
+    cout << "Locate:Can't locate the element with value " << elem << " !" << endl;
     return -1;
 }
 
@@ -210,7 +212,8 @@ bool LinkList::PriorInsert(element_type *elem, int start, int length) {
         for (int i = 0; i < length; i++) {
             bool result = this->Insert(1, elem[i + start]);
             if (!result) {
-                cout << "PriorInsert:循环插入失败！索引值为" << i + start << endl;
+                // cout << "PriorInsert:循环插入失败！索引值为" << i + start << endl;
+                cout << "PriorInsert:Loop Insert of element with index value of " << i + start << " failed!" << endl;
                 return false;
             }
         }
@@ -219,7 +222,8 @@ bool LinkList::PriorInsert(element_type *elem, int start, int length) {
         for (int i = 0; i < length; i++) {
             bool result = this->Insert(0, elem[i + start]);
             if (!result) {
-                cout << "PriorInsert:循环插入失败！索引值为" << i + start << endl;
+                // cout << "PriorInsert:循环插入失败！索引值为" << i + start << endl;
+                cout << "PriorInsert:Loop Insert of element with index value of " << i + start << "failed!" << endl;
                 return false;
             }
         }
@@ -232,7 +236,8 @@ bool LinkList::NextInsert(element_type *elem, int start, int length) {
         for (int i = 0; i < length; i++) {
             bool result = this->Insert(i + 1, elem[i + start]);
             if (!result) {
-                cout << "NextInsert:循环插入失败！索引值为" << i + start << endl;
+                // cout << "NextInsert:循环插入失败！索引值为" << i + start << endl;
+                cout << "NextInsert:Loop insert of element with index value of " << i + start << "failed!" << endl;
                 return false;
             }
         }
@@ -241,7 +246,8 @@ bool LinkList::NextInsert(element_type *elem, int start, int length) {
         for (int i = 0; i < length; i++) {
             bool result = this->Insert(i, elem[i + start]);
             if (!result) {
-                cout << "NextInsert:循环插入失败！索引值为" << i + start << endl;
+                // cout << "NextInsert:循环插入失败！索引值为" << i + start << endl;
+                cout << "NextInsert:Loop insert of element with index value of " << i + start << "failed!" << endl;
                 return false;
             }
         }
@@ -257,7 +263,7 @@ bool LinkList::Destroy() {
     this->SetLength(0);
     free(this->GetNext());
     this->SetNext(nullptr);
-    this->SetType(NULL);
+    this->SetType(true);
     return true;
 }
 
@@ -282,14 +288,16 @@ LinkListWithHead::LinkListWithHead() {
 
 bool LinkListWithHead::Print() {
     int i = 1;
-    cout << "第0个元素值为空" << endl;
+    // cout << "第0个元素值为空" << endl;
+    cout << "index: 0 -> value: NULL"  << endl;
     if (this->GetLength() == 0) {
         return true;
     }
     // 当前遍历指针
     LinkListNode *node = this->GetNext();
     while (node != nullptr) {
-        cout << "第" << i << "个元素值为" << node->GetData() << endl;
+//        cout << "第" << i << "个元素值为" << node->GetData() << endl;
+        cout << "index: " << i << " -> value: " << node->GetData() << endl;
         i++;
         node = node->GetNext();
     }
@@ -298,7 +306,8 @@ bool LinkListWithHead::Print() {
 
 bool LinkListWithHead::Insert(int index, element_type elem) {
     if (index < 1) {
-        cout << "Insert:插入索引值" << index << "过小！" << endl;
+        // cout << "Insert:插入索引值" << index << "过小！" << endl;
+        cout << "Insert:Insert index value " << index << " is too small!" << endl;
         return false;
     }
     // 定义一个结点指针p指向当前扫描到的结点
@@ -330,7 +339,8 @@ bool LinkListWithHead::Insert(int index, element_type elem) {
     }
     // 如果此时i小于index-1，表示遍历完还没有到达对应的索引
     if (i < index - 1) {
-        cout << "Insert:插入索引值" << index << "过大！" << endl;
+        // cout << "Insert:插入索引值" << index << "过大！" << endl;
+        cout << "Insert:Insert index value" << index << " is too large!";
         return false;
     }
     // 此时i==index-1
@@ -344,11 +354,13 @@ bool LinkListWithHead::Insert(int index, element_type elem) {
 element_type *LinkListWithHead::Delete(int index, int length) {
     auto *data = new element_type[length];
     if (index < 1) {
-        cout << "Delete:删除索引值" << index << "过小！" << endl;
+        // cout << "Delete:删除索引值" << index << "过小！" << endl;
+        cout << "Delete:Delete index value " << index << " is too small!" << endl;
         return data;
     }
     if (length < 1) {
-        cout << "Delete:删除长度" << length << "过小！" << endl;
+        // cout << "Delete:删除长度" << length << "过小！" << endl;
+        cout << "Delete:Delete length value " << length << " is too small!" << endl;
         return data;
     }
     // 定义一个结点指针start指向当前扫描到的结点，即要删除第一的元素的前一个
@@ -361,7 +373,8 @@ element_type *LinkListWithHead::Delete(int index, int length) {
     start = this->GetNext();
     // 如果链表没有任何数据
     if (start == nullptr) {
-        cout << "Delete:链表为空！" << endl;
+        // cout << "Delete:链表为空！" << endl;
+        cout << "Delete:Link list is empty!" << endl;
         return data;
     }
     // 循环遍历到达指定索引号的单链表的结点
@@ -372,7 +385,8 @@ element_type *LinkListWithHead::Delete(int index, int length) {
     }
     // 如果此时i小于index-1，表示遍历完还没有到达对应的索引
     if (i < index - 1) {
-        cout << "Delete:删除索引值" << index << "过大！" << endl;
+        // cout << "Delete:删除索引值" << index << "过大！" << endl;
+        cout << "Delete:Delete index value " << index << " is too large!" << endl;
         return data;
     }
     // 此时i==index-1，start到达，求end
@@ -381,7 +395,8 @@ element_type *LinkListWithHead::Delete(int index, int length) {
         data[i] = end->GetData();
         end = end->GetNext();
         if (end == nullptr) {
-            cout << "Delete:删除索引最大值" << index + length - 1 << "大于链表最大索引" << length - 1 << "！" << endl;
+            // cout << "Delete:删除索引最大值" << index + length - 1 << "大于链表最大索引" << length - 1 << "！" << endl;
+            cout << "Delete:Delete index value" << index + length -1 << "is larger than link list's biggest index " << length - 1 << "!" << endl;
             return data;
         }
     }
@@ -438,7 +453,7 @@ element_type LinkListWithoutHead::GetData() const {
 
 LinkListWithoutHead::LinkListWithoutHead() {
     this->SetType(false);
-    this->SetData(NULL);
+    this->SetData(DEFAULTELEM);
 }
 
 bool LinkListWithoutHead::Print() {
@@ -446,12 +461,14 @@ bool LinkListWithoutHead::Print() {
     if (this->GetLength() == 0) {
         return true;
     }
-    cout << "第" << i << "个元素值为" << this->GetData() << endl;
+    // cout << "第" << i << "个元素值为" << this->GetData() << endl;
+    cout << "index: " << i << " -> value: " << this->GetData() << endl;
     // 当前遍历指针
     LinkListNode *node = this->GetNext();
     while (node != nullptr) {
         i++;
-        cout << "第" << i << "个元素值为" << node->GetData() << endl;
+        // cout << "第" << i << "个元素值为" << node->GetData() << endl;
+        cout << "index: " << i << " -> value: " << node->GetData() << endl;
         node = node->GetNext();
     }
     return true;
@@ -459,7 +476,8 @@ bool LinkListWithoutHead::Print() {
 
 bool LinkListWithoutHead::Insert(int index, element_type elem) {
     if (index < 0) {
-        cout << "Insert:插入索引值" << index << "过小！" << endl;
+        // cout << "Insert:插入索引值" << index << "过小！" << endl;
+        cout << "Insert:Insert index value " << index << " is too small!" << endl;
         return false;
     }
     if (index == 0) {
@@ -497,7 +515,8 @@ bool LinkListWithoutHead::Insert(int index, element_type elem) {
     }
     // 如果此时i小于index-1，表示遍历完还没有到达对应的索引
     if (i < index - 1) {
-        cout << "Insert:插入索引值" << index << "过大！" << endl;
+        // cout << "Insert:插入索引值" << index << "过大！" << endl;
+        cout << "Insert:Insert index value" << index << " is too large!";
         return false;
     }
     // 此时i==index-1
@@ -511,11 +530,14 @@ bool LinkListWithoutHead::Insert(int index, element_type elem) {
 element_type *LinkListWithoutHead::Delete(int index, int length) {
     auto *data = new element_type[length];
     if (index < 0) {
-        cout << "Delete:删除索引值" << index << "过小！" << endl;
+        // cout << "Delete:删除索引值" << index << "过小！" << endl;
+        cout << "Delete:Delete index value " << index << " is too small!";
         return data;
     }
     if (length < 1) {
-        cout << "Delete:删除长度" << length << "过小！" << endl;
+        // cout << "Delete:删除长度" << length << "过小！" << endl;
+        cout << "Delete:Delete length value " << length << " is too small!";
+        return data;
     }
     // 定义一个结点指针start指向当前扫描到的结点，即要删除第一的元素的前一个
     LinkListNode *start;
@@ -526,8 +548,9 @@ element_type *LinkListWithoutHead::Delete(int index, int length) {
     // 将链表头结点的next指向start，为第1个结点
     start = this->GetNext();
     // 如果链表没有任何数据
-    if (this->GetData() == NULL) {
-        cout << "Delete:链表为空！" << endl;
+    if (this->GetData() == DEFAULTELEM) {
+        // cout << "Delete:链表为空！" << endl;
+        cout << "Delete:Link list is empty!" << endl;
         return data;
     }
     data[0] = this->GetData();
@@ -539,7 +562,8 @@ element_type *LinkListWithoutHead::Delete(int index, int length) {
     }
     // 如果此时i小于index-1，表示遍历完还没有到达对应的索引
     if (i < index - 1) {
-        cout << "Delete:删除索引值" << index << "过大！" << endl;
+        // cout << "Delete:删除索引值" << index << "过大！" << endl;
+        cout << "Delete:Delete index value " << index << " is too large!";
         return data;
     }
     // 从1开始遍历
@@ -550,7 +574,8 @@ element_type *LinkListWithoutHead::Delete(int index, int length) {
         }
         end = end->GetNext();
         if (end == nullptr) {
-            cout << "Delete:删除索引最大值" << index + length - 1 << "大于链表最大索引" << length - 1 << "！" << endl;
+            // cout << "Delete:删除索引最大值" << index + length - 1 << "大于链表最大索引" << length - 1 << "！" << endl;
+            cout << "Delete:Delete index value" << index + length -1 << "is larger than link list's biggest index " << length - 1 << "!" << endl;
             return data;
         }
     }
@@ -577,6 +602,6 @@ int LinkListWithoutHead::Locate(element_type elem) {
 }
 
 bool LinkListWithoutHead::Destroy() {
-    this->SetData(NULL);
+    this->SetData(DEFAULTELEM);
     return LinkList::Destroy();
 }
