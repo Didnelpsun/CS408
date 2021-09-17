@@ -7,13 +7,15 @@
 #include "../head/sequence_stack.h"
 #include "../head/share_stack.h"
 #include "../head/link_stack.h"
+#include "../head/sequence_queue.h"
+#include "../head/link_queue.h"
 
 bool SequenceListTest() {
     DynamicSequenceList list;
     element_type a[6] = {'1','2','3','4','5','6'};
     list.LoopInsert(a, 0, 6);
     list.Print();
-    element_type * data = list.GetData();
+//    element_type * data = list.GetData();
     element_type* b = list.LoopDelete(1, 3);
     list.Print();
     for (int i = 0; i < 3; i++) {

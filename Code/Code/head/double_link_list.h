@@ -1,5 +1,3 @@
-#include <cstdio>
-#include <cstdlib>
 #include "head.h"
 
 // Ë«Á´±í½áµã

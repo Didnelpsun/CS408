@@ -1,21 +1,28 @@
-#include <cstdlib>
-#include <iostream>
 #include "head.h"
-
-using namespace std;
 
 // 共享栈
 class ShareStack{
 private:
     // 栈内元素
     element_type *_data{};
-    // 栈顶指针，left从0开始，right从MAXSIZE开始
+    // 栈顶指针，left从-1开始，right从MAXSIZE开始
     int _top_left{}, _top_right{};
     // 最大容量
     int _max_size{};
 public:
     // 设置数据
+    bool SetData();
+
     bool SetData(element_type *data);
+
+    bool SetData(int max_size);
+
+    bool SetData(int index, element_type elem);
+
+    // 获取数据
+    element_type * GetData();
+
+    element_type GetData(int index);
 
     // 左栈顶指针自加
     bool SetTopLeft();
@@ -36,6 +43,8 @@ public:
     int GetTopRight() const;
 
     // 设置最大容量
+    bool SetMaxSize();
+
     bool SetMaxSize(int max_size);
 
     // 获取最大容量
@@ -80,9 +89,32 @@ public:
     element_type TopRight();
 };
 
+bool ShareStack::SetData() {
+    this->_data = new element_type[MAXSIZE];
+    return true;
+}
+
 bool ShareStack::SetData(element_type *data) {
     this->_data = data;
     return true;
+}
+
+bool ShareStack::SetData(int max_size) {
+    this->_data =  new element_type [max_size];
+    return true;
+}
+
+bool ShareStack::SetData(int index, element_type elem) {
+    this->_data[index] = elem;
+    return true;
+}
+
+element_type *ShareStack::GetData() {
+    return this->_data;
+}
+
+element_type ShareStack::GetData(int index) {
+    return this->_data[index];
 }
 
 bool ShareStack::SetTopLeft() {
@@ -113,6 +145,11 @@ int ShareStack::GetTopRight() const {
     return this->_top_right;
 }
 
+bool ShareStack::SetMaxSize() {
+    this->_max_size = MAXSIZE;
+    return true;
+}
+
 bool ShareStack::SetMaxSize(int max_size) {
     this->_max_size = max_size;
     return true;
@@ -123,14 +160,14 @@ int ShareStack::GetMaxSize() const {
 }
 
 ShareStack::ShareStack() {
-    this->SetData(new element_type[MAXSIZE]);
-    this->SetMaxSize(MAXSIZE);
+    this->SetData();
+    this->SetMaxSize();
     this->SetTopLeft(-1);
     this->SetTopRight(MAXSIZE);
 }
 
 ShareStack::ShareStack(int max_size) {
-    this->SetData(new element_type[max_size]);
+    this->SetData(max_size);
     this->SetMaxSize(max_size);
     this->SetTopLeft(-1);
     this->SetTopRight(max_size);
@@ -162,7 +199,8 @@ bool ShareStack::PushLeft(element_type elem) {
         cout << "PushLeft:The stack is full!";
         return false;
     }
-    this->_data[this->SetTopLeft()] = elem;
+    this->SetTopLeft();
+    this->SetData(this->GetTopLeft(), elem);
     return true;
 }
 
@@ -171,8 +209,8 @@ bool ShareStack::PushRight(element_type elem) {
         // cout << "PushRight:栈满无法进栈！" << endl;
         cout << "PushRight:The stack is full!" << endl;
         return false;
-    }
-    this->_data[this->SetTopRight()] = elem;
+    }this->SetTopRight();
+    this->SetData(this->GetTopRight(), elem);
     return true;
 }
 
@@ -182,7 +220,9 @@ element_type ShareStack::PopLeft() {
         cout << "PopLeft:The stack is empty!" << endl;
         return DEFAULTELEM;
     }
-    return this->_data[this->SetTopLeft(this->GetTopLeft() - 1)];
+    element_type temp = this->GetData(this->GetTopLeft());
+    this->SetTopLeft(this->GetTopLeft() - 1);
+    return temp;
 }
 
 element_type ShareStack::PopRight() {
@@ -191,7 +231,9 @@ element_type ShareStack::PopRight() {
         cout << "PopRight:The stack is empty!" << endl;
         return DEFAULTELEM;
     }
-    return this->_data[this->SetTopRight(this->GetTopRight() + 1)];
+    element_type temp = this->GetData(this->GetTopRight());
+    this->SetTopRight(this->GetTopRight() + 1);
+    return temp;
 }
 
 element_type ShareStack::TopLeft() {
@@ -200,7 +242,7 @@ element_type ShareStack::TopLeft() {
         cout << "TopLeft:The stack is empty!" << endl;
         return DEFAULTELEM;
     }
-    return this->_data[this->GetTopLeft() - 1];
+    return this->GetData(this->GetTopLeft());
 }
 
 element_type ShareStack::TopRight() {
@@ -209,5 +251,5 @@ element_type ShareStack::TopRight() {
         cout << "TopRight:The stack is empty!" << endl;
         return DEFAULTELEM;
     }
-    return this->_data[this->GetTopRight() + 1];
+    return this->GetData(this->GetTopRight());
 }

@@ -3,7 +3,7 @@
 
 int main()
 {
-//    SequenceListTest();
-    LinkListTest();
+    SequenceListTest();
+//    LinkListTest();
     return 0;
 }

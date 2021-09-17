@@ -1,5 +1,3 @@
-#include <cstdio>
-#include <cstdlib>
 #include "head.h"
 
 typedef struct LinkStackNode{

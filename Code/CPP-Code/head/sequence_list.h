@@ -1,4 +1,3 @@
-#include <cstdlib>
 #include <iostream>
 #include "head.h"
 
@@ -14,8 +13,14 @@ private:
     element_type *_data{};
     // 长度
     int _length{};
+    // 最大容量
+    int _max_size{};
 public:
     // 设置数据
+    bool SetData();
+
+    bool SetData(int max_size);
+
     bool SetData(element_type *elem);
 
     bool SetData(int index, element_type elem);
@@ -31,11 +36,21 @@ public:
     // 设置长度
     bool SetLength(int length);
 
-    // 设置长度
+    // 获取长度
     int GetLength() const;
+
+    // 设置最大容量
+    bool SetMaxSize();
+
+    bool SetMaxSize(int max_size);
+
+    // 获取最大容量
+    int GetMaxSize() const;
 
     // 构造函数
     SequenceList();
+
+    explicit SequenceList(int max_size);
 
     // 插入函数
     virtual bool Insert(int index, element_type elem) = 0;
@@ -64,6 +79,16 @@ public:
     // 销毁
     bool Destroy() const;
 };
+
+bool SequenceList::SetData() {
+    this->_data = new element_type[MAXSIZE];
+    return true;
+}
+
+bool SequenceList::SetData(int max_size) {
+    this->_data = new element_type[max_size];
+    return true;
+}
 
 bool SequenceList::SetData(element_type *elem) {
     this->_data = elem;
@@ -97,7 +122,29 @@ int SequenceList::GetLength() const {
     return this->_length;
 }
 
+bool SequenceList::SetMaxSize() {
+    this->_max_size = MAXSIZE;
+    return true;
+}
+
+bool SequenceList::SetMaxSize(int max_size) {
+    this->_max_size = max_size;
+    return true;
+}
+
+int SequenceList::GetMaxSize() const {
+    return this->_max_size;
+}
+
 SequenceList::SequenceList() {
+    this->SetData();
+    this->SetMaxSize();
+    this->SetLength(0);
+}
+
+SequenceList::SequenceList(int max_size) {
+    this->SetData(max_size);
+    this->SetMaxSize(max_size);
     this->SetLength(0);
 }
 
@@ -189,19 +236,24 @@ public:
     // 构造函数
     StaticSequenceList();
 
+    explicit StaticSequenceList(int max_size);
+
     // 插入函数
     bool Insert(int index, element_type elem) override;
 };
 
 StaticSequenceList::StaticSequenceList() : SequenceList() {
-    this->SetData(new element_type[MAXSIZE]);
+
+}
+
+StaticSequenceList::StaticSequenceList(int max_size) : SequenceList(max_size) {
 }
 
 bool StaticSequenceList::Insert(int index, element_type elem) {
     // 当静态顺序表已经满了就不能插入任何元素
-    if (this->GetLength() >= MAXSIZE) {
+    if (this->GetLength() >= this->GetMaxSize()) {
         // cout << "Insert:静态顺序表空间不足，插入失败！" << endl;
-        cout << "Insert:The space size of " << MAXSIZE << " is not enough!" << endl;
+        cout << "Insert:The space size of " << this->GetMaxSize() << " is not enough!" << endl;
         return false;
     }
     // 索引位置从0开始，所以可以插入的范围是0到list->length
@@ -221,18 +273,12 @@ bool StaticSequenceList::Insert(int index, element_type elem) {
 
 // 动态顺序表
 class DynamicSequenceList : public SequenceList {
-private:
-    // 已分配的最大容量
-    int _max_size{};
 public:
-    // 设置最大容量
-    bool SetMaxSize(int max_size);
-
-    // 获取最大容量
-    int GetMaxSize() const;
 
     // 构造函数
     DynamicSequenceList();
+
+    explicit DynamicSequenceList(int max_size);
 
     // 插入函数
     bool Insert(int index, element_type elem) override;
@@ -245,22 +291,10 @@ private:
     bool ReIncrease(int len);
 };
 
-bool DynamicSequenceList::SetMaxSize(int max_size) {
-    this->_max_size = max_size;
-    return true;
-}
-
-int DynamicSequenceList::GetMaxSize() const {
-    return this->_max_size;
-}
-
 DynamicSequenceList::DynamicSequenceList() : SequenceList() {
-    // 初初始化动态顺序表长度为0
-    this->SetMaxSize(0);
-    // 申请一片连续的存储空间
-    auto *space = new element_type[MAXSIZE];
-    this->SetData(space);
-    this->SetMaxSize(MAXSIZE);
+}
+
+DynamicSequenceList::DynamicSequenceList(int max_size) : SequenceList(max_size) {
 }
 
 bool DynamicSequenceList::OtherIncrease(int length) {
@@ -312,7 +346,7 @@ bool DynamicSequenceList::Insert(int index, element_type elem) {
     }
     // 当动态顺序表已经满了，需要新增一个位置
     // 为了避免索引无效而多增加一个空间，所以放在检查索引值的后面
-    if (this->GetLength() >= MAXSIZE) {
+    if (this->GetLength() >= this->GetMaxSize()) {
         this->ReIncrease(1);
     }
     for (int i = this->GetLength(); i > index; i--) {
