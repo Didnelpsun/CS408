@@ -100,9 +100,9 @@ element_type DepartCircularDepartSequence(SequenceQueue &queue) {
         printf("DepartCircularDepartSequence:队空无法出队！\n");
         return DEFAULTELEM;
     }
-    element_type temp = queue.data[queue.front];
+    element_type elem = queue.data[queue.front];
     queue.front = (queue.front + 1) % queue.max_size;
-    return temp;
+    return elem;
 }
 
 // 获取队长

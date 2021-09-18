@@ -95,9 +95,9 @@ element_type PopLeftShareStack(ShareStack &stack){
         printf("PopLeftShareStack:栈空无法出栈！\n");
         return DEFAULTELEM;
     }
-    element_type temp = stack.data[stack.top_left];
+    element_type elem = stack.data[stack.top_left];
     stack.top_left--;
-    return temp;
+    return elem;
 }
 
 // 右出栈
@@ -106,9 +106,9 @@ element_type PopRightShareStack(ShareStack &stack){
         printf("PopRightShareStack:栈空无法出栈！\n");
         return DEFAULTELEM;
     }
-    element_type temp = stack.data[stack.top_right];
+    element_type elem = stack.data[stack.top_right];
     stack.top_left++;
-    return temp;
+    return elem;
 }
 
 // 读取左首部

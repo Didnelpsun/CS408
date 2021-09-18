@@ -3,13 +3,13 @@
 using namespace std;
 
 // 链栈
-class LinkStackNode{
+class LinkStackNode {
 private:
     // 数据
     element_type _data{};
     // 指针
-    LinkStackNode* _next{};
-public:
+    LinkStackNode *_next{};
+
     // 设置数据
     bool SetData(element_type data);
 
@@ -17,17 +17,19 @@ public:
     element_type GetData() const;
 
     // 设置指针
-    bool SetNext(LinkStackNode* next);
+    bool SetNext(LinkStackNode *next);
 
     // 获取指针
-    LinkStackNode* GetNext();
+    LinkStackNode *GetNext();
+
+public:
 
     // 构造函数
     LinkStackNode();
 
     explicit LinkStackNode(element_type data);
 
-    LinkStackNode(element_type data, LinkStackNode* next);
+    LinkStackNode(element_type data, LinkStackNode *next);
 
     // 销毁
     bool Destroy();
@@ -68,7 +70,7 @@ LinkStackNode::LinkStackNode(element_type data, LinkStackNode *next) {
 
 bool LinkStackNode::Destroy() {
     this->SetData(DEFAULTELEM);
-    delete(this->GetNext());
+    delete (this->GetNext());
     this->SetNext(nullptr);
     return true;
 }

@@ -9,5 +9,8 @@
 *Debug/
 *x64/
 *out/
-*cmake-build-debug/
-*cmake-build-debug-mingw/
+*cmake-build-debug
+*cmake-build-debug-mingw
+*cmake-build-debug-default
+*cmake-build-debug-wsl
+*/CMakeFiles

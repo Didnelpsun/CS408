@@ -1,4 +1,4 @@
-// 测试文件
+// ???????
 #include <iostream>
 #include "../head/sequence_list.h"
 #include "../head/link_list.h"
@@ -21,8 +21,7 @@ bool SequenceListTest() {
     PrintSequenceList(list);
     printf("\n");
     int len = 2;
-    element_type elem[2];
-    MultiDeleteSequenceList(list, 0, len, elem);
+    element_type* elem = MultiDeleteSequenceList(list, 0, len);
     PrintSequenceList(list);
     for (int i = 0; i < len; i++) {
         printf("%c\n", elem[i]);
@@ -45,9 +44,9 @@ bool LinkListTest() {
     element_type* data = DeleteLinkListWithoutHead(list, 2, length);
     PrintLinkList(list);
     for (int i = 0; i < length; i++) {
-        printf("第%d为%c\n", i, data[i]);
+        printf("??%d?%c\n", i, data[i]);
     }
-    printf("长度为%d", GetLengthLinkList(list));
-    printf("%c地址%d", '3', LocateLinkList(list, '3'));
+    printf("?????%d", GetLengthLinkList(list));
+    printf("%c???%d", '3', LocateLinkList(list, '3'));
     return true;
 }

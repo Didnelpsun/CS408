@@ -158,26 +158,27 @@ bool LoopInsertSequenceList(List &list, element_type *elem, int start, int end) 
 
 // É¾³ý
 template<class List>
-bool DeleteSequenceList(List &list, int index, element_type &elem) {
+element_type DeleteSequenceList(List &list, int index) {
     if (index >= list.length || index < 0) {
         printf("DeleteStaticSequenceList:É¾³ýË÷Òý³¬¹ýË÷Òý·¶Î§£¡\n");
         return false;
     }
-    elem = list.data[index];
+    element_type elem = list.data[index];
     for (int i = index; i < list.length; i++) {
         list.data[i] = list.data[i + 1];
     }
     list.length--;
-    return true;
+    return elem;
 }
 
 // É¾³ý¶à¸öÔªËØ
 template<class List>
-int MultiDeleteSequenceList(List &list, int index, int length, element_type *elem) {
+element_type* MultiDeleteSequenceList(List &list, int index, int length) {
     if (index + length >= list.length || index < 0) {
         printf("MultiDeleteSequenceList:É¾³ýË÷Òý³¬¹ýË÷Òý·¶Î§£¡\n");
-        return 1;
+        return nullptr;
     }
+    auto elem = new element_type[length];
     for (int i = index; i < list.length - length; i++) {
         if (i < index + length) {
             elem[i - index] = list.data[i];
@@ -185,7 +186,7 @@ int MultiDeleteSequenceList(List &list, int index, int length, element_type *ele
         list.data[i] = list.data[i + length];
     }
     list.length -= length;
-    return 0;
+    return elem;
 }
 
 // °´Î»²éÕÒË³Ðò±íÔªËØ

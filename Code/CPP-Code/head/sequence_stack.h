@@ -11,7 +11,7 @@ private:
     int _top{};
     // 最大容量
     int _max_size{};
-public:
+
     // 设置数据
     bool SetData(element_type *data);
 
@@ -26,6 +26,8 @@ public:
 
     // 设置最大容量
     bool SetMaxSize(int max_size);
+
+public:
 
     // 获取最大容量
     int GetMaxSize() const;

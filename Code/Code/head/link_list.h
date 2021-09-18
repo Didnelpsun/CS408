@@ -183,10 +183,10 @@ bool PriorInsertLinkList(LinkList &list, element_type *elem, int start, int leng
 
 // 删除
 element_type *DeleteLinkListWithHead(LinkList &list, int index, int length) {
-    auto *data = (element_type *) malloc(length * sizeof(element_type));
+    auto *elem = (element_type *) malloc(length * sizeof(element_type));
     if (index < 1) {
         printf("DeleteLinkListWithHead:删除索引值%d过小！\n", index);
-        return data;
+        return elem;
     }
     if (length < 1) {
         printf("DeleteLinkListWithHead:删除长度%d过小！\n", length);
@@ -202,7 +202,7 @@ element_type *DeleteLinkListWithHead(LinkList &list, int index, int length) {
     // 如果链表没有任何数据
     if (start == nullptr) {
         printf("DeleteLinkListWithHead:链表为空！\n");
-        return data;
+        return elem;
     }
     // 循环遍历到达指定索引号的单链表的结点
     // 条件是当前结点的下一个不为空且索引号到达，所到达的结点一定不是空结点
@@ -213,16 +213,16 @@ element_type *DeleteLinkListWithHead(LinkList &list, int index, int length) {
     // 如果此时i小于index-1，表示遍历完还没有到达对应的索引
     if (i < index - 1) {
         printf("DeleteLinkListWithHead:删除索引值%d过大！\n", index);
-        return data;
+        return elem;
     }
     // 此时i==index-1，start到达，求end
     end = start;
     for (int i = 0; i < length; i++) {
-        data[i] = end->data;
+        elem[i] = end->data;
         end = end->next;
         if (end == nullptr) {
             printf("DeleteLinkListWithHead:删除索引最大值%d大于链表最大索引%d！\n", index + length - 1, length - 1);
-            return data;
+            return elem;
         }
     }
     if (index == 1) {
@@ -230,14 +230,14 @@ element_type *DeleteLinkListWithHead(LinkList &list, int index, int length) {
     } else {
         start->next = end->next;
     }
-    return data;
+    return elem;
 }
 
 element_type *DeleteLinkListWithoutHead(LinkList &list, int index, int length) {
-    auto *data = (element_type *) malloc(length * sizeof(element_type));
+    auto *elem = (element_type *) malloc(length * sizeof(element_type));
     if (index < 0) {
         printf("DeleteLinkListWithoutHead:删除索引值过小！\n");
-        return data;
+        return elem;
     }
     if (length < 1) {
         printf("DeleteLinkListWithoutHead:删除长度%d过小！\n", length);
@@ -253,7 +253,7 @@ element_type *DeleteLinkListWithoutHead(LinkList &list, int index, int length) {
     // 如果链表没有任何数据
     if (EmptyLinkList(list)) {
         printf("DeleteLinkListWithoutHead:链表为空！\n");
-        return data;
+        return elem;
     }
     // 循环遍历到达指定索引号的单链表的结点
     // 条件是当前结点的下一个不为空且索引号到达，所到达的结点一定不是空结点
@@ -264,16 +264,16 @@ element_type *DeleteLinkListWithoutHead(LinkList &list, int index, int length) {
     // 如果此时i小于index-1，表示遍历完还没有到达对应的索引
     if (i < index - 1) {
         printf("DeleteLinkListWithoutHead:删除索引值%d过大！\n", index);
-        return data;
+        return elem;
     }
     // 到达位置
     end = start;
     for (int i = 0; i < length; i++) {
         end = end->next;
-        data[i] = end->data;
+        elem[i] = end->data;
         if (end->next == nullptr) {
             printf("DeleteLinkListWithoutHead:删除索引最大值%d大于链表最大索引%d！\n", index + length - 1, length - 1);
-            return data;
+            return elem;
         }
     }
     // 如果删除第一个第0号结点
@@ -282,7 +282,7 @@ element_type *DeleteLinkListWithoutHead(LinkList &list, int index, int length) {
         start->next = end->next->next;
     }
     start->next = end->next;
-    return data;
+    return elem;
 }
 
 // 求表长
