@@ -5,12 +5,12 @@
 *.html
 *.htm
 *.vs/
+*.txt
 *.idea/
 *Debug/
 *x64/
 *out/
-*cmake-build-debug
-*cmake-build-debug-mingw
-*cmake-build-debug-default
-*cmake-build-debug-wsl
-*/CMakeFiles
+*build.mingw/
+*build.default/
+*build.wsl/
+*build.cygwin/
