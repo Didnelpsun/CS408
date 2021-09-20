@@ -7,17 +7,17 @@ typedef struct LinkListNode {
 } LinkListNode, *LinkList;
 
 // ³õÊ¼»¯
+bool InitLinkList(LinkList &list) {
+    list->data = DEFAULTELEM;
+    list->next = nullptr;
+    return true;
+}
+
 LinkList InitLinkList() {
     auto list = (LinkList) malloc(sizeof(LinkList));
     list->data = DEFAULTELEM;
     list->next = nullptr;
     return list;
-}
-
-bool InitLinkList(LinkList &list) {
-    list->data = DEFAULTELEM;
-    list->next = nullptr;
-    return true;
 }
 
 // ÅÐ¿Õ

@@ -4,8 +4,8 @@ typedef struct LinkStackNode{
     // 数据
     element_type data;
     // 指针
-    struct LinkStackNode *next;
-} *LinkStack;
+    LinkStackNode *next;
+} LinkStackNode, *LinkStack;
 
 // 初始化
 LinkStack InitLinkStack(){

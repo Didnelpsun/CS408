@@ -9,6 +9,8 @@
 #include "../head/share_stack.h"
 #include "../head/sequence_queue.h"
 #include "../head/link_queue.h"
+#include "../head/sequence_string.h"
+#include "../head/link_string.h"
 
 using namespace std;
 
