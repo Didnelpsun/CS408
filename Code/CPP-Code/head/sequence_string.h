@@ -1,10 +1,10 @@
 #include "head.h"
 
 // 顺序串
-class SequenceString{
+class SequenceString {
 private:
     // 数据
-    char* _data{};
+    char *_data{};
     // 长度
     int _length{};
     // 最大容量
@@ -20,7 +20,7 @@ public:
     bool SetData(int index, char character);
 
     // 获取数据
-    char* GetData();
+    char *GetData();
 
     char GetData(int index);
 
@@ -45,6 +45,12 @@ public:
     SequenceString();
 
     explicit SequenceString(int max_size);
+
+    // 暴力模式匹配
+    int LocateSimple(SequenceString string);
+
+    // 销毁
+    bool Destroy();
 };
 
 bool SequenceString::SetData() {
@@ -57,7 +63,7 @@ bool SequenceString::SetData(int max_size) {
     return true;
 }
 
-bool SequenceString::SetData(char * character) {
+bool SequenceString::SetData(char *character) {
     this->_data = character;
     return true;
 }
@@ -113,6 +119,34 @@ SequenceString::SequenceString(int max_size) {
     this->SetData(max_size);
     this->SetMaxSize();
     this->SetLength(0);
+}
+
+int SequenceString::LocateSimple(SequenceString string) {
+    int i = 0, j = 0;
+    while (i < this->GetLength() && j < string.GetLength()) {
+        // 匹配就继续后移
+        if (this->GetData(i) == string.GetData(j)) {
+            i++;
+            j++;
+        }
+            // 不匹配就退回
+        else {
+            i = i - j + 1;
+            j = 0;
+        }
+    }
+    if (j >= string.GetLength()) {
+        return i - string.GetLength();
+    }
+    return -1;
+}
+
+bool SequenceString::Destroy() {
+    delete (this->GetData());
+    this->SetLength(0);
+    this->SetMaxSize(0);
+    this->SetData(nullptr);
+    return true;
 }
 
 

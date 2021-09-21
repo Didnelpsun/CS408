@@ -1,5 +1,6 @@
 #include "head.h"
 
+// 链栈
 typedef struct LinkStackNode{
     // 数据
     element_type data;

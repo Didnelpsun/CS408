@@ -1,4 +1,4 @@
-// ???????
+// 测试
 #include <iostream>
 #include "../head/sequence_list.h"
 #include "../head/link_list.h"
@@ -11,6 +11,7 @@
 #include "../head/link_queue.h"
 #include "../head/sequence_string.h"
 #include "../head/link_string.h"
+#include "../head/link_tree.h"
 
 using namespace std;
 
