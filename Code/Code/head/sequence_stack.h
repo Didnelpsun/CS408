@@ -1,7 +1,7 @@
 #include "head.h"
 
 // Ë³ĞòÕ»
-typedef struct {
+typedef struct SequenceStack {
     // Õ»ÄÚÔªËØ
     element_type *data;
     // Õ»¶¥Ö¸Õë

@@ -12,6 +12,7 @@
 #include "../head/sequence_string.h"
 #include "../head/link_string.h"
 #include "../head/link_tree.h"
+#include "../head/thread_tree.h"
 
 using namespace std;
 

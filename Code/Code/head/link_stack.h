@@ -6,7 +6,7 @@ typedef struct LinkStackNode{
     element_type data;
     // 指针
     LinkStackNode *next;
-} LinkStackNode, *LinkStack;
+} *LinkStack;
 
 // 初始化
 LinkStack InitLinkStack(){
