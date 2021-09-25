@@ -9,32 +9,32 @@ typedef struct BinaryTreeNode {
 } BinaryTreeNode, *BinaryTree;
 
 // 前序遍历
-bool PreOrder(BinaryTree &tree, bool( *function)(BinaryTree&)){
+bool PreOrderBinaryTree(BinaryTree &tree, bool( *function)(BinaryTree&)){
     if(tree!= nullptr){
         if(!function(tree))
             return false;
-        PreOrder(tree->left_child, function);
-        PreOrder(tree->right_child, function);
+        PreOrderBinaryTree(tree->left_child, function);
+        PreOrderBinaryTree(tree->right_child, function);
     }
     return true;
 }
 
 // 中序遍历
-bool InOrder(BinaryTree &tree, bool(* function)(BinaryTree&)){
+bool InOrderBinaryTree(BinaryTree &tree, bool(* function)(BinaryTree&)){
     if(tree!= nullptr){
-        PreOrder(tree->left_child, function);
+        PreOrderBinaryTree(tree->left_child, function);
         if(!function(tree))
             return false;
-        PreOrder(tree->right_child, function);
+        PreOrderBinaryTree(tree->right_child, function);
     }
     return true;
 }
 
 // 后序遍历
-bool PostOrder(BinaryTree &tree, bool(* function)(BinaryTree&)){
+bool PostOrderBinaryTree(BinaryTree &tree, bool(* function)(BinaryTree&)){
     if(tree!= nullptr){
-        PreOrder(tree->left_child, function);
-        PreOrder(tree->right_child, function);
+        PreOrderBinaryTree(tree->left_child, function);
+        PreOrderBinaryTree(tree->right_child, function);
         if(!function(tree))
             return false;
     }
@@ -42,7 +42,7 @@ bool PostOrder(BinaryTree &tree, bool(* function)(BinaryTree&)){
 }
 
 // 非递归先序遍历
-bool PreOrderNonRecursive(BinaryTree &tree, bool(* function)(BinaryTree&)){
+bool PreOrderNonRecursiveBinaryTree(BinaryTree &tree, bool(* function)(BinaryTree&)){
     // 初始化栈，栈元素为tree指针
     std::stack<BinaryTree> stack;
     // 赋值一个新树
@@ -76,7 +76,7 @@ bool PreOrderNonRecursive(BinaryTree &tree, bool(* function)(BinaryTree&)){
 }
 
 // 非递归中序遍历
-bool InOrderNonRecursive(BinaryTree &tree, bool(* function)(BinaryTree&)){
+bool InOrderNonRecursiveBinaryTree(BinaryTree &tree, bool(* function)(BinaryTree&)){
     // 初始化栈，栈元素为tree指针
     std::stack<BinaryTree> stack;
     // 赋值一个新树
@@ -110,7 +110,7 @@ bool InOrderNonRecursive(BinaryTree &tree, bool(* function)(BinaryTree&)){
 }
 
 // 层序遍历
-bool LevelOrder(BinaryTree &tree, bool(* function)(BinaryTree&)){
+bool LevelOrderBinaryTree(BinaryTree &tree, bool(* function)(BinaryTree&)){
     // 初始化辅助队列
     std::queue<BinaryTree> queue;
     // 初始化树结点
