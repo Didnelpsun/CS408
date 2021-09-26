@@ -13,6 +13,8 @@
 #include "../head/link_string.h"
 #include "../head/link_tree.h"
 #include "../head/thread_tree.h"
+#include "../head/tree.h"
+#include "../head/graph.h"
 
 using namespace std;
 

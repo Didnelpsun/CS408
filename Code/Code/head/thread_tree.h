@@ -119,7 +119,7 @@ bool CreatePreOrderThreadBinaryTree(ThreadBinaryTree tree) {
     return true;
 }
 
-// 先序后历线索化
+// 后序遍历线索化
 bool PostOrderThreadBinaryTree(ThreadBinaryTree &tree, ThreadBinaryTree &pre) {
     if (tree != nullptr) {
         // 递归线索化左子树
