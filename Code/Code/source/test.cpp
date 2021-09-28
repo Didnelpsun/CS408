@@ -15,6 +15,7 @@
 #include "../head/thread_tree.h"
 #include "../head/tree.h"
 #include "../head/graph.h"
+#include "../head/search.h"
 
 using namespace std;
 
