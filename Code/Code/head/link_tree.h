@@ -2,13 +2,18 @@
 #include <stack>
 #include <queue>
 
-// äºŒå‰æ ‘ç»“ç‚¹
+// ±È½ÏÔªËØ·½·¨
+int CompareElem(element_type elem1, element_type elem2){
+    return 0;
+}
+
+// ¶ş²æÊ÷½áµã
 typedef struct BinaryTreeNode {
     element_type data;
     BinaryTreeNode *left_child, *right_child;
 } BinaryTreeNode, *BinaryTree;
 
-// å‰åºéå†
+// Ç°Ğò±éÀú
 bool PreOrderBinaryTree(BinaryTree &tree, bool( *function)(BinaryTree &)) {
     if (tree != nullptr) {
         if (!function(tree))
@@ -19,7 +24,7 @@ bool PreOrderBinaryTree(BinaryTree &tree, bool( *function)(BinaryTree &)) {
     return true;
 }
 
-// ä¸­åºéå†
+// ÖĞĞò±éÀú
 bool InOrderBinaryTree(BinaryTree &tree, bool(*function)(BinaryTree &)) {
     if (tree != nullptr) {
         PreOrderBinaryTree(tree->left_child, function);
@@ -30,7 +35,7 @@ bool InOrderBinaryTree(BinaryTree &tree, bool(*function)(BinaryTree &)) {
     return true;
 }
 
-// ååºéå†
+// ºóĞò±éÀú
 bool PostOrderBinaryTree(BinaryTree &tree, bool(*function)(BinaryTree &)) {
     if (tree != nullptr) {
         PreOrderBinaryTree(tree->left_child, function);
@@ -41,93 +46,93 @@ bool PostOrderBinaryTree(BinaryTree &tree, bool(*function)(BinaryTree &)) {
     return true;
 }
 
-// éé€’å½’å…ˆåºéå†
+// ·Çµİ¹éÏÈĞò±éÀú
 bool PreOrderNonRecursiveBinaryTree(BinaryTree &tree, bool(*function)(BinaryTree &)) {
-    // åˆå§‹åŒ–æ ˆï¼Œæ ˆå…ƒç´ ä¸ºtreeæŒ‡é’ˆ
+    // ³õÊ¼»¯Õ»£¬Õ»ÔªËØÎªtreeÖ¸Õë
     std::stack<BinaryTree> stack;
-    // èµ‹å€¼ä¸€ä¸ªæ–°æ ‘
+    // ¸³ÖµÒ»¸öĞÂÊ÷
     BinaryTree new_tree = tree;
-    // å¦‚æœæ ˆä¸ç©ºæˆ–new_treeä¸ç©ºæ—¶å¾ªç¯
+    // Èç¹ûÕ»²»¿Õ»ònew_tree²»¿ÕÊ±Ñ­»·
     while (new_tree || !stack.empty()) {
-        // ä¸€ç›´å‘å·¦
+        // Ò»Ö±Ïò×ó
         if (new_tree) {
-            // è®¿é—®å½“å‰ç»“ç‚¹
+            // ·ÃÎÊµ±Ç°½áµã
             if (!function(new_tree)) {
-                printf("PreOrderNonRecursive:è®¿é—®ç»“ç‚¹å¤±è´¥ï¼");
+                printf("PreOrderNonRecursive:·ÃÎÊ½áµãÊ§°Ü£¡");
                 return false;
             }
-            // å½“å‰ç»“ç‚¹å…¥æ ˆ
+            // µ±Ç°½áµãÈëÕ»
             stack.push(new_tree);
-            // å·¦å­©å­ä¸ç©ºåˆ™ä¸€ç›´å‘å·¦
+            // ×óº¢×Ó²»¿ÕÔòÒ»Ö±Ïò×ó
             new_tree = new_tree->left_child;
         }
-            // å‡ºæ ˆï¼Œå¹¶è½¬å‘å³å­æ ‘
+            // ³öÕ»£¬²¢×ªÏòÓÒ×ÓÊ÷
         else {
-            // è¿”å›æ ˆé¡¶çš„å…ƒç´ ï¼Œä½†ä¸åˆ é™¤è¯¥å…ƒç´ 
+            // ·µ»ØÕ»¶¥µÄÔªËØ£¬µ«²»É¾³ı¸ÃÔªËØ
             new_tree = stack.top();
-            // åˆ é™¤æ ˆé¡¶å…ƒç´ ä½†ä¸è¿”å›å…¶å€¼
+            // É¾³ıÕ»¶¥ÔªËØµ«²»·µ»ØÆäÖµ
             stack.pop();
-            // å‘å³
+            // ÏòÓÒ
             new_tree = new_tree->right_child;
-            // è¿”å›while
+            // ·µ»Øwhile
         }
     }
     return true;
 }
 
-// éé€’å½’ä¸­åºéå†
+// ·Çµİ¹éÖĞĞò±éÀú
 bool InOrderNonRecursiveBinaryTree(BinaryTree &tree, bool(*function)(BinaryTree &)) {
-    // åˆå§‹åŒ–æ ˆï¼Œæ ˆå…ƒç´ ä¸ºtreeæŒ‡é’ˆ
+    // ³õÊ¼»¯Õ»£¬Õ»ÔªËØÎªtreeÖ¸Õë
     std::stack<BinaryTree> stack;
-    // èµ‹å€¼ä¸€ä¸ªæ–°æ ‘
+    // ¸³ÖµÒ»¸öĞÂÊ÷
     BinaryTree new_tree = tree;
-    // å¦‚æœæ ˆä¸ç©ºæˆ–new_treeä¸ç©ºæ—¶å¾ªç¯
+    // Èç¹ûÕ»²»¿Õ»ònew_tree²»¿ÕÊ±Ñ­»·
     while (new_tree || !stack.empty()) {
-        // ä¸€ç›´å‘å·¦
+        // Ò»Ö±Ïò×ó
         if (new_tree) {
-            // å½“å‰ç»“ç‚¹å…¥æ ˆ
+            // µ±Ç°½áµãÈëÕ»
             stack.push(new_tree);
-            // å·¦å­©å­ä¸ç©ºåˆ™ä¸€ç›´å‘å·¦
+            // ×óº¢×Ó²»¿ÕÔòÒ»Ö±Ïò×ó
             new_tree = new_tree->left_child;
         }
-            // å‡ºæ ˆï¼Œå¹¶è½¬å‘å³å­æ ‘
+            // ³öÕ»£¬²¢×ªÏòÓÒ×ÓÊ÷
         else {
-            // è¿”å›æ ˆé¡¶çš„å…ƒç´ ï¼Œä½†ä¸åˆ é™¤è¯¥å…ƒç´ 
+            // ·µ»ØÕ»¶¥µÄÔªËØ£¬µ«²»É¾³ı¸ÃÔªËØ
             new_tree = stack.top();
-            // åˆ é™¤æ ˆé¡¶å…ƒç´ ä½†ä¸è¿”å›å…¶å€¼
+            // É¾³ıÕ»¶¥ÔªËØµ«²»·µ»ØÆäÖµ
             stack.pop();
-            // è®¿é—®å‡ºæ ˆç»“ç‚¹
+            // ·ÃÎÊ³öÕ»½áµã
             if (!function(new_tree)) {
-                printf("InOrderNonRecursive:è®¿é—®ç»“ç‚¹å¤±è´¥ï¼");
+                printf("InOrderNonRecursive:·ÃÎÊ½áµãÊ§°Ü£¡");
                 return false;
             }
-            // å‘å³
+            // ÏòÓÒ
             new_tree = new_tree->right_child;
-            // è¿”å›while
+            // ·µ»Øwhile
         }
     }
     return true;
 }
 
-// å±‚åºéå†
+// ²ãĞò±éÀú
 bool LevelOrderBinaryTree(BinaryTree &tree, bool(*function)(BinaryTree &)) {
-    // åˆå§‹åŒ–è¾…åŠ©é˜Ÿåˆ—
+    // ³õÊ¼»¯¸¨Öú¶ÓÁĞ
     std::queue<BinaryTree> queue;
-    // åˆå§‹åŒ–æ ‘ç»“ç‚¹
+    // ³õÊ¼»¯Ê÷½áµã
     BinaryTree new_tree = tree;
-    // æ ¹ç»“ç‚¹å…¥é˜Ÿ
+    // ¸ù½áµãÈë¶Ó
     queue.push(new_tree);
-    // è‹¥é˜Ÿåˆ—éç©ºåˆ™å¾ªç¯
+    // Èô¶ÓÁĞ·Ç¿ÕÔòÑ­»·
     while (!queue.empty()) {
-        // é˜Ÿå¤´ç»“ç‚¹å‡ºé˜Ÿ
+        // ¶ÓÍ·½áµã³ö¶Ó
         new_tree = queue.front();
         queue.pop();
-        // è®¿é—®å‡ºé˜Ÿç»“ç‚¹
+        // ·ÃÎÊ³ö¶Ó½áµã
         if (!function(new_tree)) {
-            printf("LevelOrder:è®¿é—®ç»“ç‚¹å¤±è´¥ï¼");
+            printf("LevelOrder:·ÃÎÊ½áµãÊ§°Ü£¡");
             return false;
         }
-        // å¦‚æœå·¦å­æ ‘ä¸ç©ºåˆ™å…¶æ ¹ç»“ç‚¹å…¥é˜Ÿ
+        // Èç¹û×ó×ÓÊ÷²»¿ÕÔòÆä¸ù½áµãÈë¶Ó
         if (new_tree->left_child != nullptr) {
             queue.push(new_tree);
         }
@@ -138,12 +143,12 @@ bool LevelOrderBinaryTree(BinaryTree &tree, bool(*function)(BinaryTree &)) {
     return true;
 }
 
-// äºŒå‰æ’åºæ ‘æŸ¥æ‰¾
+// ¶ş²æÅÅĞòÊ÷²éÕÒ
 BinaryTreeNode *SearchBinarySortTree(BinaryTree tree, element_type elem) {
     BinaryTree node = tree;
-    // è‹¥æ ‘ç©ºæˆ–ç­‰äºæ ¹ç»“ç‚¹å€¼å°±ç»“æŸå¾ªç¯
+    // ÈôÊ÷¿Õ»òµÈÓÚ¸ù½áµãÖµ¾Í½áÊøÑ­»·
     while (node != nullptr && elem != node->data) {
-        // è‹¥å°äºåˆ™å·¦å­æ ‘æŸ¥æ‰¾
+        // ÈôĞ¡ÓÚÔò×ó×ÓÊ÷²éÕÒ
         if (CompareElem(elem, node->data) < 0)
             node = node->left_child;
         else
@@ -152,33 +157,33 @@ BinaryTreeNode *SearchBinarySortTree(BinaryTree tree, element_type elem) {
     return node;
 }
 
-// äºŒå‰æ’åºæ ‘æ’å…¥
+// ¶ş²æÅÅĞòÊ÷²åÈë
 bool InsertBinarySortTree(BinaryTree &tree, element_type elem) {
     if (elem == NULL){
-        printf("InsertBinarySortTree:æ’å…¥æ•°æ®ä¸åº”ä¸ºç©ºï¼\n");
+        printf("InsertBinarySortTree:²åÈëÊı¾İ²»Ó¦Îª¿Õ£¡\n");
         return false;
     }
-    // è‹¥åŸæ ‘ä¸ºç©ºï¼Œåˆ™å°†æ–°æ’å…¥çš„è®°å½•ä½œä¸ºæ ¹ç»“ç‚¹
+    // ÈôÔ­Ê÷Îª¿Õ£¬Ôò½«ĞÂ²åÈëµÄ¼ÇÂ¼×÷Îª¸ù½áµã
     if (tree == nullptr) {
         tree = (BinaryTree) malloc(sizeof(BinaryTreeNode));
         tree->data = elem;
         tree->left_child = tree->right_child = nullptr;
         return true;
     }
-        // è‹¥å­˜åœ¨ç›¸åŒå…³é”®å­—çš„ç»“ç‚¹åˆ™æ’å…¥å¤±è´¥
+        // Èô´æÔÚÏàÍ¬¹Ø¼ü×ÖµÄ½áµãÔò²åÈëÊ§°Ü
     else if (CompareElem(elem, tree->data) == 0)
         return false;
-        // è‹¥å°äºåˆ™æ’å…¥åˆ°å·¦å­æ ‘
+        // ÈôĞ¡ÓÚÔò²åÈëµ½×ó×ÓÊ÷
     else if (CompareElem(elem, tree->data) < 0)
         return InsertBinarySortTree(tree->left_child, elem);
-        // å¦åˆ™æ’å…¥åˆ°å³å­æ ‘
+        // ·ñÔò²åÈëµ½ÓÒ×ÓÊ÷
     else
         return InsertBinarySortTree(tree->right_child, elem);
 }
 
-// æ„é€ äºŒå‰æ’åºæ ‘
+// ¹¹Ôì¶ş²æÅÅĞòÊ÷
 bool CreateBinarySortTree(BinaryTree &tree, element_type* elem, int start, int length){
-    // å°†æ ‘åˆå§‹åŒ–
+    // ½«Ê÷³õÊ¼»¯
     tree = nullptr;
     int i = 0;
     while(i<length){
@@ -189,5 +194,5 @@ bool CreateBinarySortTree(BinaryTree &tree, element_type* elem, int start, int l
     return true;
 }
 
-// åˆ é™¤äºŒå‰æ’åºæ ‘
-bool DeleteBinarySortTree()
+// É¾³ı¶ş²æÅÅĞòÊ÷
+bool DeleteBinarySortTree();

@@ -1,43 +1,43 @@
 #include "head.h"
 
-// é‚»æ¥çŸ©é˜µå›¾
+// ÁÚ½Ó¾ØÕóÍ¼
 typedef struct {
-    // é¡¶ç‚¹è¡¨
+    // ¶¥µã±í
     element_type* vex;
-    // è¾¹è¡¨
+    // ±ß±í
     weight_type *edge;
-    // å®šç‚¹æ•°
+    // ¶¨µãÊı
     int vex_length;
-    // è¾¹æ•°
+    // ±ßÊı
     int edge_length;
 } AdjacentArrayGraph;
 
-// é‚»æ¥è¡¨å›¾
-// è¾¹è¡¨ç»“ç‚¹
+// ÁÚ½Ó±íÍ¼
+// ±ß±í½áµã
 typedef struct EdgeNode{
-    // è¯¥å¼§æŒ‡å‘é¡¶ç‚¹çš„ä½ç½®
+    // ¸Ã»¡Ö¸Ïò¶¥µãµÄÎ»ÖÃ
     int vex;
-    // æŒ‡å‘ä¸‹æ¡å¼§çš„æŒ‡é’ˆ
+    // Ö¸ÏòÏÂÌõ»¡µÄÖ¸Õë
     struct EdgeNode *next;
-    // è¾¹æƒå€¼
+    // ±ßÈ¨Öµ
     weight_type weigh;
 } EdgeNode;
 
-// é¡¶ç‚¹è¡¨ç»“ç‚¹
+// ¶¥µã±í½áµã
 typedef struct VexNode{
-    // é¡¶ç‚¹ä¿¡æ¯
+    // ¶¥µãĞÅÏ¢
     element_type data;
-    .. æŒ‡å‘ç¬¬ä¸€æ¡ä¾èµ–è¯¥é¡¶ç‚¹çš„å¼§çš„æŒ‡é’ˆ
+    // Ö¸ÏòµÚÒ»ÌõÒÀÀµ¸Ã¶¥µãµÄ»¡µÄÖ¸Õë
     EdgeNode* frist;
 } VexNode, *AdjacentList;
 
-// é‚»æ¥è¡¨
+// ÁÚ½Ó±í
 typedef struct {
-    // é‚»æ¥è¡¨æ•°æ®
+    // ÁÚ½Ó±íÊı¾İ
     AdjacentList data;
-    // é¡¶ç‚¹æ•°
+    // ¶¥µãÊı
     int vex_length;
-    // è¾¹æ•°
+    // ±ßÊı
     int edge_length;
 } AdjacentListGraph;
 

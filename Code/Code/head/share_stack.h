@@ -1,15 +1,15 @@
 #include "head.h"
 
 typedef struct {
-    // æ•°æ®
+    // Êı¾İ
     element_type *data;
-    // æ ˆé¡¶æŒ‡é’ˆ
+    // Õ»¶¥Ö¸Õë
     int top_left, top_right;
-    // æœ€å¤§å®¹é‡
+    // ×î´óÈİÁ¿
     int max_size;
 } ShareStack;
 
-// åˆå§‹åŒ–
+// ³õÊ¼»¯
 bool InitShareStack(ShareStack &stack) {
     stack.data = (element_type *) malloc(sizeof(element_type) * MAXSIZE);
     stack.top_left = -1;
@@ -44,55 +44,55 @@ ShareStack InitShareStack(int max_size) {
     return (ShareStack &) stack;
 }
 
-// åˆ¤å·¦ç©º
+// ÅĞ×ó¿Õ
 bool EmptyLeftShareStack(ShareStack stack){
     return stack.top_left == -1;
 }
 
-// åˆ¤å³ç©º
+// ÅĞÓÒ¿Õ
 bool EmptyRightShareStack(ShareStack stack){
     return stack.top_right == stack.max_size;
 }
 
-// åˆ¤æ»¡
+// ÅĞÂú
 bool FullShareStack(ShareStack stack){
     return stack.top_right - stack.top_left == 1;
 }
 
-// å·¦æ ˆé•¿
+// ×óÕ»³¤
 int LengthLeftShareStack(ShareStack stack){
     return stack.top_left + 1;
 }
 
-// å³æ ˆé•¿
+// ÓÒÕ»³¤
 int LengthRightShareStack(ShareStack stack){
     return stack.max_size - stack.top_right;
 }
 
-// å·¦è¿›æ ˆ
+// ×ó½øÕ»
 bool PushLeftShareStack(ShareStack &stack, element_type elem){
     if(FullShareStack(stack)){
-        printf("PushLeftShareStack:æ ˆæ»¡æ— æ³•è¿›æ ˆï¼\n");
+        printf("PushLeftShareStack:Õ»ÂúÎŞ·¨½øÕ»£¡\n");
         return false;
     }
     stack.data[++stack.top_left] = elem;
     return true;
 }
 
-// å³è¿›æ ˆ
+// ÓÒ½øÕ»
 bool PushRightShareStack(ShareStack &stack, element_type elem){
     if(FullShareStack(stack)){
-        printf("PushRightShareStack:æ ˆæ»¡æ— æ³•è¿›æ ˆï¼\n");
+        printf("PushRightShareStack:Õ»ÂúÎŞ·¨½øÕ»£¡\n");
         return false;
     }
     stack.data[--stack.top_right] = elem;
     return true;
 }
 
-// å·¦å‡ºæ ˆ
+// ×ó³öÕ»
 element_type PopLeftShareStack(ShareStack &stack){
     if(EmptyLeftShareStack(stack)){
-        printf("PopLeftShareStack:æ ˆç©ºæ— æ³•å‡ºæ ˆï¼\n");
+        printf("PopLeftShareStack:Õ»¿ÕÎŞ·¨³öÕ»£¡\n");
         return DEFAULTELEM;
     }
     element_type elem = stack.data[stack.top_left];
@@ -100,10 +100,10 @@ element_type PopLeftShareStack(ShareStack &stack){
     return elem;
 }
 
-// å³å‡ºæ ˆ
+// ÓÒ³öÕ»
 element_type PopRightShareStack(ShareStack &stack){
     if(EmptyLeftShareStack(stack)){
-        printf("PopRightShareStack:æ ˆç©ºæ— æ³•å‡ºæ ˆï¼\n");
+        printf("PopRightShareStack:Õ»¿ÕÎŞ·¨³öÕ»£¡\n");
         return DEFAULTELEM;
     }
     element_type elem = stack.data[stack.top_right];
@@ -111,19 +111,19 @@ element_type PopRightShareStack(ShareStack &stack){
     return elem;
 }
 
-// è¯»å–å·¦é¦–éƒ¨
+// ¶ÁÈ¡×óÊ×²¿
 element_type TopLeftShareStack(ShareStack stack){
     if(EmptyLeftShareStack(stack)){
-        printf("PopLeftShareStack:æ ˆç©ºæ— æ³•å‡ºæ ˆï¼\n");
+        printf("PopLeftShareStack:Õ»¿ÕÎŞ·¨³öÕ»£¡\n");
         return DEFAULTELEM;
     }
     return stack.data[stack.top_left];
 }
 
-// è¯»å–å³é¦–éƒ¨
+// ¶ÁÈ¡ÓÒÊ×²¿
 element_type TopRightShareStack(ShareStack stack){
     if(EmptyLeftShareStack(stack)){
-        printf("TopRightShareStack:æ ˆç©ºæ— æ³•å‡ºæ ˆï¼\n");
+        printf("TopRightShareStack:Õ»¿ÕÎŞ·¨³öÕ»£¡\n");
         return DEFAULTELEM;
     }
     return stack.data[stack.top_right];

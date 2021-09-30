@@ -1,24 +1,24 @@
 #include "head.h"
 
-// é“¾é˜Ÿç»“ç‚¹
+// Á´¶Ó½áµã
 typedef struct LinkQueueNode {
-    // æ•°æ®
+    // Êı¾İ
     element_type data;
-    // æŒ‡é’ˆ
+    // Ö¸Õë
     struct LinkQueueNode *next;
 } LinkQueueNode;
 
-// é“¾é˜Ÿ
+// Á´¶Ó
 typedef struct {
-    // é˜Ÿå¤´æŒ‡é’ˆå’Œé˜Ÿå°¾æŒ‡é’ˆ
+    // ¶ÓÍ·Ö¸ÕëºÍ¶ÓÎ²Ö¸Õë
     LinkQueueNode *front, *rear;
 } LinkQueue;
 
-// åˆå§‹åŒ–
+// ³õÊ¼»¯
 bool InitLinkQueue(LinkQueue &queue){
-    // å»ºç«‹å¤´èŠ‚ç‚¹
+    // ½¨Á¢Í·½Úµã
     queue.front = queue.rear = (LinkQueueNode*) malloc(sizeof(LinkQueueNode));
-    // åˆå§‹ä¸ºç©º
+    // ³õÊ¼Îª¿Õ
     queue.front->next = nullptr;
     queue.front->data = DEFAULTELEM;
     return true;
@@ -27,40 +27,40 @@ bool InitLinkQueue(LinkQueue &queue){
 LinkQueue InitLinkQueue(){
     auto* queue = (LinkQueue*) malloc(sizeof(LinkQueue));
     queue->front = queue->rear = (LinkQueueNode*) malloc(sizeof(LinkQueueNode));
-    // åˆå§‹ä¸ºç©º
+    // ³õÊ¼Îª¿Õ
     queue->front->next = nullptr;
     queue->front->data = DEFAULTELEM;
     return (LinkQueue &) queue;
 }
 
-// åˆ¤ç©º
+// ÅĞ¿Õ
 bool EmptyLinkQueue(LinkQueue queue){
     return queue.front==queue.rear;
 }
 
-// å…¥é˜Ÿ
+// Èë¶Ó
 bool EnterLinkQueue(LinkQueue &queue, element_type elem){
-    // åˆ›å»ºæ–°ç»“ç‚¹
+    // ´´½¨ĞÂ½áµã
     auto *node = (LinkQueueNode *) malloc(sizeof(LinkQueueNode));
     node->data = elem;
     node->next = nullptr;
-    // æŠŠæœ€åä¸€ä¸ªå…ƒç´ çš„nextè¿æ¥åˆ°node
+    // °Ñ×îºóÒ»¸öÔªËØµÄnextÁ¬½Óµ½node
     queue.rear->next = node;
-    // ç§»åŠ¨å°¾æŒ‡é’ˆ
+    // ÒÆ¶¯Î²Ö¸Õë
     queue.rear = node;
     return true;
 }
 
-// å‡ºé˜Ÿ
+// ³ö¶Ó
 element_type DepartLinkQueue(LinkQueue &queue){
     if(EmptyLinkQueue(queue)){
         printf("DepartLinkQueue:The queue is empty!");
         return false;
     }
-    // è·å–å¯¹é¦–å…ƒç´ ä¸‹ä¸€ä¸ªå…ƒç´ çš„æ•°æ®
+    // »ñÈ¡¶ÔÊ×ÔªËØÏÂÒ»¸öÔªËØµÄÊı¾İ
     element_type elem = queue.front->next->data;
-    // åç§»ç§»ä½
+    // ºóÒÆÒÆÎ»
     queue.front->next=queue.front->next->next;
-    // è‹¥é˜Ÿåˆ—ç©º
+    // Èô¶ÓÁĞ¿Õ
     return true;
 }

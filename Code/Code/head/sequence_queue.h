@@ -1,16 +1,16 @@
 #include "head.h"
 
-// é¡ºåºé˜Ÿåˆ—
+// Ë³Ğò¶ÓÁĞ
 typedef struct {
-    // æ•°æ®
+    // Êı¾İ
     element_type *data;
-    // é˜Ÿå¤´ã€é˜Ÿå°¾
+    // ¶ÓÍ·¡¢¶ÓÎ²
     int front, rear;
-    // é˜Ÿåˆ—æœ€å¤§å®¹é‡
+    // ¶ÓÁĞ×î´óÈİÁ¿
     int max_size;
 } SequenceQueue;
 
-// åˆå§‹åŒ–
+// ³õÊ¼»¯
 bool InitSequenceQueue(SequenceQueue &queue) {
     queue.data = (element_type *) malloc(sizeof(element_type) * MAXSIZE);
     queue.front = 0;
@@ -45,37 +45,37 @@ SequenceQueue InitSequenceQueue(int max_size) {
     return (SequenceQueue &) queue;
 }
 
-// åˆ¤ç©º
+// ÅĞ¿Õ
 bool EmptySequenceQueue(SequenceQueue queue) {
     return queue.front == queue.rear;
 }
 
-// åˆ¤æ»¡ï¼ˆå­˜åœ¨å‡æº¢å‡ºï¼‰
+// ÅĞÂú£¨´æÔÚ¼ÙÒç³ö£©
 bool FullSequenceQueue(SequenceQueue queue) {
     return queue.rear == queue.max_size;
 }
 
-// åˆ¤å¾ªç¯é˜Ÿåˆ—æ»¡
+// ÅĞÑ­»·¶ÓÁĞÂú
 bool FullCircularSequenceQueue(SequenceQueue queue) {
     return (queue.rear + 1) % queue.max_size == queue.front;
 }
 
-// è¿›é˜Ÿ
+// ½ø¶Ó
 bool EnterSequenceQueue(SequenceQueue &queue, element_type elem) {
-    // åˆ¤æ–­é˜Ÿæ»¡
+    // ÅĞ¶Ï¶ÓÂú
     if (FullSequenceQueue(queue)) {
-        printf("EnterSequenceQueue:é˜Ÿæ»¡æ— æ³•è¿›é˜Ÿï¼\n");
+        printf("EnterSequenceQueue:¶ÓÂúÎŞ·¨½ø¶Ó£¡\n");
         return false;
     }
     queue.data[queue.rear++] = elem;
     return true;
 }
 
-// è¿›å¾ªç¯é˜Ÿ
+// ½øÑ­»·¶Ó
 bool EnterCircularSequenceQueue(SequenceQueue &queue, element_type elem) {
-    // åˆ¤å¾ªç¯é˜Ÿæ»¡
+    // ÅĞÑ­»·¶ÓÂú
     if (FullCircularSequenceQueue(queue)) {
-        printf("EnterCircularSequenceQueue:é˜Ÿæ»¡æ— æ³•è¿›é˜Ÿï¼\n");
+        printf("EnterCircularSequenceQueue:¶ÓÂúÎŞ·¨½ø¶Ó£¡\n");
         return false;
     }
     queue.data[queue.rear] = elem;
@@ -83,21 +83,21 @@ bool EnterCircularSequenceQueue(SequenceQueue &queue, element_type elem) {
     return true;
 }
 
-// å‡ºé˜Ÿ
+// ³ö¶Ó
 element_type DepartSequenceQueue(SequenceQueue &queue) {
-    // åˆ¤æ–­é˜Ÿç©º
+    // ÅĞ¶Ï¶Ó¿Õ
     if (EmptySequenceQueue(queue)) {
-        printf("DepartSequenceQueue:é˜Ÿç©ºæ— æ³•å‡ºé˜Ÿï¼\n");
+        printf("DepartSequenceQueue:¶Ó¿ÕÎŞ·¨³ö¶Ó£¡\n");
         return DEFAULTELEM;
     }
     return queue.data[queue.front++];
 }
 
-// å‡ºå¾ªç¯é˜Ÿ
+// ³öÑ­»·¶Ó
 element_type DepartCircularDepartSequence(SequenceQueue &queue) {
-    // åˆ¤æ–­é˜Ÿç©º
+    // ÅĞ¶Ï¶Ó¿Õ
     if (EmptySequenceQueue(queue)) {
-        printf("DepartCircularDepartSequence:é˜Ÿç©ºæ— æ³•å‡ºé˜Ÿï¼\n");
+        printf("DepartCircularDepartSequence:¶Ó¿ÕÎŞ·¨³ö¶Ó£¡\n");
         return DEFAULTELEM;
     }
     element_type elem = queue.data[queue.front];
@@ -105,16 +105,16 @@ element_type DepartCircularDepartSequence(SequenceQueue &queue) {
     return elem;
 }
 
-// è·å–é˜Ÿé•¿
+// »ñÈ¡¶Ó³¤
 int LengthSequenceQueue(SequenceQueue queue) {
     return (queue.rear - queue.front + queue.max_size) % queue.max_size;
 }
 
-// è¯»é˜Ÿå¤´
+// ¶Á¶ÓÍ·
 element_type HeadSequenceQueue(SequenceQueue &queue) {
-    // åˆ¤æ–­é˜Ÿç©º
+    // ÅĞ¶Ï¶Ó¿Õ
     if (EmptySequenceQueue(queue)) {
-        printf("HeadSequenceQueue:é˜Ÿç©ºæ— æ³•è¯»é˜Ÿå¤´ï¼\n");
+        printf("HeadSequenceQueue:¶Ó¿ÕÎŞ·¨¶Á¶ÓÍ·£¡\n");
         return DEFAULTELEM;
     }
     return queue.data[queue.front];

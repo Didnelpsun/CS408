@@ -1,12 +1,12 @@
 #include "head.h"
 
-// é¡ºåºä¸²
+// Ë³Ğò´®
 typedef struct {
-    // æ•°æ®
+    // Êı¾İ
     char *data;
-    // é•¿åº¦
+    // ³¤¶È
     int length;
-    // æœ€å¤§å®¹é‡
+    // ×î´óÈİÁ¿
     int max_size;
 } SequenceString;
 
@@ -40,16 +40,16 @@ SequenceString InitSequenceString(int max_size) {
     return (SequenceString &) string;
 }
 
-// ç®€å•å­—ç¬¦ä¸²åŒ¹é…
+// ¼òµ¥×Ö·û´®Æ¥Åä
 int LocateSimple(SequenceString string, SequenceString pattern) {
     int i = 0, j = 0;
     while (i < string.length && j < pattern.length) {
-        // åŒ¹é…å°±ç»§ç»­åç§»
+        // Æ¥Åä¾Í¼ÌĞøºóÒÆ
         if (string.data[i] == pattern.data[j]) {
             i++;
             j++;
         }
-            // ä¸åŒ¹é…å°±æ’¤å›
+            // ²»Æ¥Åä¾Í³·»Ø
         else {
             i = i - j + 1;
             j = 0;
@@ -61,11 +61,11 @@ int LocateSimple(SequenceString string, SequenceString pattern) {
     return -1;
 }
 
-// è·å–KMPçš„nextæ•°ç»„
+// »ñÈ¡KMPµÄnextÊı×é
 int *GetNext(SequenceString string) {
     auto *next = (int *) malloc(sizeof(int) * string.length);
     next[0] = 0;
-    // iä¸ºå½“å‰ä¸»ä¸²æ­£åœ¨åŒ¹é…çš„å­—ç¬¦ä½ç½®ï¼Œä¹Ÿå°±æ˜¯nextæ•°ç»„çš„ç´¢å¼•
+    // iÎªµ±Ç°Ö÷´®ÕıÔÚÆ¥ÅäµÄ×Ö·ûÎ»ÖÃ£¬Ò²¾ÍÊÇnextÊı×éµÄË÷Òı
     int i = 0, j = 0;
     while (i < string.length) {
         if (j == 0 || string.data[i] == string.data[j]) {
@@ -77,11 +77,11 @@ int *GetNext(SequenceString string) {
     return next;
 }
 
-// è·å–KMPçš„nextvalæ•°ç»„
+// »ñÈ¡KMPµÄnextvalÊı×é
 int *GetNextVal(SequenceString string) {
     auto *nextval = (int *) malloc(sizeof(int) * string.length);
     nextval[0] = 0;
-    // iä¸ºå½“å‰ä¸»ä¸²æ­£åœ¨åŒ¹é…çš„å­—ç¬¦ä½ç½®ï¼Œä¹Ÿå°±æ˜¯nextæ•°ç»„çš„ç´¢å¼•
+    // iÎªµ±Ç°Ö÷´®ÕıÔÚÆ¥ÅäµÄ×Ö·ûÎ»ÖÃ£¬Ò²¾ÍÊÇnextÊı×éµÄË÷Òı
     int i = 0, j = 0;
     while (i < string.length) {
         if (j == 0 || string.data[i] == string.data[j]) {
@@ -102,16 +102,16 @@ int LocateKMP(SequenceString string, SequenceString pattern, const int *next) {
     int i = 0, j = 0;
     while (i < string.length && j < pattern.length) {
         if (j == 0 || string.data[i] == pattern.data[j]) {
-            // åŒ¹é…åˆ™ç»§ç»­æ¯”è¾ƒ
+            // Æ¥ÅäÔò¼ÌĞø±È½Ï
             ++i;
             ++j;
         } else {
-            // æ¨¡å¼ä¸²å³ç§»
+            // Ä£Ê½´®ÓÒÒÆ
             j = next[j];
         }
     }
     if (j >= pattern.length) {
-        // åŒ¹é…æˆåŠŸ
+        // Æ¥Åä³É¹¦
         return i - pattern.length;
     } else {
         return -1;
@@ -123,16 +123,16 @@ int LocateKMP(SequenceString string, SequenceString pattern) {
     int i = 0, j = 0;
     while (i < string.length && j < pattern.length) {
         if (j == 0 || string.data[i] == pattern.data[j]) {
-            // åŒ¹é…åˆ™ç»§ç»­æ¯”è¾ƒ
+            // Æ¥ÅäÔò¼ÌĞø±È½Ï
             ++i;
             ++j;
         } else {
-            // æ¨¡å¼ä¸²å³ç§»
+            // Ä£Ê½´®ÓÒÒÆ
             j = next[j];
         }
     }
     if (j >= pattern.length) {
-        // åŒ¹é…æˆåŠŸ
+        // Æ¥Åä³É¹¦
         return i - pattern.length;
     } else {
         return -1;

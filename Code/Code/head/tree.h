@@ -1,29 +1,29 @@
 #include "head.h"
 
-// åŒäº²è¡¨ç¤ºæ³•
-// ç»“ç‚¹
+// Ë«Ç×±íÊ¾·¨
+// ½áµã
 typedef struct {
     element_type data;
-    // åŒäº²ä½ç½®
+    // Ë«Ç×Î»ÖÃ
     int parent;
 } ParentTreeNode;
-// æ•°
+// Êı
 typedef struct {
-    // æ•°ç»„
+    // Êı×é
     ParentTreeNode* data;
-    // é•¿åº¦
+    // ³¤¶È
     int length;
-    // æœ€å¤§å®¹é‡
+    // ×î´óÈİÁ¿
     int max_length;
 } ParentTree;
 
-// å­©å­å…„å¼Ÿè¡¨ç¤ºæ³•
-// ç»“ç‚¹
+// º¢×ÓĞÖµÜ±íÊ¾·¨
+// ½áµã
 typedef struct ChildSiblingTreeNode {
-    // æ•°æ®
+    // Êı¾İ
     element_type data;
-    // ç¬¬ä¸€ä¸ªå­©å­
+    // µÚÒ»¸öº¢×Ó
     struct ChildSiblingTreeNode *frist_child;
-    // ä¸‹ä¸€ä¸ªå…„å¼Ÿ
+    // ÏÂÒ»¸öĞÖµÜ
     struct ChildSiblingTreeNode *next_sibling;
 } ChildSiblingTreeNode, *ChildSiblingTree;

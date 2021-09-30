@@ -1,4 +1,4 @@
-// æµ‹è¯•
+// ²âÊÔ
 #include <iostream>
 #include "../head/sequence_list.h"
 #include "../head/link_list.h"
@@ -16,6 +16,7 @@
 #include "../head/tree.h"
 #include "../head/graph.h"
 #include "../head/search.h"
+#include "../head/sort.h"
 
 using namespace std;
 
@@ -55,5 +56,17 @@ bool LinkListTest() {
     }
     printf("?????%d", GetLengthLinkList(list));
     printf("%c???%d", '3', LocateLinkList(list, '3'));
+    return true;
+}
+
+bool SortTest(){
+    LinearTable table;
+    int a[3] = {2,4,1};
+    table.data = a;
+    table.length = 3;
+    StraightInsertSort(table);
+    printf("%d", table.data[0]);
+    printf("%d", table.data[1]);
+    printf("%d", table.data[2]);
     return true;
 }

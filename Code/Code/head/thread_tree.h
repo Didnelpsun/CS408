@@ -1,75 +1,75 @@
 #include "head.h"
 
-// çº¿ç´¢äºŒå‰æ ‘ç»“ç‚¹
+// ÏßË÷¶þ²æÊ÷½áµã
 typedef struct ThreadBinaryTreeNode {
-    // æ•°æ®
+    // Êý¾Ý
     element_type data;
-    // å·¦å³å­©å­ç»“ç‚¹
+    // ×óÓÒº¢×Ó½áµã
     ThreadBinaryTreeNode *left_child, *right_child;
-    // å·¦å³çº¿ç´¢æŒ‡é’ˆ
+    // ×óÓÒÏßË÷Ö¸Õë
     int left_tag, right_tag;
 } ThreadBinaryTreeNode, *ThreadBinaryTree;
 
-// ä¸­åºéåŽ†çº¿ç´¢åŒ–
+// ÖÐÐò±éÀúÏßË÷»¯
 bool InOrderThreadBinaryTree(ThreadBinaryTree &tree, ThreadBinaryTree &pre) {
     if (tree != nullptr) {
-        // é€’å½’çº¿ç´¢åŒ–å·¦å­æ ‘
+        // µÝ¹éÏßË÷»¯×ó×ÓÊ÷
         InOrderThreadBinaryTree(tree->left_child, pre);
-        // å·¦å­æ ‘ä¸ºç©ºï¼Œå»ºç«‹å‰é©±çº¿ç´¢
+        // ×ó×ÓÊ÷Îª¿Õ£¬½¨Á¢Ç°ÇýÏßË÷
         if (tree->left_child == nullptr) {
-            // å°†å·¦å­æ ‘æŒ‡å‘å‰é©±
+            // ½«×ó×ÓÊ÷Ö¸ÏòÇ°Çý
             tree->left_child = pre;
             tree->left_tag = 1;
         }
-        // å½“å…¶å‰é©±ä¸ä¸ºç©ºä¸”å‰é©±çš„å³å­æ ‘ä¸ºç©º
+        // µ±ÆäÇ°Çý²»Îª¿ÕÇÒÇ°ÇýµÄÓÒ×ÓÊ÷Îª¿Õ
         if (pre != nullptr && pre->right_child == nullptr) {
-            // å°†å‰é©±çš„åŽç»§çº¿ç´¢æŒ‡å‘å½“å‰ç»“ç‚¹
+            // ½«Ç°ÇýµÄºó¼ÌÏßË÷Ö¸Ïòµ±Ç°½áµã
             pre->right_child = tree;
             pre->right_tag = 1;
         }
-        // å°†å½“å‰ç»“ç‚¹è®¾ä¸ºå‰é©±ç»“ç‚¹
+        // ½«µ±Ç°½áµãÉèÎªÇ°Çý½áµã
         pre = tree;
-        // é€’å½’çº¿ç´¢åŒ–å³å­æ ‘
+        // µÝ¹éÏßË÷»¯ÓÒ×ÓÊ÷
         InOrderThreadBinaryTree(tree->right_child, pre);
     }
     return true;
 }
 
-// å»ºç«‹ä¸­åºçº¿ç´¢äºŒå‰æ ‘
+// ½¨Á¢ÖÐÐòÏßË÷¶þ²æÊ÷
 bool CreateInOrderThreadBinaryTree(ThreadBinaryTree tree) {
     ThreadBinaryTreeNode *pre = nullptr;
     if (tree != nullptr) {
-        // çº¿ç´¢åŒ–äºŒå‰æ ‘
+        // ÏßË÷»¯¶þ²æÊ÷
         InOrderThreadBinaryTree(tree, pre);
-        // å¤„ç†éåŽ†çš„æœ€åŽä¸€ä¸ªç»“ç‚¹
+        // ´¦Àí±éÀúµÄ×îºóÒ»¸ö½áµã
         pre->right_child = nullptr;
         pre->right_tag = 1;
     }
     return true;
 }
 
-// ä¸­åºçº¿ç´¢äºŒå‰æ ‘ä¸­åºåºåˆ—ç¬¬ä¸€ä¸ªç»“ç‚¹
+// ÖÐÐòÏßË÷¶þ²æÊ÷ÖÐÐòÐòÁÐµÚÒ»¸ö½áµã
 ThreadBinaryTreeNode *FirstInOrderBinaryTreeNode(ThreadBinaryTreeNode *node) {
-    // å½“æœ‰å·¦å­©å­ç»“ç‚¹
+    // µ±ÓÐ×óº¢×Ó½áµã
     while (node->left_tag == 0) {
-        // æœ€å·¦ä¸‹çš„ç»“ç‚¹ï¼Œä¸ä¸€å®šæ˜¯å¶å­ç»“ç‚¹
+        // ×î×óÏÂµÄ½áµã£¬²»Ò»¶¨ÊÇÒ¶×Ó½áµã
         node = node->left_child;
     }
     return node;
 }
 
-// ä¸­åºçº¿ç´¢äºŒå‰æ ‘ä¸­åºåºåˆ—åŽç»§
+// ÖÐÐòÏßË÷¶þ²æÊ÷ÖÐÐòÐòÁÐºó¼Ì
 ThreadBinaryTreeNode *NextInOrderBinaryTreeNode(ThreadBinaryTreeNode *node){
-    // å¦‚æžœæœ‰å³å­©å­ç»“ç‚¹ï¼Œåˆ™æ‰¾åˆ°å…¶å³å­æ ‘çš„æœ€å·¦ç»“ç‚¹
+    // Èç¹ûÓÐÓÒº¢×Ó½áµã£¬ÔòÕÒµ½ÆäÓÒ×ÓÊ÷µÄ×î×ó½áµã
     if(node->right_tag==0){
         return FirstInOrderBinaryTreeNode(node->right_child);
     }
     else
-        // è‹¥æœ‰åŽç»§çº¿ç´¢åˆ™ç›´æŽ¥è¿”å›žçº¿ç´¢
+        // ÈôÓÐºó¼ÌÏßË÷ÔòÖ±½Ó·µ»ØÏßË÷
         return node->right_child;
 }
 
-// ä¸­åºéåŽ†çº¿ç´¢äºŒå‰æ ‘
+// ÖÐÐò±éÀúÏßË÷¶þ²æÊ÷
 bool InOrderThreadBinaryTree(ThreadBinaryTree *tree,bool( *function)(ThreadBinaryTreeNode)){
     for(ThreadBinaryTreeNode *node= FirstInOrderBinaryTreeNode(*tree);node != nullptr;node= NextInOrderBinaryTreeNode(node)){
         if(!function(*node))
@@ -78,79 +78,79 @@ bool InOrderThreadBinaryTree(ThreadBinaryTree *tree,bool( *function)(ThreadBinar
     return true;
 }
 
-// å…ˆåºéåŽ†çº¿ç´¢åŒ–
+// ÏÈÐò±éÀúÏßË÷»¯
 bool PreOrderThreadBinaryTree(ThreadBinaryTree &tree, ThreadBinaryTree &pre) {
     if (tree != nullptr) {
-        // å·¦å­æ ‘ä¸ºç©ºï¼Œå»ºç«‹å‰é©±çº¿ç´¢
+        // ×ó×ÓÊ÷Îª¿Õ£¬½¨Á¢Ç°ÇýÏßË÷
         if (tree->left_child == nullptr) {
-            // å°†å·¦å­æ ‘æŒ‡å‘å‰é©±
+            // ½«×ó×ÓÊ÷Ö¸ÏòÇ°Çý
             tree->left_child = pre;
             tree->left_tag = 1;
         }
-        // å½“å…¶å‰é©±ä¸ä¸ºç©ºä¸”å‰é©±çš„å³å­æ ‘ä¸ºç©º
+        // µ±ÆäÇ°Çý²»Îª¿ÕÇÒÇ°ÇýµÄÓÒ×ÓÊ÷Îª¿Õ
         if (pre != nullptr && pre->right_child == nullptr) {
-            // å°†å‰é©±çš„åŽç»§çº¿ç´¢æŒ‡å‘å½“å‰ç»“ç‚¹
+            // ½«Ç°ÇýµÄºó¼ÌÏßË÷Ö¸Ïòµ±Ç°½áµã
             pre->right_child = tree;
             pre->right_tag = 1;
         }
-        // å°†å½“å‰ç»“ç‚¹è®¾ä¸ºå‰é©±ç»“ç‚¹
+        // ½«µ±Ç°½áµãÉèÎªÇ°Çý½áµã
         pre = tree;
-        // éœ€è¦åˆ¤æ–­æ˜¯å¦æœ‰å·¦å­©å­
+        // ÐèÒªÅÐ¶ÏÊÇ·ñÓÐ×óº¢×Ó
         if(tree->left_tag==0){
-            // é€’å½’çº¿ç´¢åŒ–å·¦å­æ ‘
+            // µÝ¹éÏßË÷»¯×ó×ÓÊ÷
             InOrderThreadBinaryTree(tree->left_child, pre);
         }
-        // é€’å½’çº¿ç´¢åŒ–å³å­æ ‘
+        // µÝ¹éÏßË÷»¯ÓÒ×ÓÊ÷
         InOrderThreadBinaryTree(tree->right_child, pre);
     }
     return true;
 }
 
-// å»ºç«‹å…ˆåºçº¿ç´¢äºŒå‰æ ‘
+// ½¨Á¢ÏÈÐòÏßË÷¶þ²æÊ÷
 bool CreatePreOrderThreadBinaryTree(ThreadBinaryTree tree) {
     ThreadBinaryTreeNode *pre = nullptr;
     if (tree != nullptr) {
-        // çº¿ç´¢åŒ–äºŒå‰æ ‘
+        // ÏßË÷»¯¶þ²æÊ÷
         PreOrderThreadBinaryTree(tree, pre);
-        // å¤„ç†éåŽ†çš„æœ€åŽä¸€ä¸ªç»“ç‚¹
+        // ´¦Àí±éÀúµÄ×îºóÒ»¸ö½áµã
         pre->right_child = nullptr;
         pre->right_tag = 1;
     }
     return true;
 }
 
-// åŽåºéåŽ†çº¿ç´¢åŒ–
+// ºóÐò±éÀúÏßË÷»¯
 bool PostOrderThreadBinaryTree(ThreadBinaryTree &tree, ThreadBinaryTree &pre) {
     if (tree != nullptr) {
-        // é€’å½’çº¿ç´¢åŒ–å·¦å­æ ‘
+        // µÝ¹éÏßË÷»¯×ó×ÓÊ÷
         InOrderThreadBinaryTree(tree->left_child, pre);
-        // é€’å½’çº¿ç´¢åŒ–å³å­æ ‘
+        // µÝ¹éÏßË÷»¯ÓÒ×ÓÊ÷
         InOrderThreadBinaryTree(tree->right_child, pre);
-        // å·¦å­æ ‘ä¸ºç©ºï¼Œå»ºç«‹å‰é©±çº¿ç´¢
+        // ×ó×ÓÊ÷Îª¿Õ£¬½¨Á¢Ç°ÇýÏßË÷
         if (tree->left_child == nullptr) {
-            // å°†å·¦å­æ ‘æŒ‡å‘å‰é©±
+            // ½«×ó×ÓÊ÷Ö¸ÏòÇ°Çý
             tree->left_child = pre;
             tree->left_tag = 1;
         }
-        // å½“å…¶å‰é©±ä¸ä¸ºç©ºä¸”å‰é©±çš„å³å­æ ‘ä¸ºç©º
+        // µ±ÆäÇ°Çý²»Îª¿ÕÇÒÇ°ÇýµÄÓÒ×ÓÊ÷Îª¿Õ
         if (pre != nullptr && pre->right_child == nullptr) {
-            // å°†å‰é©±çš„åŽç»§çº¿ç´¢æŒ‡å‘å½“å‰ç»“ç‚¹
+            // ½«Ç°ÇýµÄºó¼ÌÏßË÷Ö¸Ïòµ±Ç°½áµã
             pre->right_child = tree;
             pre->right_tag = 1;
         }
-        // å°†å½“å‰ç»“ç‚¹è®¾ä¸ºå‰é©±ç»“ç‚¹
+        // ½«µ±Ç°½áµãÉèÎªÇ°Çý½áµã
         pre = tree;
     }
     return true;
 }
 
-// å»ºç«‹åŽåºçº¿ç´¢äºŒå‰æ ‘
+// ½¨Á¢ºóÐòÏßË÷¶þ²æÊ÷
 bool CreatePostOrderThreadBinaryTree(ThreadBinaryTree tree) {
     ThreadBinaryTreeNode *pre = nullptr;
     if (tree != nullptr) {
-        // çº¿ç´¢åŒ–äºŒå‰æ ‘
+        // ÏßË÷»¯¶þ²æÊ÷
         PreOrderThreadBinaryTree(tree, pre);
-        // å¤„ç†éåŽ†çš„æœ€åŽä¸€ä¸ªç»“ç‚¹
+        // ´¦Àí±éÀúµÄ×îºóÒ»¸ö½áµã
         pre->right_child = nullptr;
         pre->right_tag = 1;
     }

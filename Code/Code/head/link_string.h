@@ -1,10 +1,10 @@
 #include "head.h"
 
-// å—é“¾ä¸²ç»“ç‚¹
+// ¿éÁ´´®½áµã
 typedef struct LinkStringNode {
-    // æ•°æ®
+    // Êı¾İ
     char *data;
-    // æŒ‡é’ˆ
+    // Ö¸Õë
     LinkStringNode *next;
 } LinkStringNode, *LinkString;
 

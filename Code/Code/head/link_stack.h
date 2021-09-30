@@ -1,14 +1,14 @@
 #include "head.h"
 
-// é“¾æ ˆ
+// Á´Õ»
 typedef struct LinkStackNode{
-    // æ•°æ®
+    // Êý¾Ý
     element_type data;
-    // æŒ‡é’ˆ
+    // Ö¸Õë
     LinkStackNode *next;
 } *LinkStack;
 
-// åˆå§‹åŒ–
+// ³õÊ¼»¯
 LinkStack InitLinkStack(){
     auto stack = (LinkStack) malloc(sizeof(LinkStack));
     stack->data = DEFAULTELEM;
@@ -22,7 +22,7 @@ bool InitLinkStack(LinkStack &stack){
     return true;
 }
 
-// åˆ¤ç©º
+// ÅÐ¿Õ
 bool EmptyLinkStack(LinkStack stack){
     return stack->data == DEFAULTELEM;
 };

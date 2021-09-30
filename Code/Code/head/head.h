@@ -1,3 +1,5 @@
+//#pragma once
+
 // 初始化最大长度
 #define MAXSIZE 5
 // 定义默认值
@@ -11,7 +13,5 @@ typedef char element_type;
 // 权值类型
 typedef int weight_type;
 
-// 比较元素方法
-int CompareElem(element_type elem1, element_type elem2){
-    return 0;
-}
+typedef int elem_type;
+
