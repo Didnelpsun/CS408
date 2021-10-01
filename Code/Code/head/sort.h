@@ -64,3 +64,21 @@ bool ShellSort(LinearTable table) {
     }
     return true;
 }
+
+// 冒泡排序
+bool BubbleSort(LinearTable table){
+    elem_type temp;
+    // 外循环为排序趟数，一共需要length-1趟
+    for(int i=0;i<table.length-1;i++){
+        // 内循环为排序趟数，i趟比较次数为length-i
+        // 排序完成的序列在后面
+        for(int j=0;j<table.length-1-i;j++){
+            if(table.data[j]>table.data[j+1]){
+                temp = table.data[j];
+                table.data[j] = table.data[j+1];
+                table.data[j+1] = temp;
+            }
+        }
+    }
+    return true;
+}
