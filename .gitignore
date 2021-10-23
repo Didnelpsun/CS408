@@ -5,6 +5,7 @@
 *.html
 *.htm
 *.vs/
+*.vscode/
 *.txt
 *.idea/
 *Debug/

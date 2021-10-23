@@ -1,9 +1,6 @@
 // 测试文件
 
-#include "../head/sequence_list.h"
-#include "../head/link_list.h"
-#include "../head/double_link_list.h"
-#include "../head/static_link_list.h"
+#include "../head/list.h"
 #include "../head/sequence_stack.h"
 #include "../head/share_stack.h"
 #include "../head/link_stack.h"
@@ -18,11 +15,12 @@ bool SequenceListTest() {
     list.LoopInsert(a, 0, 6);
     list.Print();
 //    element_type * data = list.GetData();
-    element_type* b = list.LoopDelete(1, 3);
-    list.Print();
-    for (int i = 0; i < 3; i++) {
-        cout << b[i] << endl;
-    }
+//    element_type* b = list.LoopDelete(1, 3);
+//    list.Print();
+//    for (int i = 0; i < 3; i++) {
+//        cout << b[i] << endl;
+//    }
+    cout << list.GetData(list.Max()) << endl;
     list.Destroy();
     return true;
 }
@@ -39,16 +37,17 @@ bool LinkListTest() {
     list2.PriorInsert(a, 2, 3);
     list2.Print();
     cout << list2.GetLength() << endl;*/
-    auto* list = new LinkListWithoutHead();
+    auto* list = new LinkListWithHead();
     list->NextInsert(a, 0 ,5);
     list->Print();
-    int len = 2;
-    element_type* b = list->Delete(2, len);
-    for (int i = 0; i < len; i++) {
-        cout << b[i] << endl;
-    }
-    list->Print();
-    cout << list->Locate('1') << endl;
+//    int len = 2;
+//    element_type* b = list->Delete(2, len);
+//    for (int i = 0; i < len; i++) {
+//        cout << b[i] << endl;
+//    }
+//    list->Print();
+//    cout << list->Locate('1') << endl;
+    cout << list->GetData(list->Min()) << endl;
     return true;
 }
 

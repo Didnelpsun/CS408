@@ -62,7 +62,7 @@ StaticLinkListNode::StaticLinkListNode(element_type elem, int next) {
 
 bool StaticLinkListNode::Destroy() {
     this->SetData(DEFAULTELEM);
-    this->SetNext(NULL);
+    this->SetNext(0);
     return true;
 }
 
@@ -138,7 +138,7 @@ int StaticLinkList::GetMaxSize() const {
 }
 
 StaticLinkList::StaticLinkList() {
-    this->SetFirst(NULL);
+    this->SetFirst(DEFAULTELEM);
     this->SetLength(0);
     this->SetMaxSize(MAXSIZE);
     this->data = new StaticLinkListNode[MAXSIZE];
