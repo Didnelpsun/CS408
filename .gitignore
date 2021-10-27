@@ -15,3 +15,4 @@
 *build.default/
 *build.wsl/
 *build.cygwin/
+*build/
