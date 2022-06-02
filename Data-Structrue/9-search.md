@@ -48,7 +48,18 @@ $ASL$查找成功为$\sum\limits_{i=1}^nP_i(n-i+1)$，$P_i$为第$i$个元素出
 
 #### 折半查找的过程
 
-查找时，首先计算出$mid$判断是否相等，若查找值小于$mid$的值，则将$high$赋值为$mid-1$的值，若查找值大于$mid$，则将$low$赋值为$mid+1$的值，重新计算$mid$。这样就可以不断二分区间来查找，从而加快迭代。当查找最后$low>high$则查找失败。
+1. 定义左边界$low$，默认为0，右边界$high$，默认为$length-1$，循环执行折半查找（2，3两步）。
+2. 计算出$mid=\lfloor(low+high)\div2\rfloor$。
+3. 判断中间索引值$data\lbrack mid\rbrack$是否与搜索值$target$相等。
+   + 若$data\lbrack mid\rbrack=target$，返回中间索引。
+   + 若$data\lbrack mid\rbrack<target$，则将$high=mid-1$。
+   + 若$data\lbrack mid\rbrack>target$，则将$low=mid+1$的值。
+4. 当查找最后$low>high$则查找失败。
+
+在对$mid$进行取值时，如果数据量太大，查找到右侧时计算$mid$进行两数相加$low+high$可能会数值溢出。那么如何解决？
+
++ 变幻公式：$(low+high)\div2\rightarrow low\div2+high\div2$或$\rightarrow low-(low\div2-high\div2)\rightarrow low+(high-low)\div2$。
++ 无符号右移运算：$mid=(low+hight) >>> 1$。直接讲除以2变为右移运算，速度更快，且舍去了小数位不需要进行取整运算。
 
 $ASL$查找成功为$\dfrac{1+2+3+\cdots+n}{n}=\dfrac{n+1}{2}$，$ASL$查找失败为$n+1$，时间复杂度为$O(n)$。
 
